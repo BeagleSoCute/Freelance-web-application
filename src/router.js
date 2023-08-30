@@ -1,5 +1,6 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import AppLayout from "layouts/AppLayout";
+// import AppLayoutAntD from "layouts/AppLayout"
 import Login from "smart/Login";
 import Register from "smart/Register";
 import Dashboard from "smart/Dashboard";

@@ -7,15 +7,14 @@ import Logout from "smart/Logout";
 import { Route, Routes } from "react-router-dom";
 import { AppProvider } from "contexts/app.context";
 import PrivateRoute from "smart/PrivateRoute";
+import AppLayoutAntD from "layouts/AppLayout"
 // import "antd/dist/antd.css";
 
 const App = () => {
-
-
   return (
     <AppProvider>
       <div className="App">
-        <AppLayout>
+        <AppLayoutAntD>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -30,7 +29,7 @@ const App = () => {
               }
             />
           </Routes>
-        </AppLayout>
+        </AppLayoutAntD>
       </div>
     </AppProvider>
   );
