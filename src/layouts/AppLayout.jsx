@@ -11,6 +11,7 @@ import { AppContext } from "contexts/app.context";
 import { checkIsAuth } from "helpers/auth.helper";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const { Header, Content, Footer, Sider } = Layout;
 const authenMenu = [
@@ -70,7 +71,8 @@ const App = () => {
     navigate(result.path);
   };
   return (
-    <Layout
+    <StyledLayout
+      className="app-layout"
       style={{
         minHeight: "100vh",
       }}
@@ -90,6 +92,21 @@ const App = () => {
         />
       </Sider>
       <Layout>
+        <div className="mobile-menu">
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={["0"]}
+            onClick={handleOnClick}
+            items={items.map((item) => {
+              const key = item.key;
+              return {
+                key,
+                label: item.label,
+              };
+            })}
+          />
+        </div>
         <Content
           style={{
             margin: "0 16px",
@@ -104,13 +121,16 @@ const App = () => {
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
           <div
+            className="content"
             style={{
               padding: 24,
-              minHeight: 360,
+              // minHeight: 3360,
               background: colorBgContainer,
             }}
           >
-          <><Outlet /></>
+            <>
+              <Outlet />
+            </>
           </div>
         </Content>
         <Footer
@@ -121,7 +141,32 @@ const App = () => {
           Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>
-    </Layout>
+    </StyledLayout>
   );
 };
+
+const StyledLayout = styled(Layout)`
+  &.app-layout {
+    .ant-layout-sider {
+      z-index: 1;
+    }
+    .mobile-menu {
+      display: none;
+    }
+    @media (max-width: 575px) {
+      //mobile screen
+      .mobile-menu {
+        display: block;
+      }
+      .ant-layout-sider {
+        z-index: 1;
+      }
+      .ant-layout-sider.ant-layout-sider-dark.ant-layout-sider-has-trigger {
+        display: none;
+      }
+      .ant-layout-sider.ant-layout-sider-dark.ant-layout-sider-has-trigger.ant-layout-sider-collapsed {
+      }
+    }
+  }
+`;
 export default App;
