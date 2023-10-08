@@ -19,13 +19,13 @@ export const transformErrorResponse = async (errResponse) => {
     });
   } else {
     errorMessage = payload.error?.msg;
-    notification({ type: "error", message: errorMessage });
+    console.log('errorMessage',errorMessage)
   }
 
   return {
     payload,
     status: response.status,
-    errorMessage: message,
+    errorMessage,
     success: false,
   };
 };
