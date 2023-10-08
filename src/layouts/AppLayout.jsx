@@ -6,26 +6,14 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu, theme, Spin } from "antd";
 import { AppContext } from "contexts/app.context";
 import { checkIsAuth } from "helpers/auth.helper";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const { Header, Content, Footer, Sider } = Layout;
-const authenMenu = [
-  { key: 1, label: "Home", path: "/" },
-  { key: 2, label: "Dashboard", path: "/dashboard" },
-  { key: 3, label: "Profile", path: "/profile" },
-  { key: 4, label: "Logout", path: "/logout" },
-];
-const notAuthenMenu = [
-  { key: 5, label: "Home", path: "/" },
-  { key: 6, label: "Dashboard", path: "/dashboard" },
-  { key: 7, label: "Login", path: "/login" },
-  { key: 8, label: "Register", path: "/register" },
-];
+const { Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
   console.warn("getItem");
@@ -71,6 +59,8 @@ const App = () => {
     navigate(result.path);
   };
   return (
+    <Spin spinning={loading} tip="Loading..." size="large">
+
     <StyledLayout
       className="app-layout"
       style={{
@@ -142,6 +132,7 @@ const App = () => {
         </Footer>
       </Layout>
     </StyledLayout>
+    </Spin>
   );
 };
 

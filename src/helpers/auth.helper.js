@@ -1,7 +1,6 @@
-import cookies from "js-cookie";
+import {ACCESS_TOKEN} from "constants"
 
 export const checkIsAuth = () => {
-  const isAuth = cookies.get("isAuth");
-  const bool = isAuth ? JSON.parse(isAuth) : false;
-  return bool;
+  const isAuth = localStorage.getItem(ACCESS_TOKEN);
+  return isAuth !== null ? true : false
 };

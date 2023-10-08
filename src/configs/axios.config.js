@@ -5,7 +5,7 @@ import {
 } from "helpers/axios.helper";
 import { refreshToken } from "apis/auth.api";
 import { notification } from "helpers/notification.helper";
-import {ACCESS_TOKEN, REFRESH_TOKEN} from "configs"
+import {ACCESS_TOKEN, REFRESH_TOKEN} from "constants"
 
 const apiInstance = axios.create({
   baseURL: "/api",
