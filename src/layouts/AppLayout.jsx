@@ -153,7 +153,7 @@ const StyledLayout = styled(Layout)`
     .mobile-menu {
       display: none;
     }
-    @media (max-width: 575px) {
+    @media (max-width: 1020px) {
       //mobile screen
       .mobile-menu {
         display: block;

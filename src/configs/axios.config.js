@@ -5,18 +5,25 @@ import {
 } from "helpers/axios.helper";
 import { refreshToken } from "apis/auth.api";
 import { notification } from "helpers/notification.helper";
+import {ACCESS_TOKEN, REFRESH_TOKEN} from "configs"
 
 const apiInstance = axios.create({
   baseURL: "/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
+    "x-auth-token": localStorage.getItem(ACCESS_TOKEN),
   },
 });
 
 const onRequestFulfilled = (configs = {}) => {
+  const token = localStorage.getItem(ACCESS_TOKEN);
+  if (token) {
+    configs.headers["x-auth-token"] = token;
+  }
   return configs;
 };
+
 const onResponseFulfilled = (response) => {
   return transformAxiosResponse(response);
 };
@@ -25,10 +32,14 @@ const onResponseRejected = async (error) => {
   const statusError = error.response.status;
   if (error.response && statusError === 401) {
     const originalRequest = error.config;
-    const { success, status } = await refreshToken();
+    const { success, status, payload } = await refreshToken();
     if (success) {
+      // keep it on the local storage
+      localStorage.setItem("refresh_token", payload[REFRESH_TOKEN]);
       return apiInstance(originalRequest);
     } else if (status === 403) {
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
       notification({
         type: "warning",
         message: "Please login into the system again.",
