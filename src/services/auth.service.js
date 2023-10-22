@@ -19,14 +19,4 @@ export const logout = async () => {
   localStorage.removeItem(REFRESH_TOKEN);
   notification({ type: "success", message: "Logout Success" });
   return true;
-
-  // const { success } = await logoutApi();
-  // if (success) {
-
-  //   notification({ type: "success", message: "Logout Success" });
-  //   return true;
-  // } else {
-  //   notification({ type: "error", message: "Logout fail!" });
-  //   return false;
-  // }
 };
