@@ -20,18 +20,15 @@ const validatorConfirmPassword = ({ getFieldValue }) => ({
 const validatePassword = (_, value) => {
   if (value && value.length < 6) {
     return Promise.reject("Password must be at least 6 characters long.");
-  } 
-  else if (value && value.length > 20) {
+  } else if (value && value.length > 20) {
     return Promise.reject("Password must no longer than 20.");
   }
   return Promise.resolve();
 };
 
 const validateName = (_, value) => {
-  if (value && value.length < 3) {
-    return Promise.reject("Name must be at least 3 characters long.");
-  } else if (value && value.length > 50) {
-    return Promise.reject("name must not exceed 50 characters long.");
+ if (value && value.length > 50) {
+    return Promise.reject("The character must not exceed 50 characters long.");
   }
   return Promise.resolve();
 };
@@ -56,10 +53,21 @@ const RegisterForm = ({ onFinish }) => {
         </Form.Item>
 
         <Form.Item
-          label="Name"
-          name="name"
+          label="First name"
+          name="firstName"
           rules={[
-            { required: true, message: "Please input your name!" },
+            { required: true, message: "Please input your first name!" },
+            { validator: validateName },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Last name"
+          name="lastName"
+          rules={[
+            { required: true, message: "Please input your last name!" },
             { validator: validateName },
           ]}
         >

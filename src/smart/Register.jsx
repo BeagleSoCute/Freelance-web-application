@@ -11,8 +11,7 @@ const Register = () => {
   const { setLoading } = useContext(AppContext);
   const handleOnFinish = async (values) => {
     setLoading(true);
-    const { email, name, password } = values;
-    const {success, errorMessage} = await register({ email, name, password });
+    const {success, errorMessage} = await register(values);
     setLoading(false);
     if (success) {
       notification({ type: "success", message: "Register Success" });
