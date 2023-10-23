@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Button, Checkbox, Form, Input } from "antd";
+import SkillTag from "components/skills/SkillTags";
 
 const { TextArea } = Input;
 
-const EditForm = () => {
+const EditForm = ({ skills }) => {
   const onFinish = () => {};
   return (
     <StyledDiv className="edit-form">
@@ -45,11 +46,23 @@ const EditForm = () => {
           <TextArea />
         </Form.Item>
 
-        <Form.Item className="button-submit-layout">
+        <Form.Item label="Skills" name="skills">
+          <Input />
+        </Form.Item>
+
+        <div className="add-skill-btn">
+          <Button className="button" type="primary">
+            Add
+          </Button>
+        </div>
+
+        <SkillTag items={skills} />
+
+        {/* <Form.Item className="button-submit-layout">
           <Button className="button-submit" type="primary" htmlType="submit">
             Update
           </Button>
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </StyledDiv>
   );
@@ -59,6 +72,15 @@ const StyledDiv = styled.div`
   &.edit-form {
     width: 50%;
     margin: 0px auto;
+    .add-skill-btn {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 25px;
+      .button {
+        width: 50%;
+      }
+    }
   }
 `;
 
