@@ -42,8 +42,6 @@ const Profile = () => {
           />
         </Col>
         <Col span={24}>
-          <h2>Skills</h2>
-          {/* <SkillTag items={skills} /> */}
         </Col>
       </Row>
     </StyledDiv>
