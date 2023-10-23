@@ -9,7 +9,10 @@ const { TextArea } = Input;
 const EditForm = ({ skills, onAddSkill, onRemoveSkill }) => {
   const [form] = Form.useForm();
   const handleAddSkill = (value) => {
-    const isDupSkill = skills.some((skill) => skill === value);
+    if (value === "") {
+      message.error("Please enter a skill that you want to add!");
+    }
+    const isDupSkill = skills.some((skill) => skill.toLowerCase() === value.toLowerCase());
     if (!isDupSkill) {
       onAddSkill(value);
     } else {
