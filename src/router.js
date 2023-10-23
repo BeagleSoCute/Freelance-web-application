@@ -4,7 +4,7 @@ import AppLayout from "layouts/AppLayout";
 import Login from "smart/Login";
 import Register from "smart/Register";
 import Dashboard from "smart/Dashboard";
-import Profile from "smart/Profile";
+import Profile from "smart/profile/Profile";
 import Logout from "smart/Logout";
 import ShowUserDetails from "smart/ShowUserDatails";
 import { AppProvider } from "contexts/app.context";

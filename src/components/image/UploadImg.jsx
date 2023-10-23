@@ -48,12 +48,9 @@ const UploadImg = () => {
 
                 <input type="file" onChange={handleChange} ref={fileInputRef} />
                 </Button>
-
             </div>
             )}
           </Row>
-
-          <div></div>
         </Col>
         <Col span={8}></Col>
       </Row>
