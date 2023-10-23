@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Row, Col, Flex } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-const SkillTags = ({ items }) => {
-  const handleRemoveItem = () => {};
+const SkillTags = ({ items, onRemoveSkill }) => {
   return (
     <StyledDiv className="skill-tags">
       <Flex wrap="wrap" gap="large">
@@ -11,7 +10,7 @@ const SkillTags = ({ items }) => {
           <div className="item" span={4}>
             <p>{item}</p>
             <CloseOutlined
-              onClick={() => handleRemoveItem()}
+              onClick={() => onRemoveSkill(item)}
               className="close-icon"
             />
           </div>

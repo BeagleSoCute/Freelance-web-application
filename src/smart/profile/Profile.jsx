@@ -7,7 +7,7 @@ import SkillTag from "components/skills/SkillTags";
 import UploadImg from "components/image/UploadImg";
 
 const Profile = () => {
-  const [skills, setSkilss] = useState([
+  const [skills, setSkills] = useState([
     "Java",
     "JavaScript",
     "React",
@@ -18,7 +18,14 @@ const Profile = () => {
     "ExpressJS",
     "NodeJS",
   ]);
-  useEffect(() => {}, []);
+  const handleAddSkill = (addedSkill) => {
+    const newSkills = [...skills, addedSkill];
+    setSkills(newSkills);
+  };
+  const handleRemoveSkill = (removedSkill) => {
+    const afterRemoveSkill = skills.filter((skill) => skill !== removedSkill);
+    setSkills(afterRemoveSkill);
+  };
   return (
     <StyledDiv className="profile-management">
       <h1>Profile Page </h1>
@@ -28,7 +35,11 @@ const Profile = () => {
           <UploadImg />
         </Col>
         <Col span={24} className="edit-form-section">
-          <EditForm skills={skills} />
+          <EditForm
+            skills={skills}
+            onAddSkill={handleAddSkill}
+            onRemoveSkill={handleRemoveSkill}
+          />
         </Col>
         <Col span={24}>
           <h2>Skills</h2>

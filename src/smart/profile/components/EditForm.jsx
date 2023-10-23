@@ -1,17 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import SkillTag from "components/skills/SkillTags";
 
 const { TextArea } = Input;
 
-const EditForm = ({ skills }) => {
+const EditForm = ({ skills, onAddSkill, onRemoveSkill }) => {
+  const [form] = Form.useForm();
+  const handleAddSkill = (value) => {
+    const isDupSkill = skills.some((skill) => skill === value);
+    if (!isDupSkill) {
+      onAddSkill(value);
+    } else {
+      message.error(
+        "You already have this skill, please add another one instead!"
+      );
+    }
+    form.setFieldValue("skill", "");
+  };
+
   const onFinish = () => {};
   return (
     <StyledDiv className="edit-form">
       <Form
-        name="basic"
+        form={form}
+        name="edit-for"
         labelCol={{ span: 24 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -46,17 +60,21 @@ const EditForm = ({ skills }) => {
           <TextArea />
         </Form.Item>
 
-        <Form.Item label="Skills" name="skills">
+        <Form.Item label="Skills" name="skill">
           <Input />
         </Form.Item>
 
         <div className="add-skill-btn">
-          <Button className="button" type="primary">
+          <Button
+            className="button"
+            type="primary"
+            onClick={() => handleAddSkill(form.getFieldValue("skill"))}
+          >
             Add
           </Button>
         </div>
 
-        <SkillTag items={skills} />
+        <SkillTag items={skills} onRemoveSkill={onRemoveSkill} />
 
         {/* <Form.Item className="button-submit-layout">
           <Button className="button-submit" type="primary" htmlType="submit">
