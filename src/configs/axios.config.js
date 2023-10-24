@@ -5,7 +5,7 @@ import {
 } from "helpers/axios.helper";
 import { refreshToken } from "apis/auth.api";
 import { notification } from "helpers/notification.helper";
-import {ACCESS_TOKEN, REFRESH_TOKEN} from "constants"
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "constants";
 
 const apiInstance = axios.create({
   baseURL: "/api",
@@ -32,10 +32,12 @@ const onResponseRejected = async (error) => {
   const statusError = error.response.status;
   if (error.response && statusError === 401) {
     const originalRequest = error.config;
-    const { success, status, payload } = await refreshToken();
+    const { success, status, payload } = await refreshToken({
+      [REFRESH_TOKEN]: localStorage.getItem(REFRESH_TOKEN),
+    });
     if (success) {
       // keep it on the local storage
-      localStorage.setItem("refresh_token", payload[REFRESH_TOKEN]);
+      localStorage.setItem(ACCESS_TOKEN, payload[ACCESS_TOKEN]);
       return apiInstance(originalRequest);
     } else if (status === 403) {
       localStorage.removeItem(ACCESS_TOKEN);

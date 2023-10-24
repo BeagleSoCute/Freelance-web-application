@@ -5,24 +5,13 @@ import EditForm from "./components/EditForm";
 import UploadImg from "components/image/UploadImg";
 import DisplayPortfolio from "./components/DisplayPortfolio";
 import { AppContext } from "contexts/app.context";
-import {updateProfile} from "services/user.service"
+import { updateProfile } from "services/user.service";
 
 const Profile = () => {
   const { user } = useContext(AppContext);
   const [form] = Form.useForm();
 
-
-  const [skills, setSkills] = useState([
-    "Java",
-    "JavaScript",
-    "React",
-    "VueJS",
-    "Css",
-    "MongoDB",
-    "NextJS",
-    "ExpressJS",
-    "NodeJS",
-  ]);
+  const [skills, setSkills] = useState([]);
   const handleAddSkill = (addedSkill) => {
     const newSkills = [...skills, addedSkill];
     setSkills(newSkills);
@@ -31,10 +20,13 @@ const Profile = () => {
     const afterRemoveSkill = skills.filter((skill) => skill !== removedSkill);
     setSkills(afterRemoveSkill);
   };
-  const handleUpdateProfile = async() => {
-    console.log('submit data is', form.getFieldsValue())
-    await updateProfile(form.getFieldsValue());
-  }
+  const handleUpdateProfile = async () => {
+    const data = {
+      formData: form.getFieldsValue(),
+      skills,
+    };
+    await updateProfile(data);
+  };
   const editFormProps = {
     userData: user,
     skills: skills,

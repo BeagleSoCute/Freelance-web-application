@@ -21,10 +21,13 @@ export const getUserDetails = async (id) => {
 };
 
 export const updateProfile = async (data) => {
+  const { formData, skills } = data;
   const transformData = {
-    first_name: data.firstName,
-    last_name: data.lastName,
-    phone_number: data.phoneNumber,
+    first_name: formData.firstName,
+    last_name: formData.lastName,
+    phone_number: formData.phoneNumber,
+    description: formData.description,
+    skills,
   };
   const { success, payload } = await updateProfileApi(transformData);
   return { success, payload };
