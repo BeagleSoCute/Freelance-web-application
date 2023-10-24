@@ -1,15 +1,16 @@
 import { useEffect, useState, useContext } from "react";
-import { Row, Col, Flex, Button } from "antd";
+import { Row, Col, Form, Button } from "antd";
 import styled from "styled-components";
 import EditForm from "./components/EditForm";
 import UploadImg from "components/image/UploadImg";
 import DisplayPortfolio from "./components/DisplayPortfolio";
 import { AppContext } from "contexts/app.context";
+import {updateProfile} from "services/user.service"
 
 const Profile = () => {
   const { user } = useContext(AppContext);
+  const [form] = Form.useForm();
 
-  console.log("user is", user);
 
   const [skills, setSkills] = useState([
     "Java",
@@ -30,9 +31,14 @@ const Profile = () => {
     const afterRemoveSkill = skills.filter((skill) => skill !== removedSkill);
     setSkills(afterRemoveSkill);
   };
+  const handleUpdateProfile = async() => {
+    console.log('submit data is', form.getFieldsValue())
+    await updateProfile(form.getFieldsValue());
+  }
   const editFormProps = {
     userData: user,
     skills: skills,
+    form,
     onAddSkill: handleAddSkill,
     onRemoveSkill: handleRemoveSkill,
   };
@@ -51,7 +57,7 @@ const Profile = () => {
           <DisplayPortfolio />
         </Col>
         <Col justify="center" className="update-button" span={24}>
-          <Button>Update Profile</Button>
+          <Button onClick={() => handleUpdateProfile()}>Update Profile</Button>
         </Col>
       </Row>
     </StyledDiv>

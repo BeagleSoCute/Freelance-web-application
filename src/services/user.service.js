@@ -1,4 +1,9 @@
-import { getUserApi, getAllUsersApi, getUserDetailsApi } from "apis/user.api";
+import {
+  getUserApi,
+  getAllUsersApi,
+  getUserDetailsApi,
+  updateProfileApi,
+} from "apis/user.api";
 
 export const getMyData = async () => {
   const res = await getUserApi();
@@ -13,4 +18,14 @@ export const getAllUsers = async () => {
 export const getUserDetails = async (id) => {
   const { success, payload: details } = await getUserDetailsApi(id);
   return { success, details };
+};
+
+export const updateProfile = async (data) => {
+  const transformData = {
+    first_name: data.firstName,
+    last_name: data.lastName,
+    phone_number: data.phoneNumber,
+  };
+  const { success, payload } = await updateProfileApi(transformData);
+  return { success, payload };
 };
