@@ -8,14 +8,16 @@ const { TextArea } = Input;
 
 const EditForm = ({ skills, onAddSkill, onRemoveSkill, userData, form }) => {
   const handleAddSkill = (value) => {
-    if (value === "") {
+    const inputValue = value.trim();
+    if (inputValue === "") {
       message.error("Please enter a skill that you want to add!");
+      return;
     }
     const isDupSkill = skills.some(
-      (skill) => skill.toLowerCase() === value.toLowerCase()
+      (skill) => skill.toLowerCase() === inputValue.toLowerCase()
     );
     if (!isDupSkill) {
-      onAddSkill(value);
+      onAddSkill(inputValue);
     } else {
       message.error(
         "You already have this skill, please add another one instead!"

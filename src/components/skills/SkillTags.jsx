@@ -1,7 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Row, Col, Flex } from "antd";
+import { Flex } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
+import PropTypes from "prop-types";
+
+const propTypes = {
+  title: PropTypes.arrayOf(String),
+  onRemoveSkill: PropTypes.func,
+};
+const defaultProps = {
+  items: [],
+  onRemoveSkill: () => {},
+};
+
 const SkillTags = ({ items, onRemoveSkill }) => {
   return (
     <StyledDiv className="skill-tags">
@@ -37,4 +48,6 @@ const StyledDiv = styled.div`
   }
 `;
 
+SkillTags.propTypes = propTypes;
+SkillTags.defaultProps = defaultProps;
 export default SkillTags;

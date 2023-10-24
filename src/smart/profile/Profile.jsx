@@ -12,6 +12,12 @@ const Profile = () => {
   const [form] = Form.useForm();
 
   const [skills, setSkills] = useState([]);
+  useEffect(() => {
+    const init = () => {
+      setSkills(user.skills);
+    };
+    init();
+  }, [user]);
   const handleAddSkill = (addedSkill) => {
     const newSkills = [...skills, addedSkill];
     setSkills(newSkills);
