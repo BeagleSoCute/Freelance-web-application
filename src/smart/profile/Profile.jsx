@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Flex, Button } from "antd";
 import styled from "styled-components";
 import EditForm from "./components/EditForm";
-import SkillTag from "components/skills/SkillTags";
-
 import UploadImg from "components/image/UploadImg";
+import DisplayPortfolio from "./components/DisplayPortfolio";
 
 const Profile = () => {
   const [skills, setSkills] = useState([
@@ -41,7 +40,11 @@ const Profile = () => {
             onRemoveSkill={handleRemoveSkill}
           />
         </Col>
-        <Col span={24}>
+        <Col className="portfolio-section" span={24}>
+          <DisplayPortfolio />
+        </Col>
+        <Col justify="center" className="update-button" span={24}>
+          <Button>Update Profile</Button>
         </Col>
       </Row>
     </StyledDiv>
@@ -56,6 +59,17 @@ const StyledDiv = styled.div`
     }
     .edit-form-section {
       margin: 45px auto;
+    }
+    .portfolio-section .card-wrapper {
+      margin: 25px 0px;
+    }
+    .update-button {
+      display: flex;
+      justify-content: center;
+      button{
+        width: 35%;
+
+      }
     }
   }
 `;
