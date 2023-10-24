@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Row, Col, Flex, Button } from "antd";
 import styled from "styled-components";
 import EditForm from "./components/EditForm";
 import UploadImg from "components/image/UploadImg";
 import DisplayPortfolio from "./components/DisplayPortfolio";
+import { AppContext } from "contexts/app.context";
 
 const Profile = () => {
+  const { user } = useContext(AppContext);
+
+  console.log("user is", user);
+
   const [skills, setSkills] = useState([
     "Java",
     "JavaScript",
@@ -25,6 +30,12 @@ const Profile = () => {
     const afterRemoveSkill = skills.filter((skill) => skill !== removedSkill);
     setSkills(afterRemoveSkill);
   };
+  const editFormProps = {
+    userData: user,
+    skills: skills,
+    onAddSkill: handleAddSkill,
+    onRemoveSkill: handleRemoveSkill,
+  };
   return (
     <StyledDiv className="profile-management">
       <h1>Profile Page </h1>
@@ -34,11 +45,7 @@ const Profile = () => {
           <UploadImg />
         </Col>
         <Col span={24} className="edit-form-section">
-          <EditForm
-            skills={skills}
-            onAddSkill={handleAddSkill}
-            onRemoveSkill={handleRemoveSkill}
-          />
+          <EditForm {...editFormProps} />
         </Col>
         <Col className="portfolio-section" span={24}>
           <DisplayPortfolio />
@@ -66,9 +73,8 @@ const StyledDiv = styled.div`
     .update-button {
       display: flex;
       justify-content: center;
-      button{
+      button {
         width: 35%;
-
       }
     }
   }

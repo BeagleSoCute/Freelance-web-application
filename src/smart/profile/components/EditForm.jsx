@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Button, Checkbox, Form, Input, message } from "antd";
@@ -6,13 +6,15 @@ import SkillTag from "components/skills/SkillTags";
 
 const { TextArea } = Input;
 
-const EditForm = ({ skills, onAddSkill, onRemoveSkill }) => {
+const EditForm = ({ skills, onAddSkill, onRemoveSkill, userData }) => {
   const [form] = Form.useForm();
   const handleAddSkill = (value) => {
     if (value === "") {
       message.error("Please enter a skill that you want to add!");
     }
-    const isDupSkill = skills.some((skill) => skill.toLowerCase() === value.toLowerCase());
+    const isDupSkill = skills.some(
+      (skill) => skill.toLowerCase() === value.toLowerCase()
+    );
     if (!isDupSkill) {
       onAddSkill(value);
     } else {
@@ -24,6 +26,17 @@ const EditForm = ({ skills, onAddSkill, onRemoveSkill }) => {
   };
 
   const onFinish = () => {};
+
+  const initialValues = {
+    firstName: userData.first_name,
+    lastName: userData.last_name,
+    phoneNumber: userData.phone_number
+  };
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [userData]);
+
   return (
     <StyledDiv className="edit-form">
       <Form
