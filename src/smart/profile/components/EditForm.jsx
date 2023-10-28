@@ -67,9 +67,6 @@ const EditForm = ({ skills, onAddSkill, onRemoveSkill, userData, form }) => {
         <Form.Item
           label="Phone number"
           name="phoneNumber"
-          rules={[
-            { required: true, message: "Please input your phone number!" },
-          ]}
         >
           <Input />
         </Form.Item>
@@ -93,12 +90,6 @@ const EditForm = ({ skills, onAddSkill, onRemoveSkill, userData, form }) => {
         </div>
 
         <SkillTag items={skills} onRemoveSkill={onRemoveSkill} />
-
-        {/* <Form.Item className="button-submit-layout">
-          <Button className="button-submit" type="primary" htmlType="submit">
-            Update
-          </Button>
-        </Form.Item> */}
       </Form>
     </StyledDiv>
   );

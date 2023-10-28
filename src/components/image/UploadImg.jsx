@@ -2,12 +2,23 @@ import React, { useState, useRef } from "react";
 import { message, Button, Row, Col } from "antd";
 import styled from "styled-components";
 import avatarImg from "assets/img/avatar_default.jpg";
+import PropTypes from "prop-types";
 
-const UploadImg = () => {
-  const [file, setFile] = useState(undefined);
+const propTypes = {
+  pictureURL: PropTypes.string,
+  file: PropTypes.object,
+  setFile: PropTypes.func,
+};
+const defaultProps = {
+  pictureURL: "",
+  setFile: () => {},
+  file: undefined,
+};
+
+const UploadImg = ({ file, pictureURL, setFile }) => {
   const fileInputRef = useRef(null);
+  const [preViewImage, setPreviewImage] = useState();
   const handleChange = (e) => {
-    console.log(e.target.files);
     const value = e.target.files[0];
     if (value.type !== "image/jpeg" && value.type !== "image/png") {
       message.error("You can only upload JPG/PNG file!");
@@ -18,11 +29,23 @@ const UploadImg = () => {
       message.error("Image must be smaller than 100 KB!");
       return;
     }
-    setFile(URL.createObjectURL(value));
+    setFile(value);
+    setPreviewImage(URL.createObjectURL(value));
   };
   const cancelUpload = () => {
     setFile(undefined);
+    setPreviewImage(undefined);
     fileInputRef.current.value = ""; // Clear the input value using ref
+  };
+
+  const renderImage = () => {
+    if (pictureURL && !file) {
+      return pictureURL;
+    } else if (!pictureURL && file || pictureURL && file) {
+      return preViewImage;
+    } else {
+      return avatarImg;
+    }
   };
 
   return (
@@ -32,7 +55,7 @@ const UploadImg = () => {
         <Col span={8}>
           <Row>
             <Col className="img-section" span={24}>
-              <img className="pic" src={file ? file : avatarImg} />
+              <img className="pic" src={renderImage()} />
             </Col>
             {file ? (
               <Button
@@ -43,12 +66,17 @@ const UploadImg = () => {
                 Cancel
               </Button>
             ) : (
-            <div className="upload-section">
+              <div className="upload-section">
                 <Button>
-
-                <input type="file" onChange={handleChange} ref={fileInputRef} />
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleChange}
+                    ref={fileInputRef}
+                  />
                 </Button>
-            </div>
+              </div>
             )}
           </Row>
         </Col>
@@ -74,8 +102,8 @@ const StyledDiv = styled.div`
     .cancel-btn {
       width: 100%;
     }
-    .upload-section{
-        margin: auto;
+    .upload-section {
+      margin: auto;
     }
   }
 `;

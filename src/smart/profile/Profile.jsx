@@ -6,9 +6,11 @@ import UploadImg from "components/image/UploadImg";
 import DisplayPortfolio from "./components/DisplayPortfolio";
 import { AppContext } from "contexts/app.context";
 import { updateProfile } from "services/user.service";
+import { notification } from "helpers/notification.helper";
 
 const Profile = () => {
-  const { user } = useContext(AppContext);
+  const { user, setLoading } = useContext(AppContext);
+  const [file, setFile] = useState(undefined);
   const [form] = Form.useForm();
 
   const [skills, setSkills] = useState([]);
@@ -27,11 +29,22 @@ const Profile = () => {
     setSkills(afterRemoveSkill);
   };
   const handleUpdateProfile = async () => {
+    setLoading(true);
     const data = {
-      formData: form.getFieldsValue(),
+      inputData: form.getFieldsValue(),
       skills,
+      image: file,
     };
-    await updateProfile(data);
+    const { success } = await updateProfile(data);
+    setLoading(false);
+    if (success) {
+      notification({ type: "success", message: "Update Profile Success" });
+    } else {
+      notification({
+        type: "error",
+        message: "Can not update profile, please contract admin!",
+      });
+    }
   };
   const editFormProps = {
     userData: user,
@@ -40,13 +53,18 @@ const Profile = () => {
     onAddSkill: handleAddSkill,
     onRemoveSkill: handleRemoveSkill,
   };
+  const uploadImgProps = {
+    pictureURL: user.profile_picture,
+    file: file,
+    setFile: setFile ,
+  };
   return (
     <StyledDiv className="profile-management">
       <h1>Profile Page </h1>
       <Row>
         <Col span={24}>
           <h2 className="title">Profile Management</h2>
-          <UploadImg />
+          <UploadImg {...uploadImgProps} />
         </Col>
         <Col span={24} className="edit-form-section">
           <EditForm {...editFormProps} />
