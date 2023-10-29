@@ -27,9 +27,10 @@ const UploadImg = ({ file, pictureURL, isProfile, setFile }) => {
       fileInputRef.current.value = "";
       return;
     }
-    const isLt100KB = value.size <= 100 * 1024;
-    if (!isLt100KB) {
-      message.error("Image must be smaller than 100 KB!");
+    const limitFileSizeKB = isProfile ? 100 : 500;
+    const isExcessSize = value.size <= limitFileSizeKB * 1024;
+    if (!isExcessSize) {
+      message.error(`Image must be smaller than ${limitFileSizeKB} KB!`);
       fileInputRef.current.value = "";
       return;
     }
@@ -61,7 +62,11 @@ const UploadImg = ({ file, pictureURL, isProfile, setFile }) => {
         <Col span={8}>
           <Row>
             <Col className="img-section" span={24}>
-              <img className="pic" src={renderImage()} />
+              <StyledImg
+                isProfile={isProfile}
+                className="display-img"
+                src={renderImage()}
+              />
             </Col>
             {file ? (
               <Button
@@ -99,12 +104,6 @@ const StyledDiv = styled.div`
       justify-content: center;
       margin-bottom: 25px;
     }
-    img {
-      height: 250px;
-      width: 250px;
-      border-radius: 100%;
-      border: 1px solid black;
-    }
     .cancel-btn {
       width: 100%;
     }
@@ -112,6 +111,13 @@ const StyledDiv = styled.div`
       margin: auto;
     }
   }
+`;
+
+const StyledImg = styled.img`
+  height: 250px;
+  width: 250px;
+  border-radius: ${(props) => (props.isProfile ? "100%" : "0%")};
+  border: 1px solid black;
 `;
 
 UploadImg.propTypes = propTypes;

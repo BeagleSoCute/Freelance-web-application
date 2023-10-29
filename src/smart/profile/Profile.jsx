@@ -11,9 +11,8 @@ import { notification } from "helpers/notification.helper";
 const Profile = () => {
   const { user, setLoading, setUser } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
-  const [form] = Form.useForm();
-
   const [skills, setSkills] = useState([]);
+  const [form] = Form.useForm();
   useEffect(() => {
     const init = () => {
       setSkills(user.skills);
