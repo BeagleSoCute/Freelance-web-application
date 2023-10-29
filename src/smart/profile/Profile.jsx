@@ -9,7 +9,7 @@ import { updateProfile } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 
 const Profile = () => {
-  const { user, setLoading } = useContext(AppContext);
+  const { user, setLoading, setUser } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
   const [form] = Form.useForm();
 
@@ -35,10 +35,11 @@ const Profile = () => {
       skills,
       image: file,
     };
-    const { success } = await updateProfile(data);
+    const { success,payload } = await updateProfile(data);
     setLoading(false);
     if (success) {
       notification({ type: "success", message: "Update Profile Success" });
+      setUser(payload)
     } else {
       notification({
         type: "error",
@@ -56,7 +57,7 @@ const Profile = () => {
   const uploadImgProps = {
     pictureURL: user.profile_picture,
     file: file,
-    setFile: setFile ,
+    setFile: setFile,
   };
   return (
     <StyledDiv className="profile-management">

@@ -31,6 +31,6 @@ export const updateProfile = async (data) => {
     description: inputData.description,
     skills,
   }));
-  const { success } = await updateProfileApi(formData);
-  return { success };
+  const { success, payload } = await updateProfileApi(formData);
+  return { success, payload };
 };

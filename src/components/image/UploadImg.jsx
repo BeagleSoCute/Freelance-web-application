@@ -22,11 +22,13 @@ const UploadImg = ({ file, pictureURL, setFile }) => {
     const value = e.target.files[0];
     if (value.type !== "image/jpeg" && value.type !== "image/png") {
       message.error("You can only upload JPG/PNG file!");
+      fileInputRef.current.value = ""; // Clear the input value using ref
       return;
     }
     const isLt100KB = value.size <= 100 * 1024;
     if (!isLt100KB) {
       message.error("Image must be smaller than 100 KB!");
+      fileInputRef.current.value = ""; // Clear the input value using ref
       return;
     }
     setFile(value);
