@@ -4,6 +4,7 @@ const TYPES = {
   SET_USER: "SET_USER",
   SET_USER_LISTS: "SET_USER_LISTS",
   SET_NOTIFICATION: "SET_NOTIFICATION",
+  SET_USER_PORTFOLIOS: "SET_PORTFOLIOS",
 };
 
 const defaultValue = {
@@ -26,6 +27,8 @@ const reducer = (state, action) => {
       return { ...state, users: payload };
     case TYPES.SET_NOTIFICATION:
       return { ...state, notificationData: payload };
+    case TYPES.SET_USER_PORTFOLIOS:
+      return { ...state, user: { ...defaultValue.user, portfolios: payload } };
     default:
       break;
   }

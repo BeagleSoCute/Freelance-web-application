@@ -4,11 +4,11 @@ import { Row, Col, Form, Button } from "antd";
 import UploadImg from "components/image/UploadImg";
 import UpdatePortfolioForm from "./components/UpdatePortfolioForm";
 import { AppContext } from "contexts/app.context";
-import { updateProfile } from "services/user.service";
+import { updatePortfolio } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 
 const UpdatePortfolio = () => {
-  const { user, setLoading, setUser } = useContext(AppContext);
+  const { user, setLoading, setUserPortfolios } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
   const [skills, setSkills] = useState([]);
   const [skillOptions, setSkillOptions] = useState([]);
@@ -19,6 +19,26 @@ const UpdatePortfolio = () => {
     };
     init();
   }, [user]);
+
+  const handleUpdatePortfolio = async() => {
+    setLoading(true);
+    const data = {
+      inputData: form.getFieldsValue(),
+      skills,
+      image: file,
+    };
+    const { success, payload } = await updatePortfolio(data);
+    setLoading(false);
+    if (success) {
+      notification({ type: "success", message: "Update Portfolio Success" });
+      setUserPortfolios(payload);
+    } else {
+      notification({
+        type: "error",
+        message: "Can not update portfolio, please contract admin!",
+      });
+    }
+  }
 
   const handleAddSkill = (addedSkill) => {
     const newSkills = [...skills, addedSkill];
@@ -56,6 +76,9 @@ const UpdatePortfolio = () => {
         </Col>
         <Col className="form-section" span={24}>
           <UpdatePortfolioForm {...updatePortfolioForm} />
+        </Col>
+        <Col justify="center" className="submit-button-section" span={24}>
+          <Button className="submit-button" onClick={() => handleUpdatePortfolio()}>Submit</Button>
         </Col>
       </Row>
     </StyledDiv>

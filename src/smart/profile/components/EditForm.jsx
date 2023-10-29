@@ -81,7 +81,7 @@ const EditForm = ({ skills, onAddSkill, onRemoveSkill, userData, form }) => {
 
         <div className="add-skill-btn">
           <Button
-            className="button"
+            className="add-button"
             type="primary"
             onClick={() => handleAddSkill(form.getFieldValue("skill"))}
           >
@@ -98,15 +98,6 @@ const StyledDiv = styled.div`
   &.edit-form {
     width: 50%;
     margin: 0px auto;
-    .add-skill-btn {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin-bottom: 25px;
-      .button {
-        width: 50%;
-      }
-    }
   }
 `;
 

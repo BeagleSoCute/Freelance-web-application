@@ -40,6 +40,9 @@ export const AppProvider = ({ children }) => {
       setUser: (data) => {
         dispatch({ type: TYPES.SET_USER, payload: data });
       },
+      setUserPortfolios: (data) => {
+        dispatch({ type: TYPES.SET_PORTFOLIOS, payload: data });
+      }
     };
   }, [loading, isAuth, user, dispatch]);
   return (

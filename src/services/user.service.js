@@ -3,6 +3,7 @@ import {
   getAllUsersApi,
   getUserDetailsApi,
   updateProfileApi,
+  updatePortfolioApi,
 } from "apis/user.api";
 
 export const getMyData = async () => {
@@ -24,13 +25,26 @@ export const updateProfile = async (data) => {
   const { inputData, skills, image } = data;
   const formData = new FormData();
   formData.append("image", image);
-  formData.append("userData", JSON.stringify({
-    first_name: inputData.firstName,
-    last_name: inputData.lastName,
-    phone_number: inputData.phoneNumber,
-    description: inputData.description,
-    skills,
-  }));
+  formData.append(
+    "userData",
+    JSON.stringify({
+      first_name: inputData.firstName,
+      last_name: inputData.lastName,
+      phone_number: inputData.phoneNumber,
+      description: inputData.description,
+      skills,
+    })
+  );
   const { success, payload } = await updateProfileApi(formData);
+  return { success, payload };
+};
+
+export const updatePortfolio = async (data) => {
+  const { inputData, skills, image } = data;
+  const formData = new FormData();
+  formData.append("image", image);
+  
+
+  const { success, payload } = await updatePortfolioApi();
   return { success, payload };
 };

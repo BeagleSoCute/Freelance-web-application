@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import PropTypes from "prop-types";
 import SkillTag from "components/skills/SkillTags";
 
@@ -26,6 +26,10 @@ const UpdatePortfolioForm = ({
 }) => {
   const onFinish = () => {};
   const handleAddSkill = (value) => {
+    if (!value) {
+      message.error("Please select a skill!");
+      return;
+    }
     onAddSkill(value);
     form.setFieldValue("skill", "");
   };
@@ -40,7 +44,7 @@ const UpdatePortfolioForm = ({
     };
   });
   return (
-    <StyledDiv>
+    <StyledDiv className="update-portfolio-form ">
       <Form
         form={form}
         name="edit-for"
@@ -78,7 +82,7 @@ const UpdatePortfolioForm = ({
 
         <div className="add-skill-btn">
           <Button
-            className="button"
+            className="add-button"
             type="primary"
             onClick={() => handleAddSkill(form.getFieldValue("skill"))}
           >
@@ -93,6 +97,11 @@ const UpdatePortfolioForm = ({
 
 const StyledDiv = styled.div`
   &.update-portfolio-form {
+    width: 50%;
+    margin: 0px auto;
+    .add-skill-btn {
+      margin-bottom: 25px;
+    }
   }
 `;
 

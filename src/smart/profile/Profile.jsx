@@ -73,8 +73,8 @@ const Profile = () => {
         <Col className="portfolio-section" span={24}>
           <DisplayPortfolio />
         </Col>
-        <Col justify="center" className="update-button" span={24}>
-          <Button onClick={() => handleUpdateProfile()}>Update Profile</Button>
+        <Col justify="center" className="submit-button-section" span={24}>
+          <Button className="submit-button"onClick={() => handleUpdateProfile()}>Update Profile</Button>
         </Col>
       </Row>
     </StyledDiv>
@@ -93,13 +93,7 @@ const StyledDiv = styled.div`
     .portfolio-section .card-wrapper {
       margin: 25px 0px;
     }
-    .update-button {
-      display: flex;
-      justify-content: center;
-      button {
-        width: 35%;
-      }
-    }
+
   }
 `;
 

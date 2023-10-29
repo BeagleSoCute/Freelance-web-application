@@ -15,6 +15,21 @@ code {
     monospace;
 }
 
-h1 {
-  /* font-size: 26px; */
+.add-skill-btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 25px;
+  .add-button {
+    width: 15%;
+  }
+}
+
+.submit-button-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .submit-button {
+    width: 35%;
+  }
 }
