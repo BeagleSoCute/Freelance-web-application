@@ -11,6 +11,7 @@ import { AppProvider } from "contexts/app.context";
 import LoginAndRegisterLayout from "layouts/LoginAndRegisterLayout";
 import { checkIsAuth } from "helpers/auth.helper";
 import { notification } from "helpers/notification.helper";
+import UpdatePortfolio from "smart/portfolio/UpdatePortfolio";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/update-portfolio",
+        element: <UpdatePortfolio />,
       },
       {
         path: "/user/:userId",

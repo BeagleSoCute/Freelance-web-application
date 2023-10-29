@@ -3,7 +3,7 @@ import { Row, Col, Form, Button } from "antd";
 import styled from "styled-components";
 import EditForm from "./components/EditForm";
 import UploadImg from "components/image/UploadImg";
-import DisplayPortfolio from "./components/DisplayPortfolio";
+import DisplayPortfolio from "../../components/portfolio/DisplayPortfolio";
 import { AppContext } from "contexts/app.context";
 import { updateProfile } from "services/user.service";
 import { notification } from "helpers/notification.helper";
@@ -35,11 +35,11 @@ const Profile = () => {
       skills,
       image: file,
     };
-    const { success,payload } = await updateProfile(data);
+    const { success, payload } = await updateProfile(data);
     setLoading(false);
     if (success) {
       notification({ type: "success", message: "Update Profile Success" });
-      setUser(payload)
+      setUser(payload);
     } else {
       notification({
         type: "error",
@@ -57,6 +57,7 @@ const Profile = () => {
   const uploadImgProps = {
     pictureURL: user.profile_picture,
     file: file,
+    isProfile: true,
     setFile: setFile,
   };
   return (

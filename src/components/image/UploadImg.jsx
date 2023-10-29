@@ -2,33 +2,35 @@ import React, { useState, useRef } from "react";
 import { message, Button, Row, Col } from "antd";
 import styled from "styled-components";
 import avatarImg from "assets/img/avatar_default.jpg";
+import emptyImg from "assets/img/emptyImg.jpg";
 import PropTypes from "prop-types";
-
 const propTypes = {
   pictureURL: PropTypes.string,
+  isProfile: PropTypes.bool,
   file: PropTypes.object,
   setFile: PropTypes.func,
 };
 const defaultProps = {
   pictureURL: "",
+  isProfile: false,
   setFile: () => {},
   file: undefined,
 };
 
-const UploadImg = ({ file, pictureURL, setFile }) => {
+const UploadImg = ({ file, pictureURL, isProfile, setFile }) => {
   const fileInputRef = useRef(null);
   const [preViewImage, setPreviewImage] = useState();
   const handleChange = (e) => {
     const value = e.target.files[0];
     if (value.type !== "image/jpeg" && value.type !== "image/png") {
       message.error("You can only upload JPG/PNG file!");
-      fileInputRef.current.value = ""; // Clear the input value using ref
+      fileInputRef.current.value = "";
       return;
     }
     const isLt100KB = value.size <= 100 * 1024;
     if (!isLt100KB) {
       message.error("Image must be smaller than 100 KB!");
-      fileInputRef.current.value = ""; // Clear the input value using ref
+      fileInputRef.current.value = "";
       return;
     }
     setFile(value);
@@ -37,16 +39,18 @@ const UploadImg = ({ file, pictureURL, setFile }) => {
   const cancelUpload = () => {
     setFile(undefined);
     setPreviewImage(undefined);
-    fileInputRef.current.value = ""; // Clear the input value using ref
+    fileInputRef.current.value = "";
   };
 
   const renderImage = () => {
     if (pictureURL && !file) {
       return pictureURL;
-    } else if (!pictureURL && file || pictureURL && file) {
+    } else if ((!pictureURL && file) || (pictureURL && file)) {
       return preViewImage;
-    } else {
+    } else if (isProfile) {
       return avatarImg;
+    } else {
+      return emptyImg;
     }
   };
 
@@ -109,4 +113,8 @@ const StyledDiv = styled.div`
     }
   }
 `;
+
+UploadImg.propTypes = propTypes;
+UploadImg.defaultProps = defaultProps;
+
 export default UploadImg;
