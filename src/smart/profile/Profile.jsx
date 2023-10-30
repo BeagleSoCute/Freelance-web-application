@@ -71,7 +71,7 @@ const Profile = () => {
           <EditForm {...editFormProps} />
         </Col>
         <Col className="portfolio-section" span={24}>
-          <DisplayPortfolio />
+          <DisplayPortfolio portfolios={user.portfolios} />
         </Col>
         <Col justify="center" className="submit-button-section" span={24}>
           <Button className="submit-button"onClick={() => handleUpdateProfile()}>Update Profile</Button>
@@ -83,6 +83,7 @@ const Profile = () => {
 
 const StyledDiv = styled.div`
   &.profile-management {
+    
     .title {
       text-align: center;
       margin-bottom: 45px;
@@ -90,8 +91,13 @@ const StyledDiv = styled.div`
     .edit-form-section {
       margin: 45px auto;
     }
+    .portfolio-section{
+      padding: 0px 50px;
+    }
     .portfolio-section .card-wrapper {
-      margin: 25px 0px;
+      display: flex;
+      justify-content: center;
+      margin: 25px auto;
     }
 
   }

@@ -2,25 +2,33 @@ import React from "react";
 import { EditOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import { Card } from "antd";
+import emptyImg from "assets/img/emptyImg.jpg";
+import styled from "styled-components";
 
 const propTypes = {
+  portfolioImageURL: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
 };
 const defaultProps = {
+  portfolioImageURL: "",
   title: "title",
   description: "description",
 };
 const { Meta } = Card;
-const CardComponent = ({ title, description }) => (
-  <Card
+const CardComponent = ({ portfolioImageURL, title, description }) => (
+  <StyledCard
+    bordered={true}
+    hoverable={true}
+    className="card-component"
     style={{
       width: 300,
     }}
     cover={
       <img
+        className="card-img"
         alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        src={portfolioImageURL ? portfolioImageURL : emptyImg}
       />
     }
     actions={[<EyeOutlined />, <EditOutlined key="edit" />, <DeleteOutlined />]}
@@ -30,9 +38,16 @@ const CardComponent = ({ title, description }) => (
       title={title}
       description={description}
     />
-  </Card>
+  </StyledCard>
 );
-
+const StyledCard = styled(Card)`
+  &.card-component {
+    img {
+      height: 250px;
+      border: 1px solid #f0f0f0;
+    }
+  }
+`;
 CardComponent.propTypes = propTypes;
 CardComponent.defaultProps = defaultProps;
 export default CardComponent;

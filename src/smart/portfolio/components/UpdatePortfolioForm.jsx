@@ -62,7 +62,7 @@ const UpdatePortfolioForm = ({
         </Form.Item>
         <Form.Item
           label="Description"
-          name="lastName"
+          name="description"
           rules={[{ required: true, message: "Please input the description!" }]}
         >
           <Input.TextArea />

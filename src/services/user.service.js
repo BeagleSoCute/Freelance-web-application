@@ -43,8 +43,14 @@ export const updatePortfolio = async (data) => {
   const { inputData, skills, image } = data;
   const formData = new FormData();
   formData.append("image", image);
-  
-
-  const { success, payload } = await updatePortfolioApi();
+  formData.append(
+    "portfolioData",
+    JSON.stringify({
+      title: inputData.title,
+      description: inputData.description,
+      skills,
+    })
+  );
+  const { success, payload } = await updatePortfolioApi(formData);
   return { success, payload };
 };

@@ -96,8 +96,8 @@ const EditForm = ({ skills, onAddSkill, onRemoveSkill, userData, form }) => {
 
 const StyledDiv = styled.div`
   &.edit-form {
-    width: 50%;
     margin: 0px auto;
+    width: 50%;
   }
 `;
 

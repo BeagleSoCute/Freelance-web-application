@@ -33,6 +33,7 @@ const SkillTags = ({ items, onRemoveSkill }) => {
 
 const StyledDiv = styled.div`
   &.skill-tags {
+    margin: 25px 0px;
     .item {
       position: relative;
       padding: 0px 45px;

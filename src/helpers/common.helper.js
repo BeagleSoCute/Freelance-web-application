@@ -12,3 +12,16 @@ export const randomString = () => {
   }
   return result;
 };
+
+
+export const truncateString = (text, maxCharacters) => {
+  if(!text){
+    return;
+  }
+  if (text.length <= maxCharacters) {
+    return text;
+  } else {
+    const truncated = text.slice(0, maxCharacters);
+    return truncated + '...';
+  }
+}

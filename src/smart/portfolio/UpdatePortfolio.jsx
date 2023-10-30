@@ -6,12 +6,15 @@ import UpdatePortfolioForm from "./components/UpdatePortfolioForm";
 import { AppContext } from "contexts/app.context";
 import { updatePortfolio } from "services/user.service";
 import { notification } from "helpers/notification.helper";
+import { useNavigate } from "react-router-dom";
 
 const UpdatePortfolio = () => {
-  const { user, setLoading, setUserPortfolios } = useContext(AppContext);
+  const { user, setLoading, setUser } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
   const [skills, setSkills] = useState([]);
   const [skillOptions, setSkillOptions] = useState([]);
+  const navigate = useNavigate();
+
   const [form] = Form.useForm();
   useEffect(() => {
     const init = () => {
@@ -20,7 +23,7 @@ const UpdatePortfolio = () => {
     init();
   }, [user]);
 
-  const handleUpdatePortfolio = async() => {
+  const handleUpdatePortfolio = async () => {
     setLoading(true);
     const data = {
       inputData: form.getFieldsValue(),
@@ -31,14 +34,15 @@ const UpdatePortfolio = () => {
     setLoading(false);
     if (success) {
       notification({ type: "success", message: "Update Portfolio Success" });
-      setUserPortfolios(payload);
+      setUser(payload);
+      navigate("/profile");
     } else {
       notification({
         type: "error",
         message: "Can not update portfolio, please contract admin!",
       });
     }
-  }
+  };
 
   const handleAddSkill = (addedSkill) => {
     const newSkills = [...skills, addedSkill];
@@ -78,7 +82,12 @@ const UpdatePortfolio = () => {
           <UpdatePortfolioForm {...updatePortfolioForm} />
         </Col>
         <Col justify="center" className="submit-button-section" span={24}>
-          <Button className="submit-button" onClick={() => handleUpdatePortfolio()}>Submit</Button>
+          <Button
+            className="submit-button"
+            onClick={() => handleUpdatePortfolio()}
+          >
+            Submit
+          </Button>
         </Col>
       </Row>
     </StyledDiv>

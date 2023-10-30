@@ -3,9 +3,16 @@ import styled from "styled-components";
 import CardComponent from "components/common/CardComponent";
 import { Row, Col, Flex, Button } from "antd";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { truncateString } from "helpers/common.helper";
+const propTypes = {
+  portfolios: PropTypes.arrayOf(Object),
+};
+const defaultProps = {
+  portfolios: [],
+};
 
-
-const DisplayPortfolio = () => {
+const DisplayPortfolio = ({ portfolios }) => {
   const navigate = useNavigate();
   return (
     <StyledDiv className="display-portfolio">
@@ -18,13 +25,19 @@ const DisplayPortfolio = () => {
           Add{" "}
         </Button>
       </Flex>
-      <Flex className="content-section" wrap="wrap" gap="large">
-        <CardComponent title="test" description="des" />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
+      <Flex
+        justify="center"
+        className="content-section"
+        wrap="wrap"
+        gap="large"
+      >
+          {portfolios.map((item) => (
+            <CardComponent
+              portfolioImageURL={item.portfolio_picture}
+              title={item.title}
+              description={truncateString(item.description, 15)}
+            />
+          ))}
       </Flex>
     </StyledDiv>
   );
@@ -35,9 +48,15 @@ const StyledDiv = styled.div`
       width: 150px;
     }
     .content-section {
-      margin: 50px 0px;
+      margin: 50px auto;
+    }
+    .card-wrapper{
+      /* margin:0px auto; */
     }
   }
 `;
+
+DisplayPortfolio.propTypes = propTypes;
+DisplayPortfolio.defaultProps = defaultProps;
 
 export default DisplayPortfolio;
