@@ -66,6 +66,7 @@ const UpdatePortfolio = () => {
       inputData: form.getFieldsValue(),
       skills,
       image: file,
+      originalImage: portfolio.portfolio_picture, 
       portfolioId: portfolio._id,
     };
     const { success, payload } = await editPortfolio(data);

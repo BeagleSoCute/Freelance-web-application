@@ -57,16 +57,19 @@ export const addPortfolio = async (data) => {
 };
 
 export const editPortfolio = async (data) => {
-  const { inputData, skills, portfolioId, image } = data;
+  const { inputData, skills, portfolioId, image, originalImage } = data;
+
   const formData = new FormData();
   formData.append("image", image);
+  formData.append("originalImage",originalImage === "" || !originalImage ? "" : originalImage)
+  console.log('originalImage',originalImage)
   formData.append(
     "portfolioData",
     JSON.stringify({
       title: inputData.title,
       description: inputData.description,
       skills,
-      portfolioId: portfolioId._id
+      _id: portfolioId,
     })
   );
   const { success, payload } = await editPortfolioApi(formData);
