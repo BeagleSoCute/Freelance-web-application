@@ -5,7 +5,7 @@ import EditForm from "./components/EditForm";
 import UploadImg from "components/image/UploadImg";
 import DisplayPortfolio from "../../components/portfolio/DisplayPortfolio";
 import { AppContext } from "contexts/app.context";
-import { updateProfile } from "services/user.service";
+import { updateProfile, deletePortfolio } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 
 const Profile = () => {
@@ -46,6 +46,22 @@ const Profile = () => {
       });
     }
   };
+
+  const handleDeletePortfolio = async (id) => {
+    setLoading(true);
+    const { success, payload } = await deletePortfolio(id);
+    setLoading(false);
+    if (success) {
+      notification({ type: "success", message: "Delete Portfolio Success" });
+      setUser(payload);
+    } else {
+      notification({
+        type: "error",
+        message: "Can not delete portfolio, please contract admin!",
+      });
+    }
+  };
+
   const editFormProps = {
     userData: user,
     skills: skills,
@@ -59,7 +75,6 @@ const Profile = () => {
     isProfile: true,
     setFile: setFile,
   };
-  const handleDeletePortfolio = () => {};
   const displayPortfolioProps = {
     portfolios: user.portfolios,
     selectPortfolio,

@@ -8,7 +8,7 @@ const propTypes = {
   skills: PropTypes.array,
   skillOptions: PropTypes.array,
   isEditPortfolio: PropTypes.bool,
-  portfolioData: PropTypes.obj,
+  portfolioData: PropTypes.object,
   onAddSkill: PropTypes.func,
   onRemoveSkill: PropTypes.func,
 };

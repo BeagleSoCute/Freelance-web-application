@@ -7,25 +7,24 @@ import PropTypes from "prop-types";
 import { truncateString } from "helpers/common.helper";
 const propTypes = {
   portfolios: PropTypes.arrayOf(Object),
-  selectPortfolio: PropTypes.func, 
+  selectPortfolio: PropTypes.func,
   onDelete: PropTypes.func,
 };
 const defaultProps = {
   portfolios: [],
   selectPortfolio: () => {},
-  onDelete: () => {}
+  onDelete: () => {},
 };
 
 const DisplayPortfolio = ({ portfolios, selectPortfolio, onDelete }) => {
   const navigate = useNavigate();
-
   const handleEdit = (item) => {
     selectPortfolio(item);
     navigate("/update-portfolio");
-  }
+  };
   const handleDelete = (id) => {
     onDelete(id);
-  }
+  };
   return (
     <StyledDiv className="display-portfolio">
       <h2>Portfolios</h2>
@@ -43,15 +42,16 @@ const DisplayPortfolio = ({ portfolios, selectPortfolio, onDelete }) => {
         wrap="wrap"
         gap="large"
       >
-          {portfolios.map((item) => (
-            <CardComponent
-              portfolioImageURL={item.portfolio_picture}
-              title={item.title}
-              description={truncateString(item.description, 15)}
-              onEdit={() => handleEdit(item)}
-              onDelete={() => handleDelete(item._id)}
-            />
-          ))}
+        {portfolios.map((item, index) => (
+          <CardComponent
+            key={index}
+            portfolioImageURL={item.portfolio_picture}
+            title={item.title}
+            description={truncateString(item.description, 15)}
+            onEdit={() => handleEdit(item)}
+            onDelete={() => handleDelete(item._id)}
+          />
+        ))}
       </Flex>
     </StyledDiv>
   );
@@ -64,7 +64,7 @@ const StyledDiv = styled.div`
     .content-section {
       margin: 50px auto;
     }
-    .card-wrapper{
+    .card-wrapper {
       /* margin:0px auto; */
     }
   }

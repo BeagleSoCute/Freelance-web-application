@@ -86,7 +86,6 @@ const UpdatePortfolio = () => {
       });
     }
   };
-
   const handleAddSkill = (addedSkill) => {
     const newSkills = [...skills, addedSkill];
     const removeThisSkillOption = skillOptions.filter(

@@ -4,7 +4,8 @@ import {
   getUserDetailsApi,
   updateProfileApi,
   addPortfolioApi,
-  editPortfolioApi
+  editPortfolioApi,
+  deletePortfolioApi,
 } from "apis/user.api";
 
 export const getMyData = async () => {
@@ -58,11 +59,12 @@ export const addPortfolio = async (data) => {
 
 export const editPortfolio = async (data) => {
   const { inputData, skills, portfolioId, image, originalImage } = data;
-
   const formData = new FormData();
   formData.append("image", image);
-  formData.append("originalImage",originalImage === "" || !originalImage ? "" : originalImage)
-  console.log('originalImage',originalImage)
+  formData.append(
+    "originalImage",
+    originalImage === "" || !originalImage ? "" : originalImage
+  );
   formData.append(
     "portfolioData",
     JSON.stringify({
@@ -76,5 +78,7 @@ export const editPortfolio = async (data) => {
   return { success, payload };
 };
 
-
-
+export const deletePortfolio = async (id) => {
+  const { success, payload } = await deletePortfolioApi(id);
+  return { success, payload };
+};

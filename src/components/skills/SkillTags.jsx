@@ -17,8 +17,8 @@ const SkillTags = ({ items, onRemoveSkill }) => {
   return (
     <StyledDiv className="skill-tags">
       <Flex wrap="wrap" gap="large">
-        {items.map((item) => (
-          <div className="item" span={4}>
+        {items.map((item,index) => (
+          <div key={index} className="item" span={4}>
             <p>{item}</p>
             <CloseOutlined
               onClick={() => onRemoveSkill(item)}
