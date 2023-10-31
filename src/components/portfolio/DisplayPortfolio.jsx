@@ -7,14 +7,16 @@ import PropTypes from "prop-types";
 import { truncateString } from "helpers/common.helper";
 const propTypes = {
   portfolios: PropTypes.arrayOf(Object),
-  selectPortfolio: PropTypes.func
+  selectPortfolio: PropTypes.func, 
+  onDelete: PropTypes.func,
 };
 const defaultProps = {
   portfolios: [],
-  selectPortfolio: () => {}
+  selectPortfolio: () => {},
+  onDelete: () => {}
 };
 
-const DisplayPortfolio = ({ portfolios, selectPortfolio }) => {
+const DisplayPortfolio = ({ portfolios, selectPortfolio, onDelete }) => {
   const navigate = useNavigate();
 
   const handleEdit = (item) => {
@@ -22,7 +24,7 @@ const DisplayPortfolio = ({ portfolios, selectPortfolio }) => {
     navigate("/update-portfolio");
   }
   const handleDelete = (id) => {
-
+    onDelete(id);
   }
   return (
     <StyledDiv className="display-portfolio">

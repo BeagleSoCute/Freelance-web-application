@@ -4,33 +4,71 @@ import { Row, Col, Form, Button } from "antd";
 import UploadImg from "components/image/UploadImg";
 import UpdatePortfolioForm from "./components/UpdatePortfolioForm";
 import { AppContext } from "contexts/app.context";
-import { updatePortfolio } from "services/user.service";
+import { addPortfolio, editPortfolio } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 import { useNavigate } from "react-router-dom";
 
 const UpdatePortfolio = () => {
-  const { user, setLoading, setUser } = useContext(AppContext);
+  const {
+    user,
+    setLoading,
+    setUser,
+    portfolio,
+    isEditPortfolio,
+    clearPortfolio,
+  } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
   const [skills, setSkills] = useState([]);
   const [skillOptions, setSkillOptions] = useState([]);
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
+  const initialValues = {
+    title: portfolio.title,
+    description: portfolio.description,
+  };
+
   useEffect(() => {
     const init = () => {
       setSkillOptions(user.skills);
+      if (isEditPortfolio) {
+        setSkills(portfolio.skills);
+        form.setFieldsValue(initialValues);
+      }
     };
     init();
   }, [user]);
 
-  const handleUpdatePortfolio = async () => {
+  const handleAddPortfolio = async () => {
     setLoading(true);
     const data = {
       inputData: form.getFieldsValue(),
       skills,
       image: file,
     };
-    const { success, payload } = await updatePortfolio(data);
+    const { success, payload } = await addPortfolio(data);
+    setLoading(false);
+    if (success) {
+      notification({ type: "success", message: "Add Portfolio Success" });
+      setUser(payload);
+      navigate("/profile");
+    } else {
+      notification({
+        type: "error",
+        message: "Can not add portfolio, please contract admin!",
+      });
+    }
+  };
+
+  const handleEditPortfolio = async () => {
+    setLoading(true);
+    const data = {
+      inputData: form.getFieldsValue(),
+      skills,
+      image: file,
+      portfolioId: portfolio._id,
+    };
+    const { success, payload } = await editPortfolio(data);
     setLoading(false);
     if (success) {
       notification({ type: "success", message: "Update Portfolio Success" });
@@ -59,7 +97,7 @@ const UpdatePortfolio = () => {
     setSkillOptions(addThisSkillOption);
   };
   const uploadImgProps = {
-    // pictureURL: user.profile_picture,
+    pictureURL: portfolio.portfolio_picture,
     file: file,
     setFile: setFile,
   };
@@ -67,6 +105,8 @@ const UpdatePortfolio = () => {
     form,
     skills: skills,
     skillOptions: skillOptions,
+    isEditPortfolio: isEditPortfolio,
+    portfolioData: portfolio,
     onAddSkill: handleAddSkill,
     onRemoveSkill: handleRemoveSkill,
   };
@@ -81,10 +121,15 @@ const UpdatePortfolio = () => {
         <Col className="form-section" span={24}>
           <UpdatePortfolioForm {...updatePortfolioForm} />
         </Col>
+
         <Col justify="center" className="submit-button-section" span={24}>
+          <Button onClick={() => navigate('/profile')} className="cancel-button">Cancel</Button>
           <Button
             className="submit-button"
-            onClick={() => handleUpdatePortfolio()}
+            type="primary"
+            onClick={() => {
+              isEditPortfolio ? handleEditPortfolio() : handleAddPortfolio();
+            }}
           >
             Submit
           </Button>

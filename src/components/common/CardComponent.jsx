@@ -35,7 +35,8 @@ const CardComponent = ({ portfolioImageURL, title, description, onEdit, onDelete
         src={portfolioImageURL ? portfolioImageURL : emptyImg}
       />
     }
-    actions={[<EyeOutlined />, <EditOutlined key="edit" />, <DeleteOutlined />]}
+    // <EyeOutlined />
+    actions={[ <EditOutlined onClick={() => {onEdit()}} key="edit" />, <DeleteOutlined onClick={() => {onDelete()}} />]}
   >
     <Meta
       title={title}

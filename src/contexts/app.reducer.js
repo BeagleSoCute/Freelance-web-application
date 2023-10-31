@@ -6,11 +6,13 @@ const TYPES = {
   SET_NOTIFICATION: "SET_NOTIFICATION",
   SET_USER_PORTFOLIOS: "SET_PORTFOLIOS",
   SELECT_PORTFOLIO: "SELECT_PORTFOLIO",
+  CLEAR_PORTFOLIO: "CLEAR_PORTFOLIO",
 };
 
 const defaultValue = {
   loading: false,
   isAuth: false,
+  isEditPortfolio: false,
   user: {},
   portfolio: {},
   users: [],
@@ -32,7 +34,9 @@ const reducer = (state, action) => {
     case TYPES.SET_USER_PORTFOLIOS:
       return { ...state, user: { ...defaultValue.user, portfolios: payload } };
     case TYPES.SELECT_PORTFOLIO:
-      return { ...state, portfolio: payload };
+      return { ...state, portfolio: payload, isEditPortfolio: true };
+    case TYPES.CLEAR_PORTFOLIO:
+      return { ...state, portfolio: undefined, isEditPortfolio: false };
     default:
       break;
   }

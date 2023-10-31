@@ -59,9 +59,11 @@ const Profile = () => {
     isProfile: true,
     setFile: setFile,
   };
+  const handleDeletePortfolio = () => {};
   const displayPortfolioProps = {
     portfolios: user.portfolios,
     selectPortfolio,
+    onDelete: handleDeletePortfolio,
   };
 
   return (

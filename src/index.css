@@ -32,4 +32,8 @@ code {
   .submit-button {
     width: 35%;
   }
+  .cancel-button{
+    width:15%;
+    margin-right: 10px;
+  }
 }

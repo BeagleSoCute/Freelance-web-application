@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Button, Form, Input, Select, message } from "antd";
 import PropTypes from "prop-types";
@@ -7,12 +7,16 @@ import SkillTag from "components/skills/SkillTags";
 const propTypes = {
   skills: PropTypes.array,
   skillOptions: PropTypes.array,
+  isEditPortfolio: PropTypes.bool,
+  portfolioData: PropTypes.obj,
   onAddSkill: PropTypes.func,
   onRemoveSkill: PropTypes.func,
 };
 const defaultProps = {
   skills: [],
+  portfolioData: {},
   skillOptions: [],
+  isEditPortfolio: false,
   onAddSkill: () => {},
   onRemoveSkill: () => {},
 };
@@ -21,9 +25,24 @@ const UpdatePortfolioForm = ({
   form,
   skills,
   skillOptions,
+  portfolioData,
+  isEditPortfolio,
   onAddSkill,
   onRemoveSkill,
 }) => {
+  const initialValues = {
+    title: portfolioData.title,
+    description: portfolioData.description,
+  };
+  useEffect(() => {
+    const init = () => {
+      if (isEditPortfolio) {
+        form.setFieldsValue(initialValues);
+      }
+      init();
+    };
+  }, [portfolioData]);
+
   const onFinish = () => {};
   const handleAddSkill = (value) => {
     if (!value) {
