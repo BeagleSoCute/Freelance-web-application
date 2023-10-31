@@ -24,19 +24,23 @@ const UpdatePortfolio = () => {
 
   const [form] = Form.useForm();
   const initialValues = {
-    title: portfolio.title,
-    description: portfolio.description,
+    title: portfolio?.title,
+    description: portfolio?.description,
   };
-
   useEffect(() => {
     const init = () => {
       setSkillOptions(user.skills);
       if (isEditPortfolio) {
         setSkills(portfolio.skills);
+        const removeDupSkill = user.skills.filter(skill => !portfolio.skills.includes(skill));
+        setSkillOptions(removeDupSkill);
         form.setFieldsValue(initialValues);
       }
     };
     init();
+    return () => {
+      clearPortfolio();
+    };
   }, [user]);
 
   const handleAddPortfolio = async () => {
@@ -66,7 +70,7 @@ const UpdatePortfolio = () => {
       inputData: form.getFieldsValue(),
       skills,
       image: file,
-      originalImage: portfolio.portfolio_picture, 
+      originalImage: portfolio.portfolio_picture,
       portfolioId: portfolio._id,
     };
     const { success, payload } = await editPortfolio(data);
@@ -98,7 +102,7 @@ const UpdatePortfolio = () => {
     setSkillOptions(addThisSkillOption);
   };
   const uploadImgProps = {
-    pictureURL: portfolio.portfolio_picture,
+    pictureURL: portfolio?.portfolio_picture,
     file: file,
     setFile: setFile,
   };
@@ -124,7 +128,12 @@ const UpdatePortfolio = () => {
         </Col>
 
         <Col justify="center" className="submit-button-section" span={24}>
-          <Button onClick={() => navigate('/profile')} className="cancel-button">Cancel</Button>
+          <Button
+            onClick={() => navigate("/profile")}
+            className="cancel-button"
+          >
+            Cancel
+          </Button>
           <Button
             className="submit-button"
             type="primary"
