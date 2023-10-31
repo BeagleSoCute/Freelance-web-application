@@ -7,13 +7,23 @@ import PropTypes from "prop-types";
 import { truncateString } from "helpers/common.helper";
 const propTypes = {
   portfolios: PropTypes.arrayOf(Object),
+  selectPortfolio: PropTypes.func
 };
 const defaultProps = {
   portfolios: [],
+  selectPortfolio: () => {}
 };
 
-const DisplayPortfolio = ({ portfolios }) => {
+const DisplayPortfolio = ({ portfolios, selectPortfolio }) => {
   const navigate = useNavigate();
+
+  const handleEdit = (item) => {
+    selectPortfolio(item);
+    navigate("/update-portfolio");
+  }
+  const handleDelete = (id) => {
+
+  }
   return (
     <StyledDiv className="display-portfolio">
       <h2>Portfolios</h2>
@@ -22,7 +32,7 @@ const DisplayPortfolio = ({ portfolios }) => {
           className="add-btn"
           onClick={() => navigate("/update-portfolio")}
         >
-          Add{" "}
+          Add
         </Button>
       </Flex>
       <Flex
@@ -36,6 +46,8 @@ const DisplayPortfolio = ({ portfolios }) => {
               portfolioImageURL={item.portfolio_picture}
               title={item.title}
               description={truncateString(item.description, 15)}
+              onEdit={() => handleEdit(item)}
+              onDelete={() => handleDelete(item._id)}
             />
           ))}
       </Flex>

@@ -9,7 +9,7 @@ import { updateProfile } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 
 const Profile = () => {
-  const { user, setLoading, setUser } = useContext(AppContext);
+  const { user, setLoading, setUser, selectPortfolio } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
   const [skills, setSkills] = useState([]);
   const [form] = Form.useForm();
@@ -59,6 +59,11 @@ const Profile = () => {
     isProfile: true,
     setFile: setFile,
   };
+  const displayPortfolioProps = {
+    portfolios: user.portfolios,
+    selectPortfolio,
+  };
+
   return (
     <StyledDiv className="profile-management">
       <h1>Profile Page </h1>
@@ -71,10 +76,15 @@ const Profile = () => {
           <EditForm {...editFormProps} />
         </Col>
         <Col className="portfolio-section" span={24}>
-          <DisplayPortfolio portfolios={user.portfolios} />
+          <DisplayPortfolio {...displayPortfolioProps} />
         </Col>
         <Col justify="center" className="submit-button-section" span={24}>
-          <Button className="submit-button"onClick={() => handleUpdateProfile()}>Update Profile</Button>
+          <Button
+            className="submit-button"
+            onClick={() => handleUpdateProfile()}
+          >
+            Update Profile
+          </Button>
         </Col>
       </Row>
     </StyledDiv>
@@ -83,7 +93,6 @@ const Profile = () => {
 
 const StyledDiv = styled.div`
   &.profile-management {
-    
     .title {
       text-align: center;
       margin-bottom: 45px;
@@ -91,7 +100,7 @@ const StyledDiv = styled.div`
     .edit-form-section {
       margin: 45px auto;
     }
-    .portfolio-section{
+    .portfolio-section {
       padding: 0px 50px;
     }
     .portfolio-section .card-wrapper {
@@ -99,7 +108,6 @@ const StyledDiv = styled.div`
       justify-content: center;
       margin: 25px auto;
     }
-
   }
 `;
 

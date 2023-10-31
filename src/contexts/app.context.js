@@ -1,18 +1,19 @@
 import { createContext, useMemo, useReducer, useEffect } from "react";
-import appReducer from "reducers/app.reducer";
+import appReducer from "contexts/app.reducer";
 import { checkIsAuth } from "helpers/auth.helper";
 import { getMyData } from "services/user.service";
 export const AppContext = createContext({
   loading: false,
   isAuth: false,
   user: {},
+  portfolio:{},
   setLoading: () => {},
   setUser: () => {},
 });
 export const { reducer, defaultValue, TYPES } = appReducer;
 export const AppProvider = ({ children }) => {
   const [reducerStates, dispatch] = useReducer(reducer, defaultValue);
-  const { loading, isAuth, user } = reducerStates;
+  const { loading, isAuth, user, portfolio } = reducerStates;
   useEffect(() => {
     dispatch({ type: TYPES.SET_LOADING, payload: true });
     const resCheckAuth = checkIsAuth();
@@ -34,6 +35,7 @@ export const AppProvider = ({ children }) => {
       loading,
       isAuth,
       user,
+      portfolio,
       setLoading: (data) => {
         dispatch({ type: TYPES.SET_LOADING, payload: data });
       },
@@ -42,9 +44,12 @@ export const AppProvider = ({ children }) => {
       },
       setUserPortfolios: (data) => {
         dispatch({ type: TYPES.SET_PORTFOLIOS, payload: data });
+      },
+      selectPortfolio: (data) => {
+        dispatch({ type: TYPES.SELECT_PORTFOLIO, payload: data });
       }
     };
-  }, [loading, isAuth, user, dispatch]);
+  }, [loading, isAuth, portfolio, user, dispatch]);
   return (
     <AppContext.Provider value={appContextValue}>
       {children}

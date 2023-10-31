@@ -9,14 +9,18 @@ const propTypes = {
   portfolioImageURL: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 const defaultProps = {
   portfolioImageURL: "",
   title: "title",
   description: "description",
+  onEdit: () => {}, 
+  onDelete: () => {},
 };
 const { Meta } = Card;
-const CardComponent = ({ portfolioImageURL, title, description }) => (
+const CardComponent = ({ portfolioImageURL, title, description, onEdit, onDelete }) => (
   <StyledCard
     bordered={true}
     hoverable={true}
@@ -34,7 +38,6 @@ const CardComponent = ({ portfolioImageURL, title, description }) => (
     actions={[<EyeOutlined />, <EditOutlined key="edit" />, <DeleteOutlined />]}
   >
     <Meta
-      // avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
       title={title}
       description={description}
     />
