@@ -6,24 +6,28 @@ import PropTypes from "prop-types";
 
 const propTypes = {
   title: PropTypes.arrayOf(String),
+  isEdit: PropTypes.bool,
   onRemoveSkill: PropTypes.func,
 };
 const defaultProps = {
   items: [],
+  isEdit: false,
   onRemoveSkill: () => {},
 };
 
-const SkillTags = ({ items, onRemoveSkill }) => {
+const SkillTags = ({ items, isEdit, onRemoveSkill }) => {
   return (
     <StyledDiv className="skill-tags">
       <Flex wrap="wrap" gap="large">
-        {items.map((item,index) => (
+        {items.map((item, index) => (
           <div key={index} className="item" span={4}>
             <p>{item}</p>
-            <CloseOutlined
-              onClick={() => onRemoveSkill(item)}
-              className="close-icon"
-            />
+            {isEdit && (
+              <CloseOutlined
+                onClick={() => onRemoveSkill(item)}
+                className="close-icon"
+              />
+            )}
           </div>
         ))}
       </Flex>

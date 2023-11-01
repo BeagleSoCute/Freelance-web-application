@@ -9,6 +9,7 @@ const propTypes = {
   portfolioImageURL: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
+  onView: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };
@@ -16,11 +17,19 @@ const defaultProps = {
   portfolioImageURL: "",
   title: "title",
   description: "description",
-  onEdit: () => {}, 
+  onView: () => {},
+  onEdit: () => {},
   onDelete: () => {},
 };
 const { Meta } = Card;
-const CardComponent = ({ portfolioImageURL, title, description, onEdit, onDelete }) => (
+const CardComponent = ({
+  portfolioImageURL,
+  title,
+  description,
+  onView,
+  onEdit,
+  onDelete,
+}) => (
   <StyledCard
     bordered={true}
     hoverable={true}
@@ -35,13 +44,26 @@ const CardComponent = ({ portfolioImageURL, title, description, onEdit, onDelete
         src={portfolioImageURL ? portfolioImageURL : emptyImg}
       />
     }
-    // <EyeOutlined />
-    actions={[ <EditOutlined onClick={() => {onEdit()}} key="edit" />, <DeleteOutlined onClick={() => {onDelete()}} />]}
+    actions={[
+      <EyeOutlined
+        onClick={() => {
+          onView();
+        }}
+      />,
+      <EditOutlined
+        onClick={() => {
+          onEdit();
+        }}
+        key="edit"
+      />,
+      <DeleteOutlined
+        onClick={() => {
+          onDelete();
+        }}
+      />,
+    ]}
   >
-    <Meta
-      title={title}
-      description={description}
-    />
+    <Meta title={title} description={description} />
   </StyledCard>
 );
 const StyledCard = styled(Card)`

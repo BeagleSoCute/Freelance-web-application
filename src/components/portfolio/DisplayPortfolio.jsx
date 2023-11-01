@@ -7,17 +7,35 @@ import PropTypes from "prop-types";
 import { truncateString } from "helpers/common.helper";
 const propTypes = {
   portfolios: PropTypes.arrayOf(Object),
+  viewPortfolio: PropTypes.func,
   selectPortfolio: PropTypes.func,
   onDelete: PropTypes.func,
+  addPortfolio: PropTypes.func,
 };
 const defaultProps = {
   portfolios: [],
+  viewPortfolio: () => {},
   selectPortfolio: () => {},
   onDelete: () => {},
+  addPortfolio: () => {},
 };
 
-const DisplayPortfolio = ({ portfolios, selectPortfolio, onDelete }) => {
+const DisplayPortfolio = ({
+  portfolios,
+  viewPortfolio,
+  selectPortfolio,
+  addPortfolio,
+  onDelete,
+}) => {
   const navigate = useNavigate();
+  const handleAdd = () => {
+    addPortfolio();
+    navigate("/update-portfolio");
+  };
+  const handleView = (item) => {
+    viewPortfolio(item);
+    navigate("/view-portfolio");
+  };
   const handleEdit = (item) => {
     selectPortfolio(item);
     navigate("/update-portfolio");
@@ -29,25 +47,18 @@ const DisplayPortfolio = ({ portfolios, selectPortfolio, onDelete }) => {
     <StyledDiv className="display-portfolio">
       <h2>Portfolios</h2>
       <Flex className="btn-section" align="end" vertical>
-        <Button
-          className="add-btn"
-          onClick={() => navigate("/update-portfolio")}
-        >
+        <Button className="add-btn" onClick={() => handleAdd()}>
           Add
         </Button>
       </Flex>
-      <Flex
-        justify="center"
-        className="content-section"
-        wrap="wrap"
-        gap="large"
-      >
+      <Flex justify="start" className="content-section" wrap="wrap" gap="large">
         {portfolios.map((item, index) => (
           <CardComponent
             key={index}
             portfolioImageURL={item.portfolio_picture}
             title={item.title}
             description={truncateString(item.description, 15)}
+            onView={() => handleView(item)}
             onEdit={() => handleEdit(item)}
             onDelete={() => handleDelete(item._id)}
           />

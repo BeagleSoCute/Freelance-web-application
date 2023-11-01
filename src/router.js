@@ -5,6 +5,7 @@ import Login from "smart/Login";
 import Register from "smart/Register";
 import Dashboard from "smart/Dashboard";
 import Profile from "smart/profile/Profile";
+import ProfileManagement from "smart/profileManagement/ProfileManagement";
 import Logout from "smart/Logout";
 import ShowUserDetails from "smart/ShowUserDatails";
 import { AppProvider } from "contexts/app.context";
@@ -12,6 +13,7 @@ import LoginAndRegisterLayout from "layouts/LoginAndRegisterLayout";
 import { checkIsAuth } from "helpers/auth.helper";
 import { notification } from "helpers/notification.helper";
 import UpdatePortfolio from "smart/portfolio/UpdatePortfolio";
+import ShowPortfolioDetail from "smart/portfolio/ShowPortfolioDetail";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -65,6 +67,15 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/profile-management",
+        element: (
+          <PrivateRoute>
+            <ProfileManagement />
+          </PrivateRoute>
+        ),
+      },
+      { path: "/view-portfolio", element: <ShowPortfolioDetail /> },
     ],
   },
 ]);

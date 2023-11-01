@@ -7,6 +7,7 @@ import { AppContext } from "contexts/app.context";
 import { addPortfolio, editPortfolio } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 import { useNavigate } from "react-router-dom";
+import ContentLayout from "layouts/ContentLayout";
 
 const UpdatePortfolio = () => {
   const {
@@ -15,6 +16,7 @@ const UpdatePortfolio = () => {
     setUser,
     portfolio,
     isEditPortfolio,
+    isAddPortfolio,
     clearPortfolio,
   } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
@@ -29,10 +31,15 @@ const UpdatePortfolio = () => {
   };
   useEffect(() => {
     const init = () => {
+      if (!isEditPortfolio && !isAddPortfolio) {
+        navigate("/profile");
+      }
       setSkillOptions(user.skills);
       if (isEditPortfolio) {
         setSkills(portfolio.skills);
-        const removeDupSkill = user.skills.filter(skill => !portfolio.skills.includes(skill));
+        const removeDupSkill = user.skills.filter(
+          (skill) => !portfolio.skills.includes(skill)
+        );
         setSkillOptions(removeDupSkill);
         form.setFieldsValue(initialValues);
       }
@@ -116,34 +123,35 @@ const UpdatePortfolio = () => {
   };
   return (
     <StyledDiv className="update-portfolio">
-      <h1>Add Portfolio</h1>
-      <Row>
-        <Col span={24}>
-          <h2 className="title">Profile Management</h2>
-          <UploadImg {...uploadImgProps} />
-        </Col>
-        <Col className="form-section" span={24}>
-          <UpdatePortfolioForm {...updatePortfolioForm} />
-        </Col>
+      <ContentLayout>
+        <h1>{isEditPortfolio ? "Edit" : "Add"} Portfolio</h1>
+        <Row>
+          <Col span={24}>
+            <UploadImg {...uploadImgProps} />
+          </Col>
+          <Col className="form-section" span={24}>
+            <UpdatePortfolioForm {...updatePortfolioForm} />
+          </Col>
 
-        <Col justify="center" className="submit-button-section" span={24}>
-          <Button
-            onClick={() => navigate("/profile")}
-            className="cancel-button"
-          >
-            Cancel
-          </Button>
-          <Button
-            className="submit-button"
-            type="primary"
-            onClick={() => {
-              isEditPortfolio ? handleEditPortfolio() : handleAddPortfolio();
-            }}
-          >
-            Submit
-          </Button>
-        </Col>
-      </Row>
+          <Col justify="center" className="submit-button-section" span={24}>
+            <Button
+              onClick={() => navigate("/profile")}
+              className="cancel-button"
+            >
+              Cancel
+            </Button>
+            <Button
+              className="submit-button"
+              type="primary"
+              onClick={() => {
+                isEditPortfolio ? handleEditPortfolio() : handleAddPortfolio();
+              }}
+            >
+              Submit
+            </Button>
+          </Col>
+        </Row>
+      </ContentLayout>
     </StyledDiv>
   );
 };

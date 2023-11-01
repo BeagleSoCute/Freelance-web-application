@@ -15,6 +15,10 @@ code {
     monospace;
 }
 
+p{
+  font-size:16px;
+}
+
 .add-skill-btn {
   display: flex;
   justify-content: center;
@@ -24,7 +28,6 @@ code {
     width: 15%;
   }
 }
-
 .submit-button-section {
   display: flex;
   justify-content: center;
@@ -32,8 +35,15 @@ code {
   .submit-button {
     width: 35%;
   }
-  .cancel-button{
-    width:15%;
+  .cancel-button {
+    width: 15%;
     margin-right: 10px;
   }
+}
+.bold-text {
+  font-weight: bold;
+}
+.profile-picture{
+  border-radius: 100%;
+  border: 1px solid black;
 }

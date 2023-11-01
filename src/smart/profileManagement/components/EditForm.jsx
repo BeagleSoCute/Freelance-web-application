@@ -88,7 +88,7 @@ const EditForm = ({ skills, onAddSkill, onRemoveSkill, userData, form }) => {
             Add
           </Button>
         </div>
-        <SkillTag items={skills} onRemoveSkill={onRemoveSkill} />
+        <SkillTag items={skills} isEdit={true} onRemoveSkill={onRemoveSkill} />
       </Form>
     </StyledDiv>
   );

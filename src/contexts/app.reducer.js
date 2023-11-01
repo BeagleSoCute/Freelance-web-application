@@ -7,12 +7,16 @@ const TYPES = {
   SET_USER_PORTFOLIOS: "SET_PORTFOLIOS",
   SELECT_PORTFOLIO: "SELECT_PORTFOLIO",
   CLEAR_PORTFOLIO: "CLEAR_PORTFOLIO",
+  VIEW_PORTFOLIO: "VIEW_PORTFOLIO",
+  ADD_PORTFOLIO: "ADD_PORTFOLIO",
 };
 
 const defaultValue = {
   loading: false,
   isAuth: false,
   isEditPortfolio: false,
+  isViewPortfolio: false,
+  isAddPortfolio: false,
   user: {},
   portfolio: {},
   users: [],
@@ -35,8 +39,18 @@ const reducer = (state, action) => {
       return { ...state, user: { ...defaultValue.user, portfolios: payload } };
     case TYPES.SELECT_PORTFOLIO:
       return { ...state, portfolio: payload, isEditPortfolio: true };
+    case TYPES.VIEW_PORTFOLIO:
+      return { ...state, portfolio: payload, isViewPortfolio: true };
+    case TYPES.ADD_PORTFOLIO:
+      return { ...state, isAddPortfolio: true };
     case TYPES.CLEAR_PORTFOLIO:
-      return { ...state, portfolio: undefined, isEditPortfolio: false };
+      return {
+        ...state,
+        portfolio: undefined,
+        isViewPortfolio: false,
+        isEditPortfolio: false,
+        isAddPortfolio: false
+      };
     default:
       break;
   }
