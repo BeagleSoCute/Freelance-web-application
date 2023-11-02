@@ -123,7 +123,13 @@ const UpdatePortfolio = () => {
   };
   return (
     <StyledDiv className="update-portfolio">
-      <ContentLayout>
+      <ContentLayout
+      isSubmit={true}
+        onSubmit={
+          isEditPortfolio ? handleEditPortfolio : handleAddPortfolio
+        }
+        onCancel={() => navigate("/profile")}
+      >
         <h1>{isEditPortfolio ? "Edit" : "Add"} Portfolio</h1>
         <Row>
           <Col span={24}>
@@ -131,24 +137,6 @@ const UpdatePortfolio = () => {
           </Col>
           <Col className="form-section" span={24}>
             <UpdatePortfolioForm {...updatePortfolioForm} />
-          </Col>
-
-          <Col justify="center" className="submit-button-section" span={24}>
-            <Button
-              onClick={() => navigate("/profile")}
-              className="cancel-button"
-            >
-              Cancel
-            </Button>
-            <Button
-              className="submit-button"
-              type="primary"
-              onClick={() => {
-                isEditPortfolio ? handleEditPortfolio() : handleAddPortfolio();
-              }}
-            >
-              Submit
-            </Button>
           </Col>
         </Row>
       </ContentLayout>

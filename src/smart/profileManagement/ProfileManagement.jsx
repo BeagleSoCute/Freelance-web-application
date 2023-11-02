@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Row, Col, Form, Button } from "antd";
+import { Row, Col, Form } from "antd";
 import styled from "styled-components";
 import EditForm from "./components/EditForm";
 import UploadImg from "components/image/UploadImg";
@@ -7,8 +7,10 @@ import { AppContext } from "contexts/app.context";
 import { updateProfile } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 import ContentLayout from "layouts/ContentLayout";
+import { useNavigate } from "react-router-dom";
 
 const ProfileManagement = () => {
+  const navigate = useNavigate();
   const { user, setLoading, setUser } = useContext(AppContext);
   const [file, setFile] = useState(undefined);
   const [skills, setSkills] = useState([]);
@@ -39,6 +41,7 @@ const ProfileManagement = () => {
     if (success) {
       notification({ type: "success", message: "Update Profile Success" });
       setUser(payload);
+      navigate("/profile");
     } else {
       notification({
         type: "error",
@@ -63,7 +66,11 @@ const ProfileManagement = () => {
 
   return (
     <StyledDiv className="profile-management">
-      <ContentLayout>
+      <ContentLayout
+        isSubmit={true}
+        onSubmit={handleUpdateProfile}
+        onCancel={() => navigate("/profile")}
+      >
         <h1>Profile Page </h1>
         <Row>
           <Col span={24}>
@@ -72,14 +79,6 @@ const ProfileManagement = () => {
           </Col>
           <Col span={24} className="edit-form-section">
             <EditForm {...editFormProps} />
-          </Col>
-          <Col justify="center" className="submit-button-section" span={24}>
-            <Button
-              className="submit-button"
-              onClick={() => handleUpdateProfile()}
-            >
-              Update Profile
-            </Button>
           </Col>
         </Row>
       </ContentLayout>
