@@ -14,6 +14,7 @@ import { checkIsAuth } from "helpers/auth.helper";
 import { notification } from "helpers/notification.helper";
 import UpdatePortfolio from "smart/portfolio/UpdatePortfolio";
 import ShowPortfolioDetail from "smart/portfolio/ShowPortfolioDetail";
+import ServicePage from "smart/service/ServicePage";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/service-list",
+        element: <ServicePage />,
       },
       {
         path: "/update-portfolio",

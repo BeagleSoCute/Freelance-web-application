@@ -95,9 +95,7 @@ const StyledDiv = styled.div`
     .edit-form-section {
       margin: 45px auto;
     }
-    .portfolio-section {
-      padding: 0px 50px;
-    }
+
     .portfolio-section .card-wrapper {
       display: flex;
       justify-content: center;

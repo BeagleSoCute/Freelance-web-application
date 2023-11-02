@@ -9,14 +9,18 @@ const propTypes = {
   portfolioImageURL: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
+  isView: PropTypes.bool,
+  noImage: PropTypes.bool,
   onView: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };
 const defaultProps = {
   portfolioImageURL: "",
-  title: "title",
-  description: "description",
+  title: "",
+  description: "",
+  isView: false,
+  noImage: false,
   onView: () => {},
   onEdit: () => {},
   onDelete: () => {},
@@ -26,46 +30,64 @@ const CardComponent = ({
   portfolioImageURL,
   title,
   description,
+  isView,
+  noImage,
   onView,
   onEdit,
   onDelete,
-}) => (
-  <StyledCard
-    bordered={true}
-    hoverable={true}
-    className="card-component"
-    style={{
-      width: 300,
-    }}
-    cover={
-      <img
-        className="card-img"
-        alt="example"
-        src={portfolioImageURL ? portfolioImageURL : emptyImg}
-      />
-    }
-    actions={[
+}) => {
+  const renderAction = () => {
+    const viewAction = (
       <EyeOutlined
         onClick={() => {
           onView();
         }}
-      />,
+      />
+    );
+    const editAction = (
       <EditOutlined
         onClick={() => {
           onEdit();
         }}
         key="edit"
-      />,
+      />
+    );
+    const deleteAction = (
       <DeleteOutlined
         onClick={() => {
           onDelete();
         }}
-      />,
-    ]}
-  >
-    <Meta title={title} description={description} />
-  </StyledCard>
-);
+      />
+    );
+    if (isView) {
+      return [viewAction];
+    } else {
+      return [viewAction, editAction, deleteAction];
+    }
+  };
+  return (
+    <StyledCard
+      bordered={true}
+      hoverable={true}
+      className="card-component"
+      style={{
+        width: 300,
+      }}
+      cover={
+        !noImage && (
+          <img
+            className="card-img"
+            alt="example"
+            src={portfolioImageURL ? portfolioImageURL : emptyImg}
+          />
+        )
+      }
+      actions={renderAction()}
+    >
+      <Meta title={title} description={description} />
+    </StyledCard>
+  );
+};
 const StyledCard = styled(Card)`
   &.card-component {
     img {

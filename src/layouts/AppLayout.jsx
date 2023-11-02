@@ -5,6 +5,7 @@ import {
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
+  FundProjectionScreenOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme, Spin } from "antd";
 import { AppContext } from "contexts/app.context";
@@ -16,7 +17,6 @@ import styled from "styled-components";
 const { Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
-  console.warn("getItem");
   return {
     key,
     icon,
@@ -26,11 +26,17 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   { key: 0, label: "Home", path: "/", logo: <PieChartOutlined /> },
-  { key: 1, label: "Dashboard", path: "/dashboard", logo: <DesktopOutlined /> },
-  { key: 2, label: "Profile", path: "/profile", logo: <UserOutlined /> },
-  { key: 3, label: "Login", path: "/login", logo: <TeamOutlined /> },
-  { key: 4, label: "Logout", path: "/logout", logo: <FileOutlined /> },
-  { key: 5, label: "Register", path: "/register", logo: <FileOutlined /> },
+  {
+    key: 1,
+    label: "Services",
+    path: "/service-list",
+    logo: <FundProjectionScreenOutlined />,
+  },
+  { key: 2, label: "Dashboard", path: "/dashboard", logo: <DesktopOutlined /> },
+  { key: 3, label: "Profile", path: "/profile", logo: <UserOutlined /> },
+  { key: 4, label: "Login", path: "/login", logo: <TeamOutlined /> },
+  { key: 5, label: "Logout", path: "/logout", logo: <FileOutlined /> },
+  { key: 6, label: "Register", path: "/register", logo: <FileOutlined /> },
 ];
 
 const App = () => {
@@ -60,78 +66,77 @@ const App = () => {
   };
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-
-    <StyledLayout
-      className="app-layout"
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
+      <StyledLayout
+        className="app-layout"
+        style={{
+          minHeight: "100vh",
+        }}
       >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["0"]}
-          mode="inline"
-          items={handleDisplayMenu()}
-          onClick={handleOnClick}
-        />
-      </Sider>
-      <Layout>
-        <div className="mobile-menu">
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+        >
+          <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
-            mode="horizontal"
             defaultSelectedKeys={["0"]}
+            mode="inline"
+            items={handleDisplayMenu()}
             onClick={handleOnClick}
-            items={items.map((item) => {
-              const key = item.key;
-              return {
-                key,
-                label: item.label,
-              };
-            })}
           />
-        </div>
-        <Content
-          style={{
-            margin: "0 16px",
-          }}
-        >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
-          >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            className="content"
-            style={{
-              padding: 24,
-              // minHeight: 3360,
-              background: colorBgContainer,
-            }}
-          >
-            <>
-              <Outlet />
-            </>
+        </Sider>
+        <Layout>
+          <div className="mobile-menu">
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={["0"]}
+              onClick={handleOnClick}
+              items={items.map((item) => {
+                const key = item.key;
+                return {
+                  key,
+                  label: item.label,
+                };
+              })}
+            />
           </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Ant Design ©2023 Created by Ant UED
-        </Footer>
-      </Layout>
-    </StyledLayout>
+          <Content
+            style={{
+              margin: "0 16px",
+            }}
+          >
+            <Breadcrumb
+              style={{
+                margin: "16px 0",
+              }}
+            >
+              <Breadcrumb.Item>User</Breadcrumb.Item>
+              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            </Breadcrumb>
+            <div
+              className="content"
+              style={{
+                padding: 24,
+                // minHeight: 3360,
+                background: colorBgContainer,
+              }}
+            >
+              <>
+                <Outlet />
+              </>
+            </div>
+          </Content>
+          <Footer
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Copyright ©2023 Created by Tanawat Limsakul
+          </Footer>
+        </Layout>
+      </StyledLayout>
     </Spin>
   );
 };

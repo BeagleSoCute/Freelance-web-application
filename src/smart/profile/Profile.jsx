@@ -8,10 +8,18 @@ import DisplayPortfolio from "components/portfolio/DisplayPortfolio";
 import { deletePortfolio } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 import ContentLayout from "layouts/ContentLayout";
+import FeedbackSection from "./components/FeedbackSection";
+import ServiceSection from "./components/ServiceSection";
 
 const Profile = () => {
-  const { user, setLoading, setUser, viewPortfolio, addPortfolio, selectPortfolio } =
-    useContext(AppContext);
+  const {
+    user,
+    setLoading,
+    setUser,
+    viewPortfolio,
+    addPortfolio,
+    selectPortfolio,
+  } = useContext(AppContext);
   const navigate = useNavigate();
   useEffect(() => {}, []);
 
@@ -39,8 +47,7 @@ const Profile = () => {
   };
   return (
     <StyledDiv className="profile">
-              <ContentLayout>
-
+      <ContentLayout>
         <Row justify="space-between">
           <h1>Profile Page </h1>
           <Button
@@ -54,6 +61,14 @@ const Profile = () => {
         <Row className="profile-section">
           <Col className="user-data-section" span={24}>
             <UserInfoSection userData={user} />
+          </Col>
+          <Col className="feedback-section" span={24}>
+            <h2>Services</h2>
+            <ServiceSection />
+          </Col>
+          <Col className="feedback-section" span={24}>
+            <h2>Feedback</h2>
+            <FeedbackSection />
           </Col>
           <Col className="portfolio-section" span={24}>
             <DisplayPortfolio {...displayPortfolioProps} />
@@ -70,16 +85,10 @@ const StyledDiv = styled.div`
     .profile-section {
       margin: 50px 0px;
     }
-    .title {
-      text-align: center;
-      margin-bottom: 45px;
-    }
+
     .edit-button {
       margin: auto 0px;
       width: 150px;
-    }
-    .portfolio-section {
-      padding: 0px 50px;
     }
   }
 `;

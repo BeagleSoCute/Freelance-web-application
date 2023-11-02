@@ -16,17 +16,24 @@ const UserInfoSection = ({ userData }) => {
       <Row justify="center">
         <Col className="user-info-wrapper">
           <div>
-            <img className="profile-picture" alt="profile-pic" src={userData.profile_picture} />
+            <img
+              className="profile-picture"
+              alt="profile-pic"
+              src={userData.profile_picture}
+            />
           </div>
           <p>
-            <span className="bold-text">Name:</span> {userData.first_name} {userData.last_name}
+            <span className="bold-text">Name:</span> {userData.first_name}{" "}
+            {userData.last_name}
           </p>
           <p>
-            <span className="bold-text">Phone number:</span> {userData.phone_number}
+            <span className="bold-text">Phone number:</span>{" "}
+            {userData.phone_number}
           </p>
 
           <p>
-            <span className="bold-text">Description:</span> {userData.description}
+            <span className="bold-text">Description:</span>{" "}
+            {userData.description}
           </p>
           <div>
             <p className="bold-text">Skills: </p>
@@ -42,16 +49,15 @@ const StyledDiv = styled.div`
   &.user-info-section {
     .user-info-wrapper {
     }
-    .skill-tags{
-      .item{
-        padding:  0px 45px;
-
+    .skill-tags {
+      .item {
+        padding: 0px 45px;
       }
     }
-  .profile-picture{
-    width: 250px;
-  height: 250px;
-  }
+    .profile-picture {
+      width: 250px;
+      height: 250px;
+    }
   }
 `;
 UserInfoSection.propTypes = propTypes;
