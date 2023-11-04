@@ -3,14 +3,15 @@ import { Button } from "antd";
 export const serviceColums = (navigate) => {
   return [
     {
-      title: "ID",
-      dataIndex: "_id",
-      key: "_id",
+      title: "By",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      width: "40%"
     },
     {
       title: "Type",
@@ -18,9 +19,14 @@ export const serviceColums = (navigate) => {
       key: "type",
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+    },
+    {
+      title: "Area",
+      dataIndex: "area",
+      key: "area",
     },
     {
       title: "Post Date",

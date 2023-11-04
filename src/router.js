@@ -15,6 +15,7 @@ import { notification } from "helpers/notification.helper";
 import UpdatePortfolio from "smart/portfolio/UpdatePortfolio";
 import ShowPortfolioDetail from "smart/portfolio/ShowPortfolioDetail";
 import ServicePage from "smart/service/ServicePage";
+import ManageService from "smart/service/ManageService";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -72,11 +73,21 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
+
       {
         path: "/profile-management",
         element: (
           <PrivateRoute>
             <ProfileManagement />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/manage-service",
+        element: (
+          <PrivateRoute>
+            <ManageService />
           </PrivateRoute>
         ),
       },

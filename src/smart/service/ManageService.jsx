@@ -5,21 +5,18 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { notification } from "helpers/notification.helper";
 import ContentLayout from "layouts/ContentLayout";
-import TableData from "components/common/TableData";
-import { serviceColums } from "./table/tableColumn";
+import ManageServiceForm from "./components/ManageServiceForm";
 import SearchFilter from "./components/OptionPanel";
 
-const ServicePage = () => {
-    const navigate = useNavigate()
-  useEffect(() => {}, []);
+const ManageService = () => {
   return (
-    <div>
+    <div className="add-service">
       <ContentLayout>
         <SearchFilter/>
-        <TableData columns={serviceColums(navigate)} />
+        <ManageServiceForm />
       </ContentLayout>
     </div>
   );
 };
 
-export default ServicePage;
+export default ManageService;
