@@ -7,6 +7,7 @@ import { notification } from "helpers/notification.helper";
 import ContentLayout from "layouts/ContentLayout";
 import TableData from "components/common/TableData";
 import { serviceColums } from "./table/tableColumn";
+import SearchFilter from "./components/SearchFilter";
 
 const ServicePage = () => {
     const navigate = useNavigate()
@@ -14,6 +15,7 @@ const ServicePage = () => {
   return (
     <div>
       <ContentLayout>
+        <SearchFilter/>
         <TableData columns={serviceColums(navigate)} />
       </ContentLayout>
     </div>
