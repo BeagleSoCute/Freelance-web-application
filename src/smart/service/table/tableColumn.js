@@ -31,7 +31,6 @@ export const serviceColums = (navigate) => {
       title: "View",
       dataIndex: "view",
       key: "view",
-      width: "5%",
       render: (item, record) => (
         <Button onClick={() => navigate(`/user/${record.id}`)}>View</Button>
       ),

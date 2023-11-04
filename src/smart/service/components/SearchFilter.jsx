@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Select, Button } from "antd";
+import { Row, Col, Select, Button, Radio } from "antd";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import nzData from "assets/data/nzData.json";
@@ -40,6 +40,12 @@ const categoryOptions = (data) => {
 const SearchFilter = ({ categoryData, onSearch }) => {
   return (
     <StyledDiv className="search-filter">
+      <div className="toggle-section">
+        <Radio.Group defaultValue="findService" buttonStyle="solid">
+          <Radio.Button value="findService">Find Services</Radio.Button>
+          <Radio.Button value="findWork">Find Works</Radio.Button>
+        </Radio.Group>
+      </div>
       <div className="search-filder-section">
         <div>
           <StyledSelect
@@ -64,7 +70,7 @@ const SearchFilter = ({ categoryData, onSearch }) => {
           <Button type="primary">Search</Button>
         </div>
         <div>
-            <Button>Add</Button>
+          <Button>Add</Button>
         </div>
       </div>
     </StyledDiv>
@@ -73,17 +79,24 @@ const SearchFilter = ({ categoryData, onSearch }) => {
 
 const StyledDiv = styled.div`
   &.search-filter {
-    margin-bottom: 20px;
-    .search-filder-section{
-        display: flex;
-        justify-content: space-between;
+    .search-filder-section {
+      display: flex;
+      justify-content: space-between;
+    }
+    .toggle-section {
+      display: flex;
+      justify-content: center;
+    }
+    .search-filder-section,
+    .toggle-section {
+      margin-bottom: 20px;
     }
   }
 `;
 
 const StyledSelect = styled(Select)`
   &.select-option {
-    width: 150px;
+    width: 200px;
     margin-right: 20px;
   }
 `;
