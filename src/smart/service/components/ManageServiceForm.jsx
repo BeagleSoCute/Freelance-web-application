@@ -4,12 +4,17 @@ import { Button, Form, Input, Select, message } from "antd";
 import PropTypes from "prop-types";
 import SkillTag from "components/skills/SkillTags";
 
-const propTypes = {};
+const propTypes = {
+  serviceType: PropTypes.string,
+};
 
-const defaultProps = {};
+const defaultProps = {
+  serviceType: "findService",
+  isManage: false,
+};
 
-const ManageServiceForm = ({}) => {
-  const [form] = Form.useForm();
+const ManageServiceForm = ({serviceType, form }) => {
+  const isFindService = serviceType === "findService";
   const onFinish = () => {};
 
   return (
@@ -31,7 +36,7 @@ const ManageServiceForm = ({}) => {
         </Form.Item>
 
         <Form.Item
-          label="Title"
+          label={isFindService? "Requirement" : "Service description"}
           name="title"
           rules={[{ required: true, message: "Please input the description!" }]}
         >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Row, Col, Select, Button, Radio } from "antd";
 import PropTypes from "prop-types";
 import styled from "styled-components";
@@ -14,12 +14,19 @@ const categoryDataMock = [
 
 const propTypes = {
   categoryData: PropTypes.array,
-  onSearch: PropTypes.string,
+  onSearch: PropTypes.func,
+  isManage: PropTypes.bool,
+  onSelectType: PropTypes.func,
+  onSelectOption: PropTypes.func,
 };
 const defaultProps = {
   categoryData: categoryDataMock,
+  isManage: false,
   onSearch: () => {},
+  onSelectType: () => {},
+  onSelectOption: () => {},
 };
+
 const typeOptions = [
   {
     label: "Onsite",
@@ -45,12 +52,22 @@ const categoryOptions = (data) => {
   });
 };
 
-const OptionPanel = ({ categoryData, onSearch }) => {
+const OptionPanel = ({
+  isManage,
+  categoryData,
+  onSearch,
+  onSelectOption,
+  onChangeServiceType,
+}) => {
   const navigate = useNavigate();
   return (
     <StyledDiv className="option-panel">
       <div className="toggle-section">
-        <Radio.Group defaultValue="findService" buttonStyle="solid">
+        <Radio.Group
+          onChange={(value) => onChangeServiceType(value)}
+          defaultValue="findService"
+          buttonStyle="solid"
+        >
           <Radio.Button value="findService">
             Looking for a freelancer
           </Radio.Button>
@@ -63,27 +80,37 @@ const OptionPanel = ({ categoryData, onSearch }) => {
             className="select-option"
             placeholder="Select type"
             options={typeOptions}
-            onChange={() => onSearch}
+            onSelect={(value) => onSelectOption('type',value)}
           />
           <StyledSelect
             showSearch
             className="select-option"
             placeholder="Select Area"
             options={areaOptions}
-            onChange={() => onSearch}
+            onSelect={(value) => onSelectOption('area',value)}
           />
           <StyledSelect
             className="select-option"
             placeholder="Select Category"
             options={categoryOptions(categoryData)}
-            onChange={() => onSearch}
+            onSelect={(value) => onSelectOption('category',value)}
           />
-          <Button className="clear-button">Clear</Button>
-          <Button type="primary">Search</Button>
+          {isManage ? (
+            ""
+          ) : (
+            <Fragment>
+              <Button className="clear-button">Clear</Button>
+              <Button type="primary">Search</Button>
+            </Fragment>
+          )}
         </div>
-        <div>
-          <Button onClick={() => navigate("/manage-service")}>Add</Button>
-        </div>
+        {isManage ? (
+          ""
+        ) : (
+          <div>
+            <Button onClick={() => navigate("/manage-service")}>Add</Button>
+          </div>
+        )}
       </div>
     </StyledDiv>
   );
@@ -111,7 +138,7 @@ const StyledDiv = styled.div`
 
 const StyledSelect = styled(Select)`
   &.select-option {
-    width: 200px;
+    width: 150px;
     margin-right: 20px;
   }
 `;
