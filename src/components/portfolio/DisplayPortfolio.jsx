@@ -7,13 +7,19 @@ import PropTypes from "prop-types";
 import { truncateString } from "helpers/common.helper";
 const propTypes = {
   portfolios: PropTypes.arrayOf(Object),
+  isShowAction: PropTypes.bool,
+  isHideAddBtn: PropTypes.bool,
+  title: PropTypes.string,
   viewPortfolio: PropTypes.func,
   selectPortfolio: PropTypes.func,
   onDelete: PropTypes.func,
   addPortfolio: PropTypes.func,
 };
 const defaultProps = {
+  title: "Portfolios",
   portfolios: [],
+  isShowAction: true,
+  isHideAddBtn: false,
   viewPortfolio: () => {},
   selectPortfolio: () => {},
   onDelete: () => {},
@@ -21,8 +27,11 @@ const defaultProps = {
 };
 
 const DisplayPortfolio = ({
+  title,
   portfolios,
   viewPortfolio,
+  isShowAction,
+  isHideAddBtn,
   selectPortfolio,
   addPortfolio,
   onDelete,
@@ -45,16 +54,19 @@ const DisplayPortfolio = ({
   };
   return (
     <StyledDiv className="display-portfolio">
-      <h2>Portfolios</h2>
-      <Flex className="btn-section" align="end" vertical>
-        <Button className="add-btn" onClick={() => handleAdd()}>
-          Add
-        </Button>
-      </Flex>
+      <h2>{title}</h2>
+      {!isHideAddBtn && (
+        <Flex className="btn-section" align="end" vertical>
+          <Button className="add-btn" onClick={() => handleAdd()}>
+            Add
+          </Button>
+        </Flex>
+      )}
       <Flex justify="start" className="content-section" wrap="wrap" gap="large">
         {portfolios.map((item, index) => (
           <CardComponent
             key={index}
+            isShowAction={isShowAction}
             portfolioImageURL={item.portfolio_picture}
             title={item.title}
             description={truncateString(item.description, 15)}

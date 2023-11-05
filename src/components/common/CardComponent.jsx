@@ -10,6 +10,7 @@ const propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   isView: PropTypes.bool,
+  isShowAction: PropTypes.bool,
   noImage: PropTypes.bool,
   onView: PropTypes.func,
   onEdit: PropTypes.func,
@@ -21,6 +22,7 @@ const defaultProps = {
   description: "",
   isView: false,
   noImage: false,
+  isShowAction: true,
   onView: () => {},
   onEdit: () => {},
   onDelete: () => {},
@@ -32,11 +34,15 @@ const CardComponent = ({
   description,
   isView,
   noImage,
+  isShowAction,
   onView,
   onEdit,
   onDelete,
 }) => {
   const renderAction = () => {
+    if (!isShowAction) {
+      return;
+    }
     const viewAction = (
       <EyeOutlined
         onClick={() => {

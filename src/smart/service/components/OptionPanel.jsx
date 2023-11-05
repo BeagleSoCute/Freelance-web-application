@@ -71,7 +71,7 @@ const OptionPanel = ({
           <Radio.Button value="findService">
             Looking for a freelancer
           </Radio.Button>
-          <Radio.Button value="findWork">Looking for a seeker</Radio.Button>
+          <Radio.Button value="provideService">Provide a service</Radio.Button>
         </Radio.Group>
       </div>
       <div className="panel-wrapper">
