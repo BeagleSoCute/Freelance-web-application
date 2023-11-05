@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Button, Form, Input, Select, message } from "antd";
 import PropTypes from "prop-types";
@@ -34,12 +34,20 @@ const ManageServiceForm = ({
   form,
 }) => {
   const isFindService = serviceType === "findService";
+  const [isDisableAdd, setIsDisableAdd] = useState(true);
   const onFinish = () => {};
   const handleAddPortfolio = () => {
-    onAddPortfolio(form.getFieldValue("relatedPortfolio"))
+    onAddPortfolio(form.getFieldValue("relatedPortfolio"));
     form.setFieldValue("relatedPortfolio", "");
-  }
-
+    setIsDisableAdd(true);
+  };
+  const handleDisableAddPort = () => {
+    if (!form.getFieldValue("relatedPortfolio")) {
+      setIsDisableAdd(true);
+    } else {
+      setIsDisableAdd(false);
+    }
+  };
   return (
     <StyledDiv>
       <Form
@@ -69,22 +77,25 @@ const ManageServiceForm = ({
           ""
         ) : (
           <>
-          <Form.Item label={"Select related portfolio"} name="relatedPortfolio">
-            <Select
-              className="select-component"
-              options={transformPortfolioOptions(portfolios)}
-            />
-         
-          </Form.Item>
-          <Button
+            <Form.Item
+              label={"Select related portfolio"}
+              name="relatedPortfolio"
+            >
+              <Select
+                className="select-component"
+                onSelect={() => setIsDisableAdd(false)}
+                options={transformPortfolioOptions(portfolios)}
+                allowClear
+              />
+            </Form.Item>
+            <Button
+              disabled={isDisableAdd}
               className="button"
-              onClick={() =>
-                handleAddPortfolio()
-              }
+              onClick={() => handleAddPortfolio()}
             >
               Add
             </Button>
-            </>
+          </>
         )}
       </Form>
     </StyledDiv>
