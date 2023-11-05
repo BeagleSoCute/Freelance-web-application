@@ -9,6 +9,7 @@ const propTypes = {
   portfolios: PropTypes.arrayOf(Object),
   isShowAction: PropTypes.bool,
   isHideAddBtn: PropTypes.bool,
+  isDeleteOnly: PropTypes.bool,
   title: PropTypes.string,
   viewPortfolio: PropTypes.func,
   selectPortfolio: PropTypes.func,
@@ -20,6 +21,7 @@ const defaultProps = {
   portfolios: [],
   isShowAction: true,
   isHideAddBtn: false,
+  isDeleteOnly:false,
   viewPortfolio: () => {},
   selectPortfolio: () => {},
   onDelete: () => {},
@@ -32,6 +34,7 @@ const DisplayPortfolio = ({
   viewPortfolio,
   isShowAction,
   isHideAddBtn,
+  isDeleteOnly,
   selectPortfolio,
   addPortfolio,
   onDelete,
@@ -67,6 +70,7 @@ const DisplayPortfolio = ({
           <CardComponent
             key={index}
             isShowAction={isShowAction}
+            isDeleteOnly={isDeleteOnly}
             portfolioImageURL={item.portfolio_picture}
             title={item.title}
             description={truncateString(item.description, 15)}

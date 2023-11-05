@@ -46,15 +46,21 @@ const ManageService = () => {
     setServiceType(e.target.value);
   };
   const handleAddPortfolio = (portfolioID) => {
-    console.log("-----port ID", portfolioID);
     const selectedPortfolio = user.portfolios.find(item => item._id === portfolioID );
-    console.log('result find', selectedPortfolio);
     const removeSelected = portfolioOptions.filter(
       (item) => item._id !== portfolioID
     );
     setPortfolioOptions(removeSelected);
     setRelatedPortfolio([...relatedPortfolio, selectedPortfolio]);
   };
+  const handleRemovePortfolio = (portfolioID) => {
+    const selectedPortfolio = user.portfolios.find(item => item._id === portfolioID );
+    const removeSelected = relatedPortfolio.filter(
+      (item) => item._id !== portfolioID
+    );
+    setPortfolioOptions([...portfolioOptions, selectedPortfolio]);
+    setRelatedPortfolio(removeSelected);
+  }
   const manageServiceFormProps = {
     serviceType,
     form,
@@ -75,8 +81,9 @@ const ManageService = () => {
             <DisplayPortfolio
               title="Related works"
               isHideAddBtn={true}
-              isShowAction={false}
+              isDeleteOnly={true}
               portfolios={relatedPortfolio}
+              onDelete={handleRemovePortfolio}
             />
           </>
         )}

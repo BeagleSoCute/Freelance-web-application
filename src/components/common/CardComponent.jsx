@@ -11,6 +11,7 @@ const propTypes = {
   description: PropTypes.string,
   isView: PropTypes.bool,
   isShowAction: PropTypes.bool,
+  isDeleteOnly: PropTypes.bool,
   noImage: PropTypes.bool,
   onView: PropTypes.func,
   onEdit: PropTypes.func,
@@ -23,6 +24,7 @@ const defaultProps = {
   isView: false,
   noImage: false,
   isShowAction: true,
+  isDeleteOnly:false,
   onView: () => {},
   onEdit: () => {},
   onDelete: () => {},
@@ -35,6 +37,7 @@ const CardComponent = ({
   isView,
   noImage,
   isShowAction,
+  isDeleteOnly,
   onView,
   onEdit,
   onDelete,
@@ -67,7 +70,10 @@ const CardComponent = ({
     );
     if (isView) {
       return [viewAction];
-    } else {
+    } else if(isDeleteOnly){
+      return [deleteAction]
+    }
+    else {
       return [viewAction, editAction, deleteAction];
     }
   };
