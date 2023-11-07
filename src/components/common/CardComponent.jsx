@@ -24,7 +24,7 @@ const defaultProps = {
   isView: false,
   noImage: false,
   isShowAction: true,
-  isDeleteOnly:false,
+  isDeleteOnly: false,
   onView: () => {},
   onEdit: () => {},
   onDelete: () => {},
@@ -70,10 +70,9 @@ const CardComponent = ({
     );
     if (isView) {
       return [viewAction];
-    } else if(isDeleteOnly){
-      return [deleteAction]
-    }
-    else {
+    } else if (isDeleteOnly) {
+      return [deleteAction];
+    } else {
       return [viewAction, editAction, deleteAction];
     }
   };

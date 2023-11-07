@@ -80,20 +80,20 @@ const OptionPanel = ({
             className="select-option"
             placeholder="Select type"
             options={typeOptions}
-            onSelect={(value) => onSelectOption('type',value)}
+            onChange={(value) => onSelectOption('type',value)}
           />
           <StyledSelect
             showSearch
             className="select-option"
             placeholder="Select Area"
             options={areaOptions}
-            onSelect={(value) => onSelectOption('area',value)}
+            onChange={(value) => onSelectOption('area',value)}
           />
           <StyledSelect
             className="select-option"
             placeholder="Select Category"
             options={categoryOptions(categoryData)}
-            onSelect={(value) => onSelectOption('category',value)}
+            onChange={(value) => onSelectOption('category',value)}
           />
           {isManage ? (
             ""
