@@ -99,7 +99,7 @@ const App = () => {
     return result.map((item) => getItem(item.label, item.key, item.logo));
   };
   const handleOnClick = (selected) => {
-    const menu = isAuth && user?.role === 'admin'? authenMenu : isAuth? authenMenu : unAuthenMenu
+    const menu = isAuth && user?.role === 'admin'? adminMenu : isAuth? authenMenu : unAuthenMenu
     const result = menu.find((item) => item.key === parseInt(selected.key));
     navigate(result.path);
   };

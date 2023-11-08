@@ -3,7 +3,7 @@ import AppLayout from "layouts/AppLayout";
 // import AppLayoutAntD from "layouts/AppLayout"
 import Login from "smart/Login";
 import Register from "smart/Register";
-import Dashboard from "smart/Dashboard";
+import Dashboard from "smart/adminPanel/Dashboard";
 import Profile from "smart/profile/Profile";
 import ProfileManagement from "smart/profileManagement/ProfileManagement";
 import Logout from "smart/Logout";
@@ -16,7 +16,6 @@ import UpdatePortfolio from "smart/portfolio/UpdatePortfolio";
 import ShowPortfolioDetail from "smart/portfolio/ShowPortfolioDetail";
 import ServicePage from "smart/service/ServicePage";
 import ManageService from "smart/service/ManageService";
-import AdminPanelPage from "smart/adminPanel/AdminPanelPage";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -32,7 +31,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "/logout", element: <Logout /> },
       {
-        path: "/dashboard",
+        path: "/admin-panel",
         element: <Dashboard />,
       },
       {
@@ -89,14 +88,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ManageService />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/admin-panel",
-        element: (
-          <PrivateRoute>
-            <AdminPanelPage />
           </PrivateRoute>
         ),
       },
