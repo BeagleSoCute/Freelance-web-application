@@ -24,23 +24,60 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const items = [
-  { key: 0, label: "Home", path: "/", logo: <PieChartOutlined /> },
-  {
+
+const menuConstants = {
+  home: { key: 0, label: "Home", path: "/", logo: <PieChartOutlined /> },
+  profile: {
     key: 1,
+    label: "Profile",
+    path: "/profile",
+    logo: <UserOutlined />,
+  },
+  services: {
+    key: 2,
     label: "Services",
     path: "/service-list",
     logo: <FundProjectionScreenOutlined />,
   },
-  { key: 2, label: "Dashboard", path: "/dashboard", logo: <DesktopOutlined /> },
-  { key: 3, label: "Profile", path: "/profile", logo: <UserOutlined /> },
-  { key: 4, label: "Login", path: "/login", logo: <TeamOutlined /> },
-  { key: 5, label: "Logout", path: "/logout", logo: <FileOutlined /> },
-  { key: 6, label: "Register", path: "/register", logo: <FileOutlined /> },
+  login: { key: 3, label: "Login", path: "/login", logo: <TeamOutlined /> },
+  logout: { key: 4, label: "Logout", path: "/logout", logo: <FileOutlined /> },
+  register: {
+    key: 5,
+    label: "Register",
+    path: "/register",
+    logo: <FileOutlined />,
+  },
+  adminPanel:  {
+    key: 6,
+    label: "Admin panel",
+    path: "/admin-panel",
+    logo: <DesktopOutlined />,
+  },
+};
+
+const authenMenu = [
+  menuConstants.home,
+  menuConstants.services,
+  menuConstants.profile,
+  menuConstants.logout
+];
+
+const adminMenu = [
+  menuConstants.home,
+  menuConstants.adminPanel,
+  menuConstants.services,
+  menuConstants.profile,
+  menuConstants.logout
+];
+
+const unAuthenMenu = [
+  menuConstants.home,
+  menuConstants.login,
+  menuConstants.register,
 ];
 
 const App = () => {
-  const { loading } = useContext(AppContext);
+  const { loading, user } = useContext(AppContext);
   const isAuth = checkIsAuth();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
@@ -48,20 +85,22 @@ const App = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const handleDisplayMenu = () => {
+    console.log('user',user)
     let result;
     if (isAuth) {
-      result = items.filter(
-        (item) => item.label !== "Login" && item.label !== "Register"
-      );
+        if(user?.role === 'admin'){
+          result = adminMenu
+        }else{
+          result = authenMenu
+        }
     } else {
-      result = items.filter(
-        (item) => item.label !== "Logout" && item.label !== "Profile"
-      );
+      result = unAuthenMenu
     }
     return result.map((item) => getItem(item.label, item.key, item.logo));
   };
   const handleOnClick = (selected) => {
-    const result = items.find((item) => item.key === parseInt(selected.key));
+    const menu = isAuth && user?.role === 'admin'? authenMenu : isAuth? authenMenu : unAuthenMenu
+    const result = menu.find((item) => item.key === parseInt(selected.key));
     navigate(result.path);
   };
   return (
@@ -93,13 +132,14 @@ const App = () => {
               mode="horizontal"
               defaultSelectedKeys={["0"]}
               onClick={handleOnClick}
-              items={items.map((item) => {
-                const key = item.key;
-                return {
-                  key,
-                  label: item.label,
-                };
-              })}
+              // items={items.map((item) => {
+              //   const key = item.key;
+              //   return {
+              //     key,
+              //     label: item.label,
+              //   };
+              // })}
+              items={handleDisplayMenu()}
             />
           </div>
           <Content
