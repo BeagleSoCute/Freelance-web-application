@@ -36,7 +36,14 @@ const ManageService = () => {
     setOptionValue({ ...optionValue, [key]: value });
   };
   const handleChangeServiceType = (e) => {
-    console.log("handleChangeServiceType", e.target.value);
+    setOptionValue({
+      area: "",
+      type: "",
+      category: "",
+    });
+    form.resetFields();
+    setPortfolioOptions(user.portfolios);
+    setRelatedPortfolio([]);
     setServiceType(e.target.value);
   };
   const handleAddPortfolio = (portfolioID) => {
@@ -70,9 +77,9 @@ const ManageService = () => {
       type: optionValue.type,
       area: optionValue.area,
       category: optionValue.category,
+      date: getCurrentDate(),
     };
     if (serviceType === "findService") {
-      console.log("transformData", transformData);
       const res = await addFindService(transformData);
       success = res.success;
       payload = res.payload;
@@ -81,7 +88,6 @@ const ManageService = () => {
         ...transformData,
         related_portfolios: relatedPortfolio.map((item) => item._id),
       };
-      console.log("provideServiceData",provideServiceData);
       const res = await addProvideService(provideServiceData);
       success = res.success;
       payload = res.payload;
@@ -89,7 +95,7 @@ const ManageService = () => {
     setLoading(false);
     if (success) {
       notification({ type: "success", message: "Create a post Success" });
-      // navigate("/profile");
+      navigate("/service-list");
     } else {
       notification({
         type: "error",
@@ -113,6 +119,7 @@ const ManageService = () => {
         onCancel={() => navigate("/service-list")}
       >
         <OptionPanel
+          optionValue={optionValue}
           onSelectOption={handleSelectOption}
           onChangeServiceType={handleChangeServiceType}
           isManage={true}

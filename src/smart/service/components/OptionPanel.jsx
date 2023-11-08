@@ -16,12 +16,14 @@ const propTypes = {
   categoryData: PropTypes.array,
   onSearch: PropTypes.func,
   isManage: PropTypes.bool,
+  optionValue: PropTypes.object,
   onSelectType: PropTypes.func,
   onSelectOption: PropTypes.func,
 };
 const defaultProps = {
   categoryData: categoryDataMock,
   isManage: false,
+  optionValue: { area: "", type: "", category: "" },
   onSearch: () => {},
   onSelectType: () => {},
   onSelectOption: () => {},
@@ -56,6 +58,7 @@ const OptionPanel = ({
   isManage,
   categoryData,
   onSearch,
+  optionValue,
   onSelectOption,
   onChangeServiceType,
 }) => {
@@ -77,23 +80,26 @@ const OptionPanel = ({
       <div className="panel-wrapper">
         <div>
           <StyledSelect
+            value={optionValue.type}
             className="select-option"
             placeholder="Select type"
             options={typeOptions}
-            onChange={(value) => onSelectOption('type',value)}
+            onChange={(value) => onSelectOption("type", value)}
           />
           <StyledSelect
+            value={optionValue.area}
             showSearch
             className="select-option"
             placeholder="Select Area"
             options={areaOptions}
-            onChange={(value) => onSelectOption('area',value)}
+            onChange={(value) => onSelectOption("area", value)}
           />
           <StyledSelect
+            value={optionValue.category}
             className="select-option"
             placeholder="Select Category"
             options={categoryOptions(categoryData)}
-            onChange={(value) => onSelectOption('category',value)}
+            onChange={(value) => onSelectOption("category", value)}
           />
           {isManage ? (
             ""
