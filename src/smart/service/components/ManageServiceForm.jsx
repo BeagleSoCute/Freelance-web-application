@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Form, Input, Select, message } from "antd";
 import PropTypes from "prop-types";
-import SkillTag from "components/skills/SkillTags";
-import AddData from "components/select/AddData";
+
 
 const propTypes = {
   serviceType: PropTypes.string,

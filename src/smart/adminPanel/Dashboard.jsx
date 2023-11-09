@@ -2,87 +2,59 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Row, Col, Button } from "antd";
 import { AppContext } from "contexts/app.context";
-import { checkIsAuth } from "helpers/auth.helper";
 import { getAllUsers } from "services/user.service";
 import TableData from "components/common/TableData";
 import { transformAllUsersDataToTable } from "helpers/user.helper";
 import { useNavigate } from "react-router-dom";
+import { allUserColums, serviceColums } from "./tableData";
+import OptionPanel from "./components/OptionPanel";
+import { showPendingPostService } from "services/admin.service";
+import { transformPrivideServiceTableData } from "./helpers/table.helper";
+import ContentLayout from "layouts/ContentLayout";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
   const { user, setLoading } = useContext(AppContext);
-
+  const [users, setUsers] = useState([]);
+  const [serviceData, setSerivceData] = useState([]);
+  const [currentTab, setCurrentTab] = useState("seeUsers");
   useEffect(() => {
     setLoading(true);
     const init = async () => {
-      const { success, allUsersData } = await getAllUsers();
-      if (success) {
-        const tableData = transformAllUsersDataToTable(allUsersData);
-        setUsers(tableData);
-      }
+      const { allUsersData } = await getAllUsers();
+      const { payload: pendingServiceLists } = await showPendingPostService();
+      const tableData = transformAllUsersDataToTable(allUsersData);
+      const provideServiceData =
+        transformPrivideServiceTableData(pendingServiceLists);
+      console.log("pendingServiceLists", provideServiceData);
+      setUsers(tableData);
+      setSerivceData(provideServiceData);
     };
     init();
     setLoading(false);
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
+  const handleChangeOption = (e) => {
+    setCurrentTab(e.target.value);
+  };
 
-  const allUserColums = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "View",
-      dataIndex: "view",
-      key: "view",
-      width: "5%",
-      render: (item, record) => (
-        <Button onClick={() => navigate(`/user/${record.id}`)}>View</Button>
-      ),
-    },
-    {
-      title: "Edit",
-      dataIndex: "edit",
-      key: "edit",
-      width: "5%",
-
-      render: (item, record) => <Button>Edit</Button>,
-    },
-    {
-      title: "Delete",
-      dataIndex: "delete",
-      key: "delete",
-      width: "5%",
-
-      render: (item, record) => <Button>Delete</Button>,
-    },
-  ];
+  const handleShowTableData = () => {
+    if (currentTab === "seeUsers") {
+      return { column: allUserColums(navigate), data: users };
+    } else if (currentTab === "approveServices") {
+      return { column: serviceColums(navigate), data: serviceData };
+    }
+  };
   return (
     <StyledDiv className="dashboard">
-      <h1>Dashboard</h1>
-      {checkIsAuth() ? (
-        <div>
-          <Row className="myInfo">
-            <Col span={6}>Name: {user.name} </Col>
-            <Col span={6}>Email:{user.email} </Col>
-          </Row>
-          <TableData columns={allUserColums} data={users} />
-        </div>
-      ) : (
-        <h2>Please Login into the system</h2>
-      )}
+      <ContentLayout>
+        <h1>Dashboard</h1>
+        <OptionPanel onChangeOption={handleChangeOption} />
+        <TableData
+          columns={handleShowTableData().column}
+          data={handleShowTableData().data}
+        />
+      </ContentLayout>
     </StyledDiv>
   );
 };

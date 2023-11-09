@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Row, Col, Select, Button, Radio } from "antd";
+import { Select, Button, Radio } from "antd";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import nzData from "assets/data/nzData.json";
