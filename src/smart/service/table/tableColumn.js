@@ -1,6 +1,6 @@
 import { Button } from "antd";
 
-export const serviceColums = (navigate) => {
+export const serviceColums = (navigate,type) => {
   return [
     {
       title: "By",
@@ -38,7 +38,7 @@ export const serviceColums = (navigate) => {
       dataIndex: "view",
       key: "view",
       render: (item, record) => (
-        <Button onClick={() => navigate(`/user/${record.id}`)}>View</Button>
+        <Button onClick={() => navigate(`/post-details/${type}/${record.id}`)}>View</Button>
       ),
     },
   ];

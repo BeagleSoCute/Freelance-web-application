@@ -4,11 +4,13 @@ import { Button, Form, Input, Select, message, Row, Col, Flex } from "antd";
 import PropTypes from "prop-types";
 
 const propTypes = {
+  postType: PropTypes.string,
   data: PropTypes.object,
   isProbideService: PropTypes.bool,
 };
 
 const defaultProps = {
+  postType: "provideService",
   isProbideService: true,
   data: {
     title: "",
@@ -25,7 +27,7 @@ const defaultProps = {
   },
 };
 
-const ShowPostContentSection = ({ data, isProbideService }) => {
+const ShowPostContentSection = ({postType, data, isProbideService }) => {
   const {
     title,
     description,
@@ -39,7 +41,7 @@ const ShowPostContentSection = ({ data, isProbideService }) => {
   return (
     <StyledDiv className="show-post-content-section">
       <div>
-        <h1>{isProbideService ? "Provide Service" : "Find a freelancer"}</h1>
+        <h1>{ postType==='provideService' ? "Provide Service" : "Find a freelancer"}</h1>
       </div>
       <div>
         <h2>{title}</h2>
@@ -47,7 +49,7 @@ const ShowPostContentSection = ({ data, isProbideService }) => {
       <Flex gap="large">
         <p>
           <span className="bold-text">Post by:</span>
-          {owner.first_name} {owner.last_name}
+          {owner?.first_name} {owner?.last_name}
         </p>
         <Button className="review-btn">Review Profile</Button>
       </Flex>

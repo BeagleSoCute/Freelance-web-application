@@ -17,6 +17,7 @@ import ShowPortfolioDetail from "smart/portfolio/ShowPortfolioDetail";
 import ServicePage from "smart/service/ServicePage";
 import ManageService from "smart/service/ManageService";
 import ShowApprovePostDetails from "smart/adminPanel/ShowApprovePostDetails";
+import ShowPostDetails from "smart/service/ShowPostDetails";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -96,6 +97,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ShowApprovePostDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/post-details/:type/:postID",
+        element: (
+          <PrivateRoute>
+            <ShowPostDetails />
           </PrivateRoute>
         ),
       },

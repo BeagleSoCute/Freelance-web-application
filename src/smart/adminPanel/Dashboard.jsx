@@ -25,7 +25,6 @@ const Dashboard = () => {
       const tableData = transformAllUsersDataToTable(allUsersData);
       const provideServiceData =
         transformPrivideServiceTableData(pendingServiceLists);
-      console.log("pendingServiceLists", provideServiceData);
       setUsers(tableData);
       setSerivceData(provideServiceData);
     };
