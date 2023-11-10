@@ -37,12 +37,13 @@ const ShowPostDetails = ({}) => {
   return (
     <div className="show-post-details">
       <ContentLayout
+      isDisable={data?.requestInfo ? true : false}
         isSubmit={true}
         onSubmit={handleSubmit}
-        onCancel={() => navigate()}
+        onCancel={() => navigate('/service-list')}
       >
         <ShowPostContentSection postType={type} data={data} />
-        <RequestForm form={form} />
+        <RequestForm requestInfo={data?.requestInfo} form={form} />
       </ContentLayout>
     </div>
   );

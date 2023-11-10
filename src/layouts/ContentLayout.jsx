@@ -5,15 +5,23 @@ import PropTypes from "prop-types";
 
 const propTypes = {
   isSubmit: PropTypes.bool,
+  isDisable: PropTypes.bool,
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func,
 };
 const defaultProps = {
   isSubmit: false,
+  isDisable: false,
   onCancel: () => {},
   onSubmit: () => {},
 };
-const ContentLayout = ({ children, isSubmit, onSubmit, onCancel }) => {
+const ContentLayout = ({
+  children,
+  isSubmit,
+  onSubmit,
+  onCancel,
+  isDisable,
+}) => {
   return (
     <Row className="content-layout">
       <Col span={1}></Col>
@@ -22,9 +30,10 @@ const ContentLayout = ({ children, isSubmit, onSubmit, onCancel }) => {
         {isSubmit && (
           <Col justify="center" className="submit-button-section" span={24}>
             <Button onClick={() => onCancel()} className="cancel-button">
-              Cancel
+              {isDisable ? "Back" : "Cancel"}
             </Button>
             <Button
+              disabled={isDisable}
               className="submit-button"
               type="primary"
               onClick={() => onSubmit()}

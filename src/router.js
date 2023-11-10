@@ -18,6 +18,7 @@ import ServicePage from "smart/service/ServicePage";
 import ManageService from "smart/service/ManageService";
 import ShowApprovePostDetails from "smart/adminPanel/ShowApprovePostDetails";
 import ShowPostDetails from "smart/service/ShowPostDetails";
+import UserDashboard from "smart/userPanel/UserDashboard";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -105,6 +106,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ShowPostDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/user-panel",
+        element: (
+          <PrivateRoute>
+            <UserDashboard />
           </PrivateRoute>
         ),
       },

@@ -53,10 +53,17 @@ const menuConstants = {
     path: "/admin-panel",
     logo: <DesktopOutlined />,
   },
+  userPanel:  {
+    key: 7,
+    label: "User panel",
+    path: "/user-panel",
+    logo: <DesktopOutlined />,
+  },
 };
 
 const authenMenu = [
   menuConstants.home,
+  menuConstants.userPanel,
   menuConstants.services,
   menuConstants.profile,
   menuConstants.logout
@@ -85,7 +92,6 @@ const App = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const handleDisplayMenu = () => {
-    console.log('user',user)
     let result;
     if (isAuth) {
         if(user?.role === 'admin'){
@@ -132,13 +138,6 @@ const App = () => {
               mode="horizontal"
               defaultSelectedKeys={["0"]}
               onClick={handleOnClick}
-              // items={items.map((item) => {
-              //   const key = item.key;
-              //   return {
-              //     key,
-              //     label: item.label,
-              //   };
-              // })}
               items={handleDisplayMenu()}
             />
           </div>

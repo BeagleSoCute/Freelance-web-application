@@ -16,7 +16,7 @@ const Login = () => {
       const userRes = await getMyData();
       if (userRes.success) {
         setUser(userRes.userData);
-        navigate("/dashboard");
+        navigate("/");
       }
     }
     setLoading(false);
