@@ -16,6 +16,7 @@ import UpdatePortfolio from "smart/portfolio/UpdatePortfolio";
 import ShowPortfolioDetail from "smart/portfolio/ShowPortfolioDetail";
 import ServicePage from "smart/service/ServicePage";
 import ManageService from "smart/service/ManageService";
+import ShowApprovePostDetails from "smart/adminPanel/ShowApprovePostDetails";
 
 import PrivateRoute from "smart/PrivateRoute";
 
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
     //   errorElement: <ErrorPage />,
     children: [
       { path: "/logout", element: <Logout /> },
+      { path: "/service-post", element: <Logout /> },
       {
         path: "/admin-panel",
         element: <Dashboard />,
@@ -73,8 +75,6 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-
-
       {
         path: "/profile-management",
         element: (
@@ -88,6 +88,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ManageService />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/admin-approve-post/:postID",
+        element: (
+          <PrivateRoute>
+            <ShowApprovePostDetails />
           </PrivateRoute>
         ),
       },

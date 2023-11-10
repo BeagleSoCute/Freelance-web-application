@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Row, Col, Button } from "antd";
 import { AppContext } from "contexts/app.context";
 import { getAllUsers } from "services/user.service";
 import TableData from "components/common/TableData";
 import { transformAllUsersDataToTable } from "helpers/user.helper";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { allUserColums, serviceColums } from "./tableData";
 import OptionPanel from "./components/OptionPanel";
 import { showPendingPostService } from "services/admin.service";
@@ -37,7 +36,6 @@ const Dashboard = () => {
   const handleChangeOption = (e) => {
     setCurrentTab(e.target.value);
   };
-
   const handleShowTableData = () => {
     if (currentTab === "seeUsers") {
       return { column: allUserColums(navigate), data: users };
