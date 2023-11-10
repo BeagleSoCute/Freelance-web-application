@@ -4,7 +4,7 @@ import ContentLayout from "layouts/ContentLayout";
 import ApprovePostForm from "./components/ApprovePostForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { showPostDetails, updatePostStatus } from "services/admin.service";
-import { Form, Input, Radio } from "antd";
+import { Form } from "antd";
 import { notification } from "helpers/notification.helper";
 
 const ShowApprovePostDetails = () => {

@@ -2,7 +2,8 @@ import {
   addFindServiceAPI,
   addProvideServiceAPI,
   showPostServiceListsAPI,
-  showPostDetailsAPI
+  showPostDetailsAPI,
+  sendServiceRequestAPI,
 } from "apis/service.api";
 
 export const addProvideService = async (data) => {
@@ -20,8 +21,12 @@ export const getServiceLists = async (data) => {
   return { success, payload };
 };
 
+export const showPostDetails = async (postID, type) => {
+  const { success, payload } = await showPostDetailsAPI(postID, type);
+  return { payload };
+};
 
-export const showPostDetails = async(postID,type) => {
-  const {success, payload} = await showPostDetailsAPI(postID,type);
-  return {payload}
-}
+export const sendServiceRequest = async (data, postID,type) => {
+  const { success, payload } = await sendServiceRequestAPI(data, postID,type);
+  return { success, payload };
+};
