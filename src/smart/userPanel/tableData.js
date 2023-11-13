@@ -49,7 +49,7 @@ export const serviceColums = (navigate,type) => {
   ];
 };
 
-export const serviceRequestColums = (navigate,type) => {
+export const serviceRequestColums = (navigate) => {
   return [
     {
       title: "By",
@@ -92,7 +92,7 @@ export const serviceRequestColums = (navigate,type) => {
       dataIndex: "view",
       key: "view",
       render: (item, record) => (
-        <Button onClick={() => navigate(`/post-details/${type}/${record.id}`)}>View</Button>
+        <Button onClick={() => navigate(`/post-details/${record.serviceType}/${record.id}`)}>View</Button>
       ),
     },
   ];

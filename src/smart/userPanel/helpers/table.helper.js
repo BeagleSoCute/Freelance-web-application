@@ -25,7 +25,8 @@ export const transformRequestTableData = (data) => {
       area: item.area,
       category: item.category,
       date: item.date,
-      status: item.candidateStatus
+      status: item.candidateStatus,
+      serviceType:item.serviceType
     };
   });
 };

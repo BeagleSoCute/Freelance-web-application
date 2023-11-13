@@ -45,7 +45,7 @@ const UserDashboard = () => {
     } else if (currentTab === "provideService") {
       return { column: serviceColums(navigate,currentTab), data: provideServiceList };
     } else if(currentTab ==="requestService"){ 
-      return { column: serviceRequestColums(navigate,currentTab), data: requestList };
+      return { column: serviceRequestColums(navigate), data: requestList };
     }
   };
   return (
