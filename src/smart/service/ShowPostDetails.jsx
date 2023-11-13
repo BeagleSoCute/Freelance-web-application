@@ -12,7 +12,7 @@ import { Form } from "antd";
 import { notification } from "helpers/notification.helper";
 import CandidateLists from "./components/CandidateLists";
 import CandidateDetails from "./components/CandidateDetails";
-
+import { getCurrentDate } from "helpers/date.helper";
 const ShowPostDetails = ({}) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ const ShowPostDetails = ({}) => {
   const handleSubmit = async () => {
     const data = {
       description: form.getFieldValue("description"),
+      date: getCurrentDate(),
     };
     const { success } = await sendServiceRequest(data, postID, type);
     if (success) {

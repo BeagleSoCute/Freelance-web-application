@@ -33,7 +33,7 @@ const RequestForm = ({ requestInfo, form }) => {
         autoComplete="off"
       >
         <h2>Send the request</h2>
-        <p><span className="bold-text">Status:</span> {requestInfo.status}</p>
+        <p><span className="bold-text">Status:</span> {requestInfo?.status}</p>
         <Form.Item label="Description" name="description">
           <Input.TextArea disabled={requestInfo ? true : false} />
         </Form.Item>
