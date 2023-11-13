@@ -13,3 +13,16 @@ export const transformServiceTableData = (data) => {
     };
   });
 };
+
+export const transformCandidateTableData = (data) => {
+  return data.map((item, index) => {
+    return {
+      key: index,
+      id: item._id,
+      name: `${item.user.first_name} ${item.user.last_name} `,
+      description: item.description,
+      date: item.date,
+      status: item.status,
+    };
+  });
+};

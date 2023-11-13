@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { showPostDetails, updatePostStatus } from "services/admin.service";
 import { Form } from "antd";
 import { notification } from "helpers/notification.helper";
+import { getCurrentDate } from "helpers/date.helper";
 
 const ShowApprovePostDetails = () => {
   const [form] = Form.useForm();
@@ -32,6 +33,7 @@ const ShowApprovePostDetails = () => {
     const data = {
       reason: form.getFieldValue("reason"),
       status: type,
+      date:getCurrentDate(),
     };
     const { success } = await updatePostStatus(data,postID);
     if (success) {

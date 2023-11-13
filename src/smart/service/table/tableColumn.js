@@ -11,7 +11,7 @@ export const serviceColums = (navigate,type) => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: "40%"
+      width: "20%"
     },
     {
       title: "Type",
@@ -39,6 +39,36 @@ export const serviceColums = (navigate,type) => {
       key: "view",
       render: (item, record) => (
         <Button onClick={() => navigate(`/post-details/${type}/${record.id}`)}>View</Button>
+      ),
+    },
+  ];
+};
+
+
+
+export const candidateColums = (onSetSeeCandidate) => {
+  return [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Request Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "View",
+      dataIndex: "view",
+      key: "view",
+      render: (item, record) => (
+        <Button onClick={() => onSetSeeCandidate(record)}>View</Button>
       ),
     },
   ];

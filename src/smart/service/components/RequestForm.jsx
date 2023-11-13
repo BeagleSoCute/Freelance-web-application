@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Form, Input, Radio } from "antd";
+import { Form, Input } from "antd";
 import PropTypes from "prop-types";
 const propTypes = {
   type: PropTypes.string,

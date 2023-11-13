@@ -8,5 +8,9 @@ export const showPostDetailsAPI = (postID, type = "provideService") =>
   apiInstance.get(`/service/showPostDetails/${type}/${postID}`);
 export const showPostServiceListsAPI = () =>
   apiInstance.get("service/showPostServiceLists");
-export const sendServiceRequestAPI = (data, postID,type) =>
+export const sendServiceRequestAPI = (data, postID, type) =>
   apiInstance.put(`service/sendServiceRequest/${type}/${postID}`, data);
+export const showMyServiceListsAPI = () =>
+  apiInstance.get("service/showMyServiceLists");
+export const approveCandidateAPI = (data, postID, type) =>
+  apiInstance.put(`service/approveCandidate/${type}/${postID}`, data);

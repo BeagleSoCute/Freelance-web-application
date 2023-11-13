@@ -3,24 +3,36 @@ import styled from "styled-components";
 import { AppContext } from "contexts/app.context";
 import TableData from "components/common/TableData";
 import { useNavigate } from "react-router-dom";
-import { serviceColums } from "./tableData";
+import { serviceColums, serviceRequestColums } from "./tableData";
 import OptionPanel from "./components/OptionPanel";
-import { transformPrivideServiceTableData } from "./helpers/table.helper.js";
+import { transformPrivideServiceTableData, transformRequestTableData } from "./helpers/table.helper.js";
 import ContentLayout from "layouts/ContentLayout";
+import { getMyServiceList } from "services/service.service";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const { setLoading } = useContext(AppContext);
-  const [serviceData, setSerivceData] = useState([]);
-  const [currentTab, setCurrentTab] = useState("seeUsers");
+  const [findServiceList, setFindServiceList] = useState([]);
+  const [provideServiceList, setProvideServiceList] = useState([]);
+  const [requestList, setRequestList] = useState([])
+  const [currentTab, setCurrentTab] = useState("findService");
   useEffect(() => {
     setLoading(true);
     const init = async () => {
-      const provideServiceData =
-        transformPrivideServiceTableData();
-      setSerivceData(provideServiceData);
+      const {success, payload} = await getMyServiceList();
+      if(success){
+        const provideServiceData =
+        transformPrivideServiceTableData(payload.provideServiceLists);
+        const findServiceData =
+        transformPrivideServiceTableData(payload.findServiceList);
+       const requestListData= transformRequestTableData(payload.requestList)
+        setProvideServiceList(provideServiceData);
+        setFindServiceList(findServiceData);
+        setRequestList(requestListData)
     };
-    // init();
+      }
+     
+    init();
     setLoading(false);
     // eslint-disable-next-line
   }, []);
@@ -28,10 +40,12 @@ const UserDashboard = () => {
     setCurrentTab(e.target.value);
   };
   const handleShowTableData = () => {
-    if (currentTab === "seeUsers") {
-      return 
-    } else if (currentTab === "approveServices") {
-      return { column: serviceColums(navigate), data: serviceData };
+    if (currentTab === "findService") {
+      return { column: serviceColums(navigate,currentTab), data: findServiceList };
+    } else if (currentTab === "provideService") {
+      return { column: serviceColums(navigate,currentTab), data: provideServiceList };
+    } else if(currentTab ==="requestService"){ 
+      return { column: serviceRequestColums(navigate,currentTab), data: requestList };
     }
   };
   return (

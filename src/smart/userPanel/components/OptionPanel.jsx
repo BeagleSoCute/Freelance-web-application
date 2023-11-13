@@ -15,17 +15,17 @@ const OptionPanel = ({ onChangeOption }) => {
     <StyledDiv className="user-option-panel">
       <Radio.Group
         onChange={(value) => onChangeOption(value)}
-        defaultValue="seeUsers"
+        defaultValue="findService"
         buttonStyle="solid"
       >
-        <Radio.Button value="seeFindServices">
+        <Radio.Button value="findService">
           See my finding service post
         </Radio.Button>
-        <Radio.Button value="seeProvideServices">
+        <Radio.Button value="provideService">
           See my providing service post
         </Radio.Button>
-        <Radio.Button value="approveServices">See my requests</Radio.Button>
-        <Radio.Button value="approveServices">See my projects</Radio.Button>
+        <Radio.Button value="requestService">See my requests</Radio.Button>
+        <Radio.Button value="approveServicesa">See my projects</Radio.Button>
       </Radio.Group>
     </StyledDiv>
   );

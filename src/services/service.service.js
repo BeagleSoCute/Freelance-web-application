@@ -4,6 +4,8 @@ import {
   showPostServiceListsAPI,
   showPostDetailsAPI,
   sendServiceRequestAPI,
+  showMyServiceListsAPI,
+  approveCandidateAPI
 } from "apis/service.api";
 
 export const addProvideService = async (data) => {
@@ -30,3 +32,13 @@ export const sendServiceRequest = async (data, postID,type) => {
   const { success, payload } = await sendServiceRequestAPI(data, postID,type);
   return { success, payload };
 };
+
+export const getMyServiceList = async () => {
+  const {success,payload} = await showMyServiceListsAPI();
+  return {success, payload};
+}
+
+export const approveCandidate = async (data, postID, type) => {
+  const {success} = await approveCandidateAPI(data, postID, type);
+  return {success};
+}

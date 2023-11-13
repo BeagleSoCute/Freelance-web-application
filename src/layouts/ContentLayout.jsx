@@ -6,17 +6,20 @@ import PropTypes from "prop-types";
 const propTypes = {
   isSubmit: PropTypes.bool,
   isDisable: PropTypes.bool,
+  isGoBackOnly: PropTypes.bool,
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func,
 };
 const defaultProps = {
   isSubmit: false,
   isDisable: false,
+  isGoBackOnly:false,
   onCancel: () => {},
   onSubmit: () => {},
 };
 const ContentLayout = ({
   children,
+  isGoBackOnly,
   isSubmit,
   onSubmit,
   onCancel,
@@ -30,8 +33,9 @@ const ContentLayout = ({
         {isSubmit && (
           <Col justify="center" className="submit-button-section" span={24}>
             <Button onClick={() => onCancel()} className="cancel-button">
-              {isDisable ? "Back" : "Cancel"}
+              {isGoBackOnly ? "Back" : "Cancel"}
             </Button>
+            {!isGoBackOnly &&
             <Button
               disabled={isDisable}
               className="submit-button"
@@ -40,6 +44,7 @@ const ContentLayout = ({
             >
               Submit
             </Button>
+}
           </Col>
         )}
       </Col>
@@ -51,6 +56,7 @@ const ContentLayout = ({
 
 const StyledDiv = styled.div`
   &content-layout {
+
     .child-content {
     }
   }

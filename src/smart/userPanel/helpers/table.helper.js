@@ -4,7 +4,6 @@ export const transformPrivideServiceTableData = (data) => {
     return {
       key: index,
       id: item._id,
-      name: `${item.owner.first_name} ${item.owner.last_name} `,
       title: truncateString(item.title,30),
       type: item.type,
       area: item.area,
@@ -14,3 +13,20 @@ export const transformPrivideServiceTableData = (data) => {
     };
   });
 };
+
+export const transformRequestTableData = (data) => {
+  return data.map((item, index) => {
+    return {
+      key: index,
+      id: item._id,
+      name: `${item.owner.first_name} ${item.owner.last_name} `,
+      title: truncateString(item.title,30),
+      type: item.type,
+      area: item.area,
+      category: item.category,
+      date: item.date,
+      status: item.candidateStatus
+    };
+  });
+};
+

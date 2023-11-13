@@ -32,6 +32,7 @@ const ShowPostContentSection = ({postType, data, isProbideService }) => {
     title,
     description,
     related_portfolios,
+    status,
     date,
     type,
     area,
@@ -54,6 +55,10 @@ const ShowPostContentSection = ({postType, data, isProbideService }) => {
         <Button className="review-btn">Review Profile</Button>
       </Flex>
       <div>
+      <p>
+          <span className="bold-text">Status:</span>
+          {status}
+        </p>
         <p>
           <span className="bold-text">Date:</span>
           {date}
