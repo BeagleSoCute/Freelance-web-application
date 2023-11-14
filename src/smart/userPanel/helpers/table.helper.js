@@ -31,3 +31,16 @@ export const transformRequestTableData = (data) => {
   });
 };
 
+export const transformProjectTableData = (data) => {
+  return data.map((item, index) => {
+    return {
+      key: index,
+      id: item._id,
+      freelancerName: `${item.freelancer.first_name} ${item.freelancer.last_name} `,
+      seekerName: `${item.seeker.first_name} ${item.seeker.last_name} `,
+      title: item.relatedService.title,
+      postID: item.relatedService.id,
+      status: item.status,
+    };
+  });
+};

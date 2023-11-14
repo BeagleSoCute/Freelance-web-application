@@ -18,6 +18,7 @@ export const transformCandidateTableData = (data) => {
   return data.map((item, index) => {
     return {
       key: index,
+      userID: item.user._id,
       id: item._id,
       name: `${item.user.first_name} ${item.user.last_name} `,
       description: item.description,

@@ -55,6 +55,8 @@ const ShowPostDetails = ({}) => {
     const transformData = {
       status: value,
       candidateID: currentCandidate.id,
+      candidateUserID: currentCandidate.userID,
+      postTitle: data.title
     };
     const { success } = await approveCandidate(transformData, postID, type);
     if (success) {
@@ -90,6 +92,7 @@ const ShowPostDetails = ({}) => {
             />
           ) : (
             <CandidateLists
+              status={data?.status}
               data={data?.candidates}
               onSetSeeCandidate={handleSetSeeCandidate}
             />

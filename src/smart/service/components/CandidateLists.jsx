@@ -6,21 +6,23 @@ import { candidateColums } from "../table/tableColumn";
 import { transformCandidateTableData } from "../helpers/table.helper.js";
 import PropTypes from "prop-types";
 const propTypes = {
+  status: PropTypes.string,
   data: PropTypes.array,
   onSetSeeCandidate: PropTypes.func
 };
 
 const defaultProps = {
+  status: '',
   data: [],
   onSetSeeCandidate: () => {}
 };
-const CandidateLists = ({data, onSetSeeCandidate}) => {
+const CandidateLists = ({status, data, onSetSeeCandidate}) => {
   const navigate = useNavigate();
   return (
     <StyledDiv className="candidate-list">
       <h2>Candidates</h2>
       <TableData
-        columns={candidateColums(onSetSeeCandidate)}
+        columns={candidateColums(onSetSeeCandidate, status)}
         data={transformCandidateTableData(data)}
       />
     </StyledDiv>

@@ -46,7 +46,7 @@ export const serviceColums = (navigate,type) => {
 
 
 
-export const candidateColums = (onSetSeeCandidate) => {
+export const candidateColums = (onSetSeeCandidate, status) => {
   return [
     {
       title: "Name",
@@ -68,7 +68,7 @@ export const candidateColums = (onSetSeeCandidate) => {
       dataIndex: "view",
       key: "view",
       render: (item, record) => (
-        <Button onClick={() => onSetSeeCandidate(record)}>View</Button>
+        <Button disabled={status === 'close' || status ==='reject' ? true : false} onClick={() => onSetSeeCandidate(record)}>View</Button>
       ),
     },
   ];

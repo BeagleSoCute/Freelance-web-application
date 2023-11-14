@@ -96,4 +96,38 @@ export const serviceRequestColums = (navigate) => {
       ),
     },
   ];
+}
+  export const projectColums = (navigate) => {
+    return [
+      {
+        title: "Freelancer name",
+        dataIndex: "freelancerName",
+        key: "freelancerName",
+      },
+      {
+        title: "Seeker name",
+        dataIndex: "seekerName",
+        key: "seekerName",
+      },
+      {
+        title: "Title",
+        dataIndex: "title",
+        key: "title",
+        width: "20%"
+      },
+      {
+        title: "Status",
+        dataIndex: "status",
+        key: "status",
+      },
+      {
+        title: "View",
+        dataIndex: "view",
+        key: "view",
+        render: (item, record) => (
+          <Button onClick={() => navigate(`/post-details/${record.serviceType}/${record.id}`)}>View</Button>
+        ),
+      },
+    ];
+
 };
