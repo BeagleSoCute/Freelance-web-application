@@ -19,8 +19,8 @@ import ManageService from "smart/service/ManageService";
 import ShowApprovePostDetails from "smart/adminPanel/ShowApprovePostDetails";
 import ShowPostDetails from "smart/service/ShowPostDetails";
 import UserDashboard from "smart/userPanel/UserDashboard";
-
 import PrivateRoute from "smart/PrivateRoute";
+import ProjectSection from "smart/project/ProjectSection";
 
 export const router = createBrowserRouter([
   {
@@ -114,6 +114,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UserDashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/project-requirement/:projectID",
+        element: (
+          <PrivateRoute>
+            <ProjectSection />
           </PrivateRoute>
         ),
       },
