@@ -13,3 +13,7 @@ export const getCurrentDate = () => {
 export const getFormatedDate = (date) => {
   return dayjs(date).format(DATE_FORMAT_DD_MM_YYYY);
 };
+
+export const parseFormattedDate = (formattedDate) => {
+  return dayjs(formattedDate, DATE_FORMAT_DD_MM_YYYY);
+};

@@ -8,24 +8,44 @@ import {
 } from "services/project.service";
 import { Form } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getFormatedDate } from "helpers/date.helper";
+import { getFormatedDate, parseFormattedDate } from "helpers/date.helper";
 import { notification } from "helpers/notification.helper";
-
+import DiscussionSection from "./components/DiscussionSection";
 const ProjectSection = () => {
   const navigate = useNavigate();
   const { projectID } = useParams();
   const [projectData, setProjectData] = useState();
   const [myRole, setMyRole] = useState("");
   const [isEditRequirement, setIsEditRequirement] = useState(true);
+  const [isAgree, setIsAgree] = useState("");
+  const [comment, setComment] = useState("");
   const [form] = Form.useForm();
-
+  let initialValue;
   useEffect(() => {
     const init = async () => {
       const { success, payload } = await showProjectDetails(projectID);
       if (success) {
         setProjectData(payload.projectDetails);
         setMyRole(payload.myRole);
+        if (payload.projectDetails.status === "negotiation") {
+          setIsEditRequirement(false);
+        }
+        initialValue = {
+          expectation: payload.projectDetails.expectation,
+          requirement: payload.projectDetails.requirement,
+          budget: payload.projectDetails.budget,
+          scope: payload.projectDetails.scope,
+          dueDate: [
+            parseFormattedDate(payload.projectDetails.startDate),
+            parseFormattedDate(payload.projectDetails.endDate),
+          ],
+        };
+        console.log(
+          "parseFormattedDate(payload.projectDetails.startDate)",
+          parseFormattedDate(payload.projectDetails.startDate)
+        );
       }
+      form.setFieldsValue(initialValue);
       console.log(" payload is ", payload.projectDetails);
     };
     init();
@@ -33,13 +53,12 @@ const ProjectSection = () => {
 
   const handleShowContent = () => {
     const isShowContent =
-      myRole === "seeker" ||
-      ((myRole === "admin" || myRole === "admin") &&
-        projectData.status !== "pending");
+      projectData?.status === "pending" &&
+      (myRole === "admin" || myRole === "freelancer");
     if (isShowContent) {
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   };
 
@@ -69,6 +88,14 @@ const ProjectSection = () => {
       });
     }
   };
+  const handleSubmitDiscussion = () => {
+    if (isAgree) {
+      setComment("");
+    }
+  };
+  const handleSetAgree = (isAgree) => {
+    setIsAgree(isAgree);
+  };
   return (
     <div className="project-section">
       <ContentLayout
@@ -85,6 +112,12 @@ const ProjectSection = () => {
           />
         ) : (
           <h1>Please wait the seeker to finish the requirement form </h1>
+        )}
+        {projectData?.status !== "pending" && myRole === "freelancer" && (
+          <DiscussionSection
+            isDiscussion={!isAgree}
+            onSetAgree={handleSetAgree}
+          />
         )}
       </ContentLayout>
     </div>

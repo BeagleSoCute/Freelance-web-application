@@ -4,6 +4,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const propTypes = {
+  submitBtnText: PropTypes.string,
   isSubmit: PropTypes.bool,
   isDisable: PropTypes.bool,
   isGoBackOnly: PropTypes.bool,
@@ -11,6 +12,7 @@ const propTypes = {
   onSubmit: PropTypes.func,
 };
 const defaultProps = {
+  submitBtnText: 'Submit',
   isSubmit: false,
   isDisable: false,
   isGoBackOnly:false,
@@ -24,6 +26,7 @@ const ContentLayout = ({
   onSubmit,
   onCancel,
   isDisable,
+  submitBtnText
 }) => {
   return (
     <Row className="content-layout">
@@ -42,7 +45,7 @@ const ContentLayout = ({
               type="primary"
               onClick={() => onSubmit()}
             >
-              Submit
+              {submitBtnText}
             </Button>
 }
           </Col>
