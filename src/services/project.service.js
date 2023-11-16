@@ -2,6 +2,8 @@ import {
   showMyProjectListsAPI,
   showProjectDetailsAPI,
   updateProjectRequirementAPI,
+  updateNegotiationCommentAPI,
+  freelancerApproveProjectRequirementAPI,
 } from "apis/project.api";
 
 export const getMyProjectLists = () => {
@@ -18,4 +20,12 @@ export const updateProjectRequirement = async (data, projectID) => {
     projectID
   );
   return { success, errorMessage };
+};
+
+export const updateNegotiationComment = (data, projectID) => {
+  return updateNegotiationCommentAPI(data, projectID);
+};
+
+export const freelancerApproveRequirement = (projectID) => {
+  return freelancerApproveProjectRequirementAPI(projectID);
 };

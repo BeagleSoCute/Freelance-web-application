@@ -5,20 +5,24 @@ import { useParams } from "react-router-dom";
 import {
   showProjectDetails,
   updateProjectRequirement,
+  updateNegotiationComment,
+  freelancerApproveRequirement,
 } from "services/project.service";
-import { Form } from "antd";
+import { Form, Button, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import { getFormatedDate, parseFormattedDate } from "helpers/date.helper";
 import { notification } from "helpers/notification.helper";
 import DiscussionSection from "./components/DiscussionSection";
+import { getCurrentDate } from "helpers/date.helper";
 const ProjectSection = () => {
   const navigate = useNavigate();
   const { projectID } = useParams();
   const [projectData, setProjectData] = useState();
   const [myRole, setMyRole] = useState("");
   const [isEditRequirement, setIsEditRequirement] = useState(true);
-  const [isAgree, setIsAgree] = useState("");
-  const [comment, setComment] = useState("");
+  const [isAgree, setIsAgree] = useState(false);
+  const [comment, setComment] = useState();
+  const [isAddEditMsg, setIsAddEditMsg] = useState(false);
   const [form] = Form.useForm();
   let initialValue;
   useEffect(() => {
@@ -27,7 +31,10 @@ const ProjectSection = () => {
       if (success) {
         setProjectData(payload.projectDetails);
         setMyRole(payload.myRole);
-        if (payload.projectDetails.status === "negotiation") {
+        if (
+          payload.projectDetails.status === "negotiation" ||
+          payload.projectDetails.status === "approve"
+        ) {
           setIsEditRequirement(false);
         }
         initialValue = {
@@ -40,10 +47,6 @@ const ProjectSection = () => {
             parseFormattedDate(payload.projectDetails.endDate),
           ],
         };
-        console.log(
-          "parseFormattedDate(payload.projectDetails.startDate)",
-          parseFormattedDate(payload.projectDetails.startDate)
-        );
       }
       form.setFieldsValue(initialValue);
       console.log(" payload is ", payload.projectDetails);
@@ -70,6 +73,8 @@ const ProjectSection = () => {
       expectation: form.getFieldValue("expectation"),
       scope: form.getFieldValue("scope"),
       budget: form.getFieldValue("budget"),
+      date: getCurrentDate(),
+      isEdit: isAddEditMsg,
     };
     const { success } = await updateProjectRequirement(
       transformData,
@@ -88,20 +93,75 @@ const ProjectSection = () => {
       });
     }
   };
-  const handleSubmitDiscussion = () => {
-    if (isAgree) {
+  const handleAddDiscussion = async () => {
+    const data = {
+      comment,
+      status: "needDiscussion",
+      date: getCurrentDate(),
+    };
+    const { success } = await updateNegotiationComment(data, projectID);
+    if (success) {
+      notification({
+        type: "success",
+        message: "Add the comment success",
+      });
+      const { payload } = await showProjectDetails(projectID);
+      setProjectData(payload.projectDetails);
       setComment("");
+    } else {
+      notification({
+        type: "error",
+        message: "Add the comment fail, please contract admin!",
+      });
     }
   };
-  const handleSetAgree = (isAgree) => {
-    setIsAgree(isAgree);
+  const handleChangeComment = (e) => {
+    setComment(e.target.value);
+  };
+  const handleSetAgree = (isOk) => {
+    if (myRole === "freelancer") {
+      setIsAgree(isOk);
+    } else if (myRole === "seeker" && isOk) {
+      setIsEditRequirement(true);
+      setIsAgree(true);
+      setIsAddEditMsg(true);
+    } else if (myRole === "seeker" && !isOk) {
+      setIsAgree(false);
+      setIsEditRequirement(false);
+      setIsAddEditMsg(false);
+    }
+  };
+  const handleFreelancerApproveRequirement = async () => {
+    const { success } = await freelancerApproveRequirement(projectID);
+    if (success) {
+      notification({
+        type: "success",
+        message: "Approve the project requirement success",
+      });
+      const { payload } = await showProjectDetails(projectID);
+      setProjectData(payload.projectDetails);
+    } else {
+      notification({
+        type: "error",
+        message:
+          "Can not approve the project requirement, please contract admin!",
+      });
+    }
+  };
+
+  const onSubmit = () => {
+    if (myRole === "seeker") {
+      handleSubmitRequirementForm();
+    } else {
+      handleFreelancerApproveRequirement();
+    }
   };
   return (
     <div className="project-section">
       <ContentLayout
-        isDisable={!isEditRequirement}
-        isSubmit={handleShowContent()}
-        onSubmit={() => handleSubmitRequirementForm()}
+        isDisable={!isEditRequirement && myRole === "seeker" ? true : false}
+        isSubmit={handleShowContent() && isAgree}
+        onSubmit={() => onSubmit()}
         onCancel={() => navigate("/user-panel")}
       >
         {handleShowContent() === true ? (
@@ -113,12 +173,25 @@ const ProjectSection = () => {
         ) : (
           <h1>Please wait the seeker to finish the requirement form </h1>
         )}
-        {projectData?.status !== "pending" && myRole === "freelancer" && (
+        {projectData?.status !== "pending" && (
           <DiscussionSection
+            data={projectData?.negotiation}
+            status={projectData?.status}
+            myRole={myRole}
+            comment={comment}
             isDiscussion={!isAgree}
             onSetAgree={handleSetAgree}
+            onChange={handleChangeComment}
+            onAdd={handleAddDiscussion}
           />
         )}
+        {projectData?.status === "approve" &&
+          !projectData?.isPaid &&
+          myRole === "seeker" && (
+            <Flex justify="center">
+              <Button className="normal-btn">Pay</Button>
+            </Flex>
+          )}
       </ContentLayout>
     </div>
   );
