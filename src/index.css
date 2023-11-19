@@ -51,3 +51,7 @@ p{
 .normal-btn{
   width: 250px;
 }
+
+span.bold-text{
+  margin-right:5px;
+}

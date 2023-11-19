@@ -125,7 +125,7 @@ export const serviceRequestColums = (navigate) => {
         dataIndex: "view",
         key: "view",
         render: (item, record) => (
-          <Button onClick={() => navigate(`/project-requirement/${record.id}`)}>View</Button>
+          <Button onClick={() => navigate(`/landing-project-page/${record.id}`)}>View</Button>
         ),
       },
     ];

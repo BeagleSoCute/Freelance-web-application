@@ -15,5 +15,9 @@ export const getFormatedDate = (date) => {
 };
 
 export const parseFormattedDate = (formattedDate) => {
+  console.log('formattedDate',formattedDate)
+  if(!formattedDate){
+    return
+  }
   return dayjs(formattedDate, DATE_FORMAT_DD_MM_YYYY);
 };

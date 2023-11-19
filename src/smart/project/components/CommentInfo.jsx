@@ -4,7 +4,7 @@ import { Flex, Radio, Input, Button, Row, Col } from "antd";
 import PropTypes from "prop-types";
 
 const propTypes = {
-  data: {},
+  data: PropTypes.object,
 };
 
 const defaultProps = {
@@ -15,7 +15,7 @@ const CommentInfo = ({ data }) => {
   return (
     <StyledDiv className="comment-info">
       <Row>
-        <Col span={4} className="profile-section">
+        <Col span={5} className="profile-section">
           <img
             className="profile-picture"
             alt="profile-pic"

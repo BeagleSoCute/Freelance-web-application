@@ -10,12 +10,14 @@ export const AppContext = createContext({
   isAddPortfolio: false,
   user: {},
   portfolio: {},
+  projectDetail: {},
   setLoading: () => {},
   setUser: () => {},
   clearPortfolio: () => {},
   selectPortfolio: () => {},
   viewPortfolio: () => {},
-  addPortfolio: () => {}
+  addPortfolio: () => {},
+  setProjectDetail: () => {},
 });
 export const { reducer, defaultValue, TYPES } = appReducer;
 export const AppProvider = ({ children }) => {
@@ -28,6 +30,7 @@ export const AppProvider = ({ children }) => {
     isEditPortfolio,
     isViewPortfolio,
     isAddPortfolio,
+    projectDetail,
   } = reducerStates;
   useEffect(() => {
     dispatch({ type: TYPES.SET_LOADING, payload: true });
@@ -50,6 +53,7 @@ export const AppProvider = ({ children }) => {
       isAuth,
       user,
       portfolio,
+      projectDetail,
       isEditPortfolio,
       isViewPortfolio,
       isAddPortfolio,
@@ -74,12 +78,16 @@ export const AppProvider = ({ children }) => {
       clearPortfolio: () => {
         dispatch({ type: TYPES.CLEAR_PORTFOLIO });
       },
+      setProjectDetail: (data) => {
+        dispatch({ type: TYPES.SET_PROJECT_DETAIL, payload:data });
+      },
     };
   }, [
     loading,
     isAuth,
     portfolio,
     user,
+    projectDetail,
     isEditPortfolio,
     isAddPortfolio,
     isViewPortfolio,

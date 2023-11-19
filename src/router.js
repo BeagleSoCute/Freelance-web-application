@@ -20,6 +20,8 @@ import ShowApprovePostDetails from "smart/adminPanel/ShowApprovePostDetails";
 import ShowPostDetails from "smart/service/ShowPostDetails";
 import UserDashboard from "smart/userPanel/UserDashboard";
 import PrivateRoute from "smart/PrivateRoute";
+import NegotiationSection from "smart/project/NegotiationSection";
+import LandingProjectPage from "smart/project/LandingProjectPage";
 import ProjectSection from "smart/project/ProjectSection";
 
 export const router = createBrowserRouter([
@@ -121,7 +123,23 @@ export const router = createBrowserRouter([
         path: "/project-requirement/:projectID",
         element: (
           <PrivateRoute>
+            <NegotiationSection />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/project/:projectID",
+        element: (
+          <PrivateRoute>
             <ProjectSection />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/landing-project-page/:projectID",
+        element: (
+          <PrivateRoute>
+            <LandingProjectPage />
           </PrivateRoute>
         ),
       },

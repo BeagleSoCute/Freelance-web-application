@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import { Flex, Form, Input, InputNumber, DatePicker } from "antd";
 import PropTypes from "prop-types";
+import { parseFormattedDate } from "helpers/date.helper";
 
 const propTypes = {
   data: PropTypes.object,
@@ -14,6 +15,22 @@ const defaultProps = {
 };
 
 const RequirementForm = ({ data, isDisable, form }) => {
+  const initialValues = {
+    expectation: data?.expectation,
+    requirement: data?.requirement,
+    budget: data?.budget,
+    scope: data?.scope,
+    dueDate: [
+      parseFormattedDate(data?.startDate),
+      parseFormattedDate(data?.endDate),
+    ],
+  };
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues)
+
+  },[initialValues])
+
   return (
     <StyledDiv className="requirement-form ">
       <Flex justify="center">
@@ -23,7 +40,7 @@ const RequirementForm = ({ data, isDisable, form }) => {
         form={form}
         name="manage-service-form"
         labelCol={{ span: 24 }}
-        initialValues={{ remember: true }}
+        initialValues={initialValues}
         autoComplete="off"
       >
         <Flex>

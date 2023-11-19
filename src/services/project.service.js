@@ -10,8 +10,9 @@ export const getMyProjectLists = () => {
   return showMyProjectListsAPI();
 };
 
-export const showProjectDetails = (projectID) => {
-  return showProjectDetailsAPI(projectID);
+export const showProjectDetails = async(projectID) => {
+  const res = await showProjectDetailsAPI(projectID);
+  return res
 };
 
 export const updateProjectRequirement = async (data, projectID) => {

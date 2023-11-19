@@ -9,6 +9,7 @@ const TYPES = {
   CLEAR_PORTFOLIO: "CLEAR_PORTFOLIO",
   VIEW_PORTFOLIO: "VIEW_PORTFOLIO",
   ADD_PORTFOLIO: "ADD_PORTFOLIO",
+  SET_PROJECT_DETAIL: "SET_PROJECT_DETAIL",
 };
 
 const defaultValue = {
@@ -17,6 +18,7 @@ const defaultValue = {
   isEditPortfolio: false,
   isViewPortfolio: false,
   isAddPortfolio: false,
+  projectDetail: {},
   user: {},
   portfolio: {},
   users: [],
@@ -49,7 +51,13 @@ const reducer = (state, action) => {
         portfolio: undefined,
         isViewPortfolio: false,
         isEditPortfolio: false,
-        isAddPortfolio: false
+        isAddPortfolio: false,
+      };
+    case TYPES.SET_PROJECT_DETAIL:
+      console.log('payload is', payload)
+      return {
+        ...state,
+        projectDetail: payload,
       };
     default:
       break;
