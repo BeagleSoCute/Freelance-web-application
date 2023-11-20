@@ -1,16 +1,18 @@
-import React, { useEffect, useState, useContext } from "react";
-import { AppContext } from "contexts/app.context";
-import { useNavigate, useParams } from "react-router-dom";
-import { Flex, Button, Row, Col, Form, Input } from "antd";
+import React, { useEffect, useState, useRef } from "react";
+import { Flex, Button, Row, Col, Form, Input, Checkbox, Select } from "antd";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import TaskComponent from "./TaskComponent";
+import { randomString } from "helpers/common.helper";
+import CheckListComponent from "./ChecklistComponent";
+import { getCurrentDate } from "helpers/date.helper";
 
 const propTypes = {
   title: PropTypes.string,
   date: PropTypes.string,
   priority: PropTypes.string,
   progress: PropTypes.string,
+  onClose: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
 
 const defaultProps = {
@@ -18,22 +20,92 @@ const defaultProps = {
   date: "date",
   priority: "high",
   progress: "progress",
+  onClose: () => {},
+  onSubmit: () => {},
 };
 
-const ManageTaskForm = ({ title, date, priority, progress, form }) => {
+const priorityOptions = [
+  { label: "High", value: "high" },
+  { label: "Medium", value: "medium" },
+  { label: "Low", value: "low" },
+];
+
+const progressOptions = [
+  { label: "Todo", value: "todo" },
+  { label: "In-progress", value: "inProgress" },
+  { label: "Done", value: "done" },
+];
+
+const ManageTaskForm = ({
+  title,
+  date,
+  priority,
+  progress,
+  onClose,
+  onSubmit,
+}) => {
+  const [form] = Form.useForm();
+  const [checkList, setCheckList] = useState([]);
+  const [selectProgress, setSelectProgress] = useState("");
+  const [selectPriority, setSelectPriority] = useState("");
+  const [inputCheckDes, setInputChecDes] = useState("");
+  const [inputTitle, setInputTitle] = useState("");
+  const handleSetCheckList = () => {
+    const data = {
+      id: randomString(),
+      description: inputCheckDes,
+      isDone: false,
+    };
+    setCheckList([...checkList, data]);
+    setInputChecDes("");
+  };
+  const handleRemove = (id) => {
+    const afterRemoved = checkList.filter((item) => item.id !== id);
+    setCheckList(afterRemoved);
+  };
+  const handleCheck = (id, value) => {
+    const afterEdited = checkList.map((item) =>
+      item.id === id ? { ...item, isDone: value } : item
+    );
+    setCheckList(afterEdited);
+  };
+
+  const handleSubmit = () => {
+    const data = {
+      title: inputTitle,
+      priority: selectPriority,
+      progress: selectProgress,
+      description: form.getFieldValue("description"),
+      scope: form.getFieldValue("scope"),
+      checkList,
+      date: getCurrentDate()
+    };
+    onSubmit(data);
+  };
   return (
     <StyledDiv className="manage-task-form ">
       <Flex justify="space-between">
-        <div className="bold-text">{title}</div>
+        <div>
+          <span className="bold-text">Add title:</span>
+          <Input onChange={(e) => setInputTitle(e.target.value)} />
+        </div>
         <div>{date}</div>
       </Flex>
       <p>
         <span className="bold-text">Priority:</span>
-        {priority}
+        <Select
+          onSelect={(value) => setSelectPriority(value)}
+          className="normal-select"
+          options={priorityOptions}
+        />
       </p>
       <p>
         <span className="bold-text">Progress:</span>
-        {progress}
+        <Select
+          onSelect={(value) => setSelectProgress(value)}
+          className="normal-select"
+          options={progressOptions}
+        />
       </p>
 
       <Form
@@ -46,24 +118,64 @@ const ManageTaskForm = ({ title, date, priority, progress, form }) => {
         <Form.Item
           label="Scope"
           name="scope"
-          rules={[{ required: true, message: "Please input a scope!" }]}
         >
-          <Input.TextArea disabled={isDisable} style={{ height: 150 }} />
+          <Input.TextArea style={{ height: 150 }} />
         </Form.Item>
         <Form.Item
           label="Description"
           name="description"
-          rules={[{ required: true, message: "Please input a description!" }]}
         >
-          <Input.TextArea disabled={isDisable} style={{ height: 150 }} />
+          <Input.TextArea style={{ height: 150 }} />
         </Form.Item>
       </Form>
+
+      <div className="progress-section">
+        <Flex justify="space-between">
+          <h2 className="bold-text progress-title">Progress</h2>
+        </Flex>
+        <div>
+          <p>Add progress</p>
+          <Input
+            value={inputCheckDes}
+            onChange={(e) => setInputChecDes(e.target.value)}
+          />
+          <Button
+            onClick={() => handleSetCheckList()}
+            className="normal-btn add-progress"
+          >
+            Add
+          </Button>
+        </div>
+        <div className="diplay checklist">
+          {checkList.map((item, index) => (
+            <CheckListComponent
+              key={index}
+              id={item?.id}
+              description={item?.description}
+              onCheck={handleCheck}
+              onRemove={handleRemove}
+            />
+          ))}
+        </div>
+      </div>
+      <Flex justify="center" gap="middle">
+        <Button onClick={onClose}>Cancel</Button>
+        <Button type="primary" onClick={() => handleSubmit()}>
+          Confirm
+        </Button>
+      </Flex>
     </StyledDiv>
   );
 };
 
 const StyledDiv = styled.div`
   &.manage-task-form {
+    .progress-section {
+      padding: 20px;
+    }
+    .add-progress {
+      margin-top: 20px;
+    }
   }
 `;
 

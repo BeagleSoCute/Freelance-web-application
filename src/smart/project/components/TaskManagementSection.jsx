@@ -6,34 +6,60 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import TaskComponent from "./TaskComponent";
 
+const propTypes = {
+  tasks: PropTypes.object,
+  onOpenTask: PropTypes.func,
+};
 
-const propTypes = {};
+const defaultProps = {
+  tasks: {},
+  onOpenTask: () => {},
+};
 
-const defaultProps = {};
+const taskComponentProps = (item) => {
+  return {
+    title: item.title,
+    date: item.date,
+    priority: item.priority,
+    progress: item.progress,
+  };
+};
 
-const TaskManagementSection = () => {
+const TaskManagementSection = ({ tasks, onOpenTask }) => {
   return (
     <StyledDiv className="task-management-section">
       <Flex justify="center">
         <h2>Tasks</h2>
       </Flex>
       <Flex justify="end">
-        <Button className="normal-btn">Add</Button>
+        <Button onClick={onOpenTask} className="normal-btn">
+          Add
+        </Button>
       </Flex>
       <div className="task-section">
-      <h3>Todo</h3>
-
+        <h3>Todo</h3>
         <Row className="todo">
-          <Col span={5}>
-          <TaskComponent/>
-          </Col>
-        </Row>
+          {tasks?.todo.map((item) => (
+            <Col span={5}>
+              <TaskComponent {...taskComponentProps(item)} />
+            </Col>
+          ))}
+        </Row>{" "}
+        <h3>In progress</h3>
         <Row className="in-progress">
-          <h3>In progress</h3>
+          {tasks?.inProgress.map((item) => (
+            <Col span={5}>
+              <TaskComponent {...taskComponentProps(item)} />
+            </Col>
+          ))}
         </Row>
-
+        <h3>Done</h3>
         <Row className="done">
-          <h3>Done</h3>
+          {tasks?.done.map((item) => (
+            <Col span={5}>
+              <TaskComponent {...taskComponentProps(item)} />
+            </Col>
+          ))}
         </Row>
       </div>
     </StyledDiv>

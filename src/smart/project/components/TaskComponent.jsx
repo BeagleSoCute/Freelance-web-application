@@ -44,6 +44,7 @@ const StyledDiv = styled.div`
   &.task-component {
     padding: 20px;
     border: 1px solid black;
+    margin: 0px 10px;
     button {
       margin-top: 5px;
       width: 250px;

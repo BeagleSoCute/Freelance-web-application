@@ -55,3 +55,6 @@ p{
 span.bold-text{
   margin-right:5px;
 }
+.normal-select{
+  width: 150px;
+}
