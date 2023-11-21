@@ -58,3 +58,7 @@ span.bold-text{
 .normal-select{
   width: 150px;
 }
+
+.alert-text{
+  color: red;
+}

@@ -10,6 +10,7 @@ const propTypes = {
   id: PropTypes.number,
   description: PropTypes.string,
   isCheck: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   onRemove: PropTypes.func,
   onCheck: PropTypes.func,
 };
@@ -18,6 +19,7 @@ const defaultProps = {
   id: 0,
   description: "des...",
   isCheck: false,
+  isDisabled: false,
   onRemove: () => {},
   onCheck: () => {},
 };
@@ -26,6 +28,7 @@ const CheckListComponent = ({
   id,
   description,
   isCheck,
+  isDisabled,
   onCheck,
   onRemove,
 }) => {
@@ -35,14 +38,21 @@ const CheckListComponent = ({
         <Row>
           <Checkbox
             defaultChecked={isCheck}
+            disabled={isDisabled}
             onChange={(e) => onCheck(id, e.target.checked)}
           />
           <p className="des">{description}</p>
         </Row>
-
-        <div className="delete-section">
-          <DeleteOutlined classID="delete-icon" onClick={() => onRemove(id)} />
-        </div>
+        {isDisabled ? (
+          ""
+        ) : (
+          <div className="delete-section">
+            <DeleteOutlined
+              classID="delete-icon"
+              onClick={() => onRemove(id)}
+            />
+          </div>
+        )}
       </Flex>
     </StyledDiv>
   );

@@ -6,6 +6,9 @@ import {
   freelancerApproveProjectRequirementAPI,
   addTaskAPI,
   updateTaskAPI,
+  addCommentAPI,
+  completeProjectAPI,
+  requestRejectProjectAPI,
 } from "apis/project.api";
 
 export const getMyProjectLists = () => {
@@ -40,4 +43,16 @@ export const addTask = async (data, projectID) => {
 
 export const updateTask = (data, projectID) => {
   return updateTaskAPI(data, projectID);
+};
+
+export const addProjectComment = (data, projectID) => {
+  return addCommentAPI(data, projectID);
+};
+
+export const completeProject = (isComplete, projectID) => {
+  return completeProjectAPI({ isComplete }, projectID);
+};
+
+export const requestRejectProject = (projectID) => {
+  return requestRejectProjectAPI(projectID);
 };

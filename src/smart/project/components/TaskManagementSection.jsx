@@ -8,6 +8,7 @@ import TaskComponent from "./TaskComponent";
 
 const propTypes = {
   tasks: PropTypes.object,
+  isDisabled: PropTypes.bool,
   onOpenTask: PropTypes.func,
   onView: PropTypes.func,
   viewTaskData:PropTypes.object
@@ -15,12 +16,13 @@ const propTypes = {
 
 const defaultProps = {
   tasks: {},
+  isDisabled: false,
   viewTaskData: {},
   onOpenTask: () => {},
   onView: () => {},
 };
 
-const TaskManagementSection = ({ tasks, viewTaskData, onOpenTask, onView }) => {
+const TaskManagementSection = ({ tasks, viewTaskData, isDisabled, onOpenTask, onView }) => {
   const taskComponentProps = (item) => {
     return {
       title: item.title,
@@ -37,7 +39,7 @@ const TaskManagementSection = ({ tasks, viewTaskData, onOpenTask, onView }) => {
         <h2>Tasks</h2>
       </Flex>
       <Flex justify="end">
-        <Button onClick={onOpenTask} className="normal-btn">
+        <Button disabled={isDisabled} onClick={onOpenTask} className="normal-btn">
           Add
         </Button>
       </Flex>

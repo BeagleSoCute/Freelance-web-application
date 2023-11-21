@@ -29,12 +29,15 @@ const CommentInfo = ({ data }) => {
           <p className="date">
             <span className="bold-text">Date:</span> {data?.date}
           </p>
-          <p className="status">
-            <span className="bold-text">
-              Status:            </span>
+          {data?.status && (
+            <p className="status">
+              <span className="bold-text">Status: </span>
 
-              {data?.status === "needDiscussion" ? "Need a discussion" : "Edit the requirement"}
-          </p>
+              {data?.status === "needDiscussion"
+                ? "Need a discussion"
+                : "Edit the requirement"}
+            </p>
+          )}
           <p>{data?.comment}</p>
         </Col>
       </Row>
@@ -62,7 +65,6 @@ const StyledDiv = styled.div`
     .date {
       font-size: 12px;
     }
-    
   }
 `;
 

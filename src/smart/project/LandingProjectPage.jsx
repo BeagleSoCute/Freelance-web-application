@@ -14,9 +14,9 @@ const LandingProjectPage = () => {
       setLoading(false)
 
       if (success) {
-        const data = payload.projectDetails;
+        const data = payload;
         setProjectDetail(data);
-        if (data?.status !== "inProgress" && !data?.isPaid) {
+        if (data?.projectDetails.status !== "inProgress" && !data?.projectDetails.isPaid) {
           navigate(`/project-requirement/${projectID}`);
         } else {
           navigate(`/project/${projectID}`);

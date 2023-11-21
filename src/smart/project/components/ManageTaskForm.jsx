@@ -14,6 +14,7 @@ const propTypes = {
   progress: PropTypes.string,
   onClose: PropTypes.func,
   onSubmit: PropTypes.func,
+  isDisabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -21,6 +22,7 @@ const defaultProps = {
   date: "date",
   priority: "high",
   progress: "progress",
+  isDisabled: false,
   onClose: () => {},
   onSubmit: () => {},
 };
@@ -38,14 +40,11 @@ const progressOptions = [
 ];
 
 const ManageTaskForm = ({
-  title,
-  date,
-  priority,
-  progress,
   viewTaskData,
   onClose,
   onSubmit,
   onEdit,
+  isDisabled,
 }) => {
   const [form] = Form.useForm();
   const [checkList, setCheckList] = useState(
@@ -101,15 +100,17 @@ const ManageTaskForm = ({
         <div>
           <span className="bold-text">Add title:</span>
           <Input
+            disabled={isDisabled}
             value={inputTitle}
             onChange={(e) => setInputTitle(e.target.value)}
           />
         </div>
-        <div>{date}</div>
+        <div>{viewTaskData ? viewTaskData?.date : ""}</div>
       </Flex>
       <p>
         <span className="bold-text">Priority:</span>
         <Select
+          disabled={isDisabled}
           value={selectPriority}
           onSelect={(value) => setSelectPriority(value)}
           className="normal-select"
@@ -119,6 +120,7 @@ const ManageTaskForm = ({
       <p>
         <span className="bold-text">Progress:</span>
         <Select
+          disabled={isDisabled}
           value={selectProgress}
           onSelect={(value) => setSelectProgress(value)}
           className="normal-select"
@@ -137,10 +139,10 @@ const ManageTaskForm = ({
         autoComplete="off"
       >
         <Form.Item label="Scope" name="scope">
-          <Input.TextArea style={{ height: 150 }} />
+          <Input.TextArea disabled={isDisabled} style={{ height: 150 }} />
         </Form.Item>
         <Form.Item label="Description" name="description">
-          <Input.TextArea style={{ height: 150 }} />
+          <Input.TextArea disabled={isDisabled} style={{ height: 150 }} />
         </Form.Item>
       </Form>
 
@@ -149,17 +151,24 @@ const ManageTaskForm = ({
           <h2 className="bold-text progress-title">Progress</h2>
         </Flex>
         <div>
-          <p>Add progress</p>
-          <Input
-            value={inputCheckDes}
-            onChange={(e) => setInputChecDes(e.target.value)}
-          />
-          <Button
-            onClick={() => handleSetCheckList()}
-            className="normal-btn add-progress"
-          >
-            Add
-          </Button>
+          {isDisabled ? (
+            ""
+          ) : (
+            <>
+              <p>Add progress</p>
+              <Input
+                value={inputCheckDes}
+                onChange={(e) => setInputChecDes(e.target.value)}
+              />
+              <Button
+                disabled={isDisabled}
+                onClick={() => handleSetCheckList()}
+                className="normal-btn add-progress"
+              >
+                Add
+              </Button>
+            </>
+          )}
         </div>
         <div className="diplay checklist">
           {checkList.map((item, index) => (
@@ -169,6 +178,7 @@ const ManageTaskForm = ({
               isCheck={item?.isDone}
               description={item?.description}
               onCheck={handleCheck}
+              isDisabled={isDisabled}
               onRemove={handleRemove}
             />
           ))}
@@ -176,9 +186,13 @@ const ManageTaskForm = ({
       </div>
       <Flex justify="center" gap="middle">
         <Button onClick={onClose}>Cancel</Button>
-        <Button type="primary" onClick={() => handleSubmit()}>
-          Confirm
-        </Button>
+        {isDisabled ? (
+          ""
+        ) : (
+          <Button type="primary" onClick={() => handleSubmit()}>
+            Confirm
+          </Button>
+        )}
       </Flex>
     </StyledDiv>
   );

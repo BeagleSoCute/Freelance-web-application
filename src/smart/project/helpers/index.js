@@ -1,11 +1,9 @@
 export const categorizeTasks = (data) => {
-  console.log("data", data);
   if (!data) {
     return { todo: [], inProgress: [], done: [] };
   }
   const result = data.reduce(
     (acc, curr) => {
-      console.log("curr", curr);
       acc[curr.progress].push(curr);
       return acc;
     },
