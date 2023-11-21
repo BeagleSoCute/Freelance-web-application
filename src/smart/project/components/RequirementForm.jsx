@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import { Flex, Form, Input, InputNumber, DatePicker } from "antd";
+import { Flex, Form, Input, InputNumber, DatePicker, Button } from "antd";
 import PropTypes from "prop-types";
 import { parseFormattedDate } from "helpers/date.helper";
-
+import { useNavigate, useParams } from "react-router-dom";
 const propTypes = {
   data: PropTypes.object,
   isDisable: PropTypes.bool,
@@ -14,7 +14,9 @@ const defaultProps = {
   isDisable: false,
 };
 
-const RequirementForm = ({ data, isDisable, form }) => {
+const RequirementForm = ({ data, isDisable , form }) => {
+  const navigate = useNavigate();
+  const {projectID} = useParams();
   const initialValues = {
     expectation: data?.expectation,
     requirement: data?.requirement,
@@ -33,8 +35,12 @@ const RequirementForm = ({ data, isDisable, form }) => {
 
   return (
     <StyledDiv className="requirement-form ">
-      <Flex justify="center">
+      <Flex justify="space-between">
+        <div></div>
         <h1>{data?.title}</h1>
+        <div>
+        {isDisable ? <Button onClick={() => navigate(`/project/${projectID}`)}>Back to your project</Button>: ''}
+        </div>
       </Flex>
       <Form
         form={form}

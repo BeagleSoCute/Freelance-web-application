@@ -27,7 +27,7 @@ const NegotiationSection = () => {
   const [comment, setComment] = useState();
   const [isAddEditMsg, setIsAddEditMsg] = useState(false);
   const [form] = Form.useForm();
-
+const isSeeOnly = projectDetail?.status !== 'pending';
   useEffect(() => {
     const init = async () => {
       if (isEmpty(projectDetail) && !loading) {
@@ -178,7 +178,7 @@ const NegotiationSection = () => {
       >
         {handleShowContent() === true ? (
           <RequirementForm
-            isDisable={!isEditRequirement}
+            isDisable={!isEditRequirement || isSeeOnly}
             data={projectDetail}
             form={form}
           />
@@ -195,6 +195,7 @@ const NegotiationSection = () => {
             onSetAgree={handleSetAgree}
             onChange={handleChangeComment}
             onAdd={handleAddDiscussion}
+            isDisable={isSeeOnly}
           />
         )}
         {projectDetail?.status === "approve" &&

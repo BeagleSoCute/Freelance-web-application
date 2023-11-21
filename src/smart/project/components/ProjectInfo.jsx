@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AppContext } from "contexts/app.context";
 import { useNavigate, useParams } from "react-router-dom";
-import { Flex } from "antd";
+import { Flex, Button } from "antd";
 import PropTypes from "prop-types";
 
 const propTypes = {
   data: PropTypes.object,
+  projectID: PropTypes.string
 };
 
 const defaultProps = {
   data: {},
 };
 
-const ProjectInfo = ({ data }) => {
+const ProjectInfo = ({ data, projectID }) => {
+  const navigate = useNavigate();
   return (
     <div className="project-section">
       <Flex className="title-section" justify="space-between">
@@ -21,6 +23,10 @@ const ProjectInfo = ({ data }) => {
           {data?.startDate} - {data?.endDate}
         </p>
       </Flex>
+      <Button
+        onClick={() => navigate(`/project-requirement/${projectID}`)}
+      >See Project Requirement</Button>
+      
       <div className="name-section">
         <p>
           <span className="bold-text">Client:</span> {data?.seeker?.first_name}{" "}

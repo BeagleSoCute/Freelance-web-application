@@ -11,7 +11,7 @@ import {
   updateTask,
   addProjectComment,
   completeProject,
-  requestRejectProject
+  requestRejectProject,
 } from "services/project.service";
 import { notification } from "helpers/notification.helper";
 import { categorizeTasks } from "./helpers/index";
@@ -137,21 +137,23 @@ const ProjectSection = ({ data }) => {
   };
 
   const handleRequestRejectProject = async () => {
-    const { success } = await requestRejectProject(
-      projectID);
+    const { success } = await requestRejectProject(projectID);
     if (success) {
       notification({
         type: "success",
-        message: "Request for rejecting the project success, please wait for an admin to review your request",
+        message:
+          "Request for rejecting the project success, please wait for an admin to review your request",
       });
       navigate(`/landing-project-page/${projectID}`);
     } else {
       notification({
         type: "error",
-        message: "equest for rejecting the project fail, please contract admin!",
+        message:
+          "equest for rejecting the project fail, please contract admin!",
       });
     }
-  };  return (
+  };
+  return (
     <div className="project-section">
       <ContentLayout>
         {isDisplayTask ? (
@@ -167,7 +169,7 @@ const ProjectSection = ({ data }) => {
           />
         ) : (
           <>
-            <ProjectInfo data={projectDetail} />
+            <ProjectInfo data={projectDetail} projectID={projectID} />
             <TaskManagementSection
               viewTaskData={viewTaskData}
               tasks={tasks}

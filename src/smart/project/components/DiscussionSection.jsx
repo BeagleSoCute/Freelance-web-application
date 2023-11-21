@@ -19,6 +19,7 @@ const defaultProps = {
 
 const DiscussionSection = ({
   status,
+  isDisable,
   myRole,
   comment,
   data,
@@ -31,37 +32,43 @@ const DiscussionSection = ({
     <StyledDiv className="discussion-section">
       {status !== "approve" && (
         <>
-          {" "}
-          <p className="bold-text">
-            {myRole === "freelancer"
-              ? " Do you agree with all requirements provided by the seeker? If you disagree, you can start a discussion"
-              : "Do you agree to edit the project requirement? If not, you can provide a reason"}
-          </p>
-          <Radio.Group
-            onChange={(e) => {
-              onSetAgree(e.target.value);
-            }}
-            defaultValue={false}
-            buttonStyle="solid"
-          >
-            <Radio.Button value={true}>
-              {myRole === "freelancer" ? "Apprpve" : "Edit Requirement"}
-            </Radio.Button>
-            <Radio.Button value={false}>Need discussion</Radio.Button>
-          </Radio.Group>
-          {isDiscussion && (
+          {isDisable ? (
+            ""
+          ) : (
             <>
-              <div className="discussion-section">
-                <p>Add Comment</p>
-                <Input.TextArea
-                  onChange={(e) => onChange(e)}
-                  value={comment}
-                  style={{ height: 150 }}
-                />
-              </div>
-              <Flex justify="center">
-                <Button onClick={() => onAdd()}>Add</Button>
-              </Flex>
+              <p className="bold-text">
+                {myRole === "freelancer"
+                  ? " Do you agree with all requirements provided by the seeker? If you disagree, you can start a discussion"
+                  : "Do you agree to edit the project requirement? If not, you can provide a reason"}
+              </p>
+              <Radio.Group
+                onChange={(e) => {
+                  onSetAgree(e.target.value);
+                }}
+                defaultValue={false}
+                buttonStyle="solid"
+              >
+                <Radio.Button value={true}>
+                  {myRole === "freelancer" ? "Apprpve" : "Edit Requirement"}
+                </Radio.Button>
+                <Radio.Button value={false}>Need discussion</Radio.Button>
+              </Radio.Group>
+
+              {isDiscussion && (
+                <>
+                  <div className="discussion-section">
+                    <p>Add Comment</p>
+                    <Input.TextArea
+                      onChange={(e) => onChange(e)}
+                      value={comment}
+                      style={{ height: 150 }}
+                    />
+                  </div>
+                  <Flex justify="center">
+                    <Button onClick={() => onAdd()}>Add</Button>
+                  </Flex>
+                </>
+              )}
             </>
           )}
         </>
