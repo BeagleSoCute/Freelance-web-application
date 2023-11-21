@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { randomString } from "helpers/common.helper";
 import CheckListComponent from "./ChecklistComponent";
 import { getCurrentDate } from "helpers/date.helper";
+import { transformCheckList } from "../helpers/index";
 
 const propTypes = {
   title: PropTypes.string,
@@ -41,15 +42,19 @@ const ManageTaskForm = ({
   date,
   priority,
   progress,
+  viewTaskData,
   onClose,
   onSubmit,
+  onEdit,
 }) => {
   const [form] = Form.useForm();
-  const [checkList, setCheckList] = useState([]);
-  const [selectProgress, setSelectProgress] = useState("");
-  const [selectPriority, setSelectPriority] = useState("");
+  const [checkList, setCheckList] = useState(
+    viewTaskData ? transformCheckList(viewTaskData?.checkList) : []
+  );
+  const [selectProgress, setSelectProgress] = useState(viewTaskData?.progress);
+  const [selectPriority, setSelectPriority] = useState(viewTaskData?.priority);
   const [inputCheckDes, setInputChecDes] = useState("");
-  const [inputTitle, setInputTitle] = useState("");
+  const [inputTitle, setInputTitle] = useState(viewTaskData?.title);
   const handleSetCheckList = () => {
     const data = {
       id: randomString(),
@@ -69,7 +74,6 @@ const ManageTaskForm = ({
     );
     setCheckList(afterEdited);
   };
-
   const handleSubmit = () => {
     const data = {
       title: inputTitle,
@@ -78,22 +82,35 @@ const ManageTaskForm = ({
       description: form.getFieldValue("description"),
       scope: form.getFieldValue("scope"),
       checkList,
-      date: getCurrentDate()
+      date: getCurrentDate(),
     };
-    onSubmit(data);
+    const editData = {
+      ...data,
+      id: viewTaskData?._id,
+    };
+    if (viewTaskData) {
+      onEdit(editData);
+    } else {
+      onSubmit(data);
+    }
   };
+
   return (
     <StyledDiv className="manage-task-form ">
       <Flex justify="space-between">
         <div>
           <span className="bold-text">Add title:</span>
-          <Input onChange={(e) => setInputTitle(e.target.value)} />
+          <Input
+            value={inputTitle}
+            onChange={(e) => setInputTitle(e.target.value)}
+          />
         </div>
         <div>{date}</div>
       </Flex>
       <p>
         <span className="bold-text">Priority:</span>
         <Select
+          value={selectPriority}
           onSelect={(value) => setSelectPriority(value)}
           className="normal-select"
           options={priorityOptions}
@@ -102,6 +119,7 @@ const ManageTaskForm = ({
       <p>
         <span className="bold-text">Progress:</span>
         <Select
+          value={selectProgress}
           onSelect={(value) => setSelectProgress(value)}
           className="normal-select"
           options={progressOptions}
@@ -112,19 +130,16 @@ const ManageTaskForm = ({
         form={form}
         name="manage-task-form"
         labelCol={{ span: 24 }}
-        // initialValues={initialValues}
+        initialValues={{
+          scope: viewTaskData?.scope,
+          description: viewTaskData?.description,
+        }}
         autoComplete="off"
       >
-        <Form.Item
-          label="Scope"
-          name="scope"
-        >
+        <Form.Item label="Scope" name="scope">
           <Input.TextArea style={{ height: 150 }} />
         </Form.Item>
-        <Form.Item
-          label="Description"
-          name="description"
-        >
+        <Form.Item label="Description" name="description">
           <Input.TextArea style={{ height: 150 }} />
         </Form.Item>
       </Form>
@@ -150,7 +165,8 @@ const ManageTaskForm = ({
           {checkList.map((item, index) => (
             <CheckListComponent
               key={index}
-              id={item?.id}
+              id={item._id ? item._id : item.id}
+              isCheck={item?.isDone}
               description={item?.description}
               onCheck={handleCheck}
               onRemove={handleRemove}

@@ -9,23 +9,28 @@ import TaskComponent from "./TaskComponent";
 const propTypes = {
   tasks: PropTypes.object,
   onOpenTask: PropTypes.func,
+  onView: PropTypes.func,
+  viewTaskData:PropTypes.object
 };
 
 const defaultProps = {
   tasks: {},
+  viewTaskData: {},
   onOpenTask: () => {},
+  onView: () => {},
 };
 
-const taskComponentProps = (item) => {
-  return {
-    title: item.title,
-    date: item.date,
-    priority: item.priority,
-    progress: item.progress,
+const TaskManagementSection = ({ tasks, viewTaskData, onOpenTask, onView }) => {
+  const taskComponentProps = (item) => {
+    return {
+      title: item.title,
+      date: item.date,
+      priority: item.priority,
+      progress: item.progress,
+      onClick: () => onView(item),
+    };
   };
-};
 
-const TaskManagementSection = ({ tasks, onOpenTask }) => {
   return (
     <StyledDiv className="task-management-section">
       <Flex justify="center">

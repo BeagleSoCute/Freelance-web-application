@@ -10,3 +10,7 @@ export const updateNegotiationCommentAPI = (data, projectID) =>
   apiInstance.put(`project/updateNegotiationComment/${projectID}`, data);
 export const freelancerApproveProjectRequirementAPI = (projectID) =>
   apiInstance.put(`project/freelancerApproveProjectRequirement/${projectID}`);
+export const addTaskAPI = (data, projectID) =>
+  apiInstance.put(`project/addTask/${projectID}`, data);
+export const updateTaskAPI = (data, projectID) =>
+  apiInstance.put(`project/updateTask/${projectID}`, data);

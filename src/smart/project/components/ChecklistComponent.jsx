@@ -9,6 +9,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 const propTypes = {
   id: PropTypes.number,
   description: PropTypes.string,
+  isCheck: PropTypes.bool,
   onRemove: PropTypes.func,
   onCheck: PropTypes.func,
 };
@@ -16,16 +17,26 @@ const propTypes = {
 const defaultProps = {
   id: 0,
   description: "des...",
+  isCheck: false,
   onRemove: () => {},
   onCheck: () => {},
 };
 
-const CheckListComponent = ({ id, description, onCheck, onRemove }) => {
+const CheckListComponent = ({
+  id,
+  description,
+  isCheck,
+  onCheck,
+  onRemove,
+}) => {
   return (
     <StyledDiv className="checklist-component">
       <Flex className="wrapper" justify="space-between">
         <Row>
-          <Checkbox onChange={(e) => onCheck(id, e.target.checked)} />
+          <Checkbox
+            defaultChecked={isCheck}
+            onChange={(e) => onCheck(id, e.target.checked)}
+          />
           <p className="des">{description}</p>
         </Row>
 

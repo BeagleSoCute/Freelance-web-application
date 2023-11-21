@@ -9,6 +9,7 @@ const propTypes = {
   date: PropTypes.string,
   priority: PropTypes.string,
   progress: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 const defaultProps = {
@@ -16,9 +17,10 @@ const defaultProps = {
   date: "date",
   priority: "high",
   progress: "progress",
+  onClick: () => {}
 };
 
-const TaskComponent = ({ title, date, priority, progress }) => {
+const TaskComponent = ({ title, date, priority, progress, onClick }) => {
   return (
     <StyledDiv className="task-component">
       <Flex justify="space-between">
@@ -34,7 +36,7 @@ const TaskComponent = ({ title, date, priority, progress }) => {
         {progress}
       </p>
       <Flex justify="center">
-        <Button>View</Button>
+        <Button onClick={() => onClick()}>View</Button>
       </Flex>
     </StyledDiv>
   );
