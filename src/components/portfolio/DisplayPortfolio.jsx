@@ -10,6 +10,7 @@ const propTypes = {
   isShowAction: PropTypes.bool,
   isHideAddBtn: PropTypes.bool,
   isDeleteOnly: PropTypes.bool,
+  isViewOnly: PropTypes.bool,
   title: PropTypes.string,
   viewPortfolio: PropTypes.func,
   selectPortfolio: PropTypes.func,
@@ -19,6 +20,7 @@ const propTypes = {
 const defaultProps = {
   title: "Portfolios",
   portfolios: [],
+  isViewOnly:false,
   isShowAction: true,
   isHideAddBtn: false,
   isDeleteOnly:false,
@@ -32,6 +34,7 @@ const DisplayPortfolio = ({
   title,
   portfolios,
   viewPortfolio,
+  isViewOnly,
   isShowAction,
   isHideAddBtn,
   isDeleteOnly,
@@ -69,6 +72,7 @@ const DisplayPortfolio = ({
         {portfolios.map((item, index) => (
           <CardComponent
             key={index}
+            isView={isViewOnly}
             isShowAction={isShowAction}
             isDeleteOnly={isDeleteOnly}
             portfolioImageURL={item.portfolio_picture}

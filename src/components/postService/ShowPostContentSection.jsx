@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Form, Input, Select, message, Row, Col, Flex } from "antd";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const propTypes = {
   postType: PropTypes.string,
@@ -28,6 +29,7 @@ const defaultProps = {
 };
 
 const ShowPostContentSection = ({postType, data, isProbideService }) => {
+  const navigate = useNavigate();
   const {
     title,
     description,
@@ -52,7 +54,7 @@ const ShowPostContentSection = ({postType, data, isProbideService }) => {
           <span className="bold-text">Post by:</span>
           {owner?.first_name} {owner?.last_name}
         </p>
-        <Button className="review-btn">Review Profile</Button>
+        <Button onClick={() => navigate(`/profile/${owner?._id}`)} className="review-btn">Review Profile</Button>
       </Flex>
       <div>
       <p>

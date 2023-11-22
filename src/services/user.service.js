@@ -19,8 +19,8 @@ export const getAllUsers = async () => {
 };
 
 export const getUserDetails = async (id) => {
-  const { success, payload: details } = await getUserDetailsApi(id);
-  return { success, details };
+  const { success, payload } = await getUserDetailsApi(id);
+  return { success, payload };
 };
 
 export const updateProfile = async (data) => {

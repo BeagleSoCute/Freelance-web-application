@@ -19,7 +19,6 @@ const ShowApprovePostDetails = () => {
     const init = async () => {
       const { payload } = await showPostDetails(postID);
       setPostData(payload);
-      console.log("payload is---", payload);
     };
     init();
   }, []);

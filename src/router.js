@@ -23,6 +23,7 @@ import PrivateRoute from "smart/PrivateRoute";
 import NegotiationSection from "smart/project/NegotiationSection";
 import LandingProjectPage from "smart/project/LandingProjectPage";
 import ProjectSection from "smart/project/ProjectSection";
+import OtherProfileDetails from "smart/profile/OtherProfileDetail";
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +93,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ManageService />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile/:userID",
+        element: (
+          <PrivateRoute>
+            <OtherProfileDetails />
           </PrivateRoute>
         ),
       },
