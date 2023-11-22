@@ -4,43 +4,37 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import CardComponent from "components/common/CardComponent";
 import { useNavigate } from "react-router-dom";
+import { transformFeedbackCount } from "../helpers/index";
+
 const propTypes = {
-  feedbackData: PropTypes.object,
+  seekerFeedback: PropTypes.object,
+  freelancerFeedback: PropTypes.object,
+
 };
 const defaultProps = {
-  feedbackData: {
-    seeker_feedbacks: {
-      positive: 0,
-      negative: 0,
-      neutral: 0,
-    },
-    provider_feedbacks: {
-      positive: 0,
-      negative: 0,
-      neutral: 0,
-    },
-  },
+  
 };
-const renderFeedback = (data, title) => {
+const renderFeedback = ( data,title) => {
+  console.log('renderFeed',data)
   return (
     <div className="content-section">
       <h1>{title}</h1>
       <p>
         <span className="bold-text">Positive: </span>
-        {data.positive}
+        {data?.positive}
       </p>
       <p>
         <span className="bold-text">Negative: </span>
-        {data.negative}
+        {data?.negative}
       </p>
       <p>
         <span className="bold-text">Neutral: </span>
-        {data.neutral}
+        {data?.neutral}
       </p>
     </div>
   );
 };
-const FeedbackSection = ({ feedbackData }) => {
+const FeedbackSection = ({ seekerFeedback,freelancerFeedback, onSelect }) => {
   const navigate = useNavigate();
   return (
     <StyledDiv className="feedback-section">
@@ -48,23 +42,23 @@ const FeedbackSection = ({ feedbackData }) => {
         <Col className="seeker-section" span={12}>
           <CardComponent
             description={renderFeedback(
-              feedbackData.seeker_feedbacks,
+              transformFeedbackCount( seekerFeedback),
               "As a seeker"
             )}
             noImage={true}
             isView={true}
-            onView={() => navigate("/feedback")}
+            onView={() => onSelect(seekerFeedback)}
           />
         </Col>
         <Col className="freelancer-section" span={12}>
           <CardComponent
             description={renderFeedback(
-              feedbackData.provider_feedbacks,
+              transformFeedbackCount( freelancerFeedback),
               "As a freelancer"
             )}
             noImage={true}
             isView={true}
-            onView={() => navigate("/feedback")}
+            onView={() => onSelect(freelancerFeedback)}
           />
         </Col>
       </Row>

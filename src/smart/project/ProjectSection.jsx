@@ -240,6 +240,7 @@ const ProjectSection = ({ data }) => {
               <FeedbackSection
                 feedbackList={projectDetail?.feedback}
                 isDoneFeedback={projectDetail?.isDoneFeedback}
+                myRole={myRole}
                 onSubmit={handleSubmitFeedback}
               />
             )}

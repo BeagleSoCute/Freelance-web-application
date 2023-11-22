@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { AppContext } from "contexts/app.context";
 import { Row, Col, Button } from "antd";
 import styled from "styled-components";
@@ -9,7 +9,8 @@ import { deletePortfolio } from "services/user.service";
 import { notification } from "helpers/notification.helper";
 import ContentLayout from "layouts/ContentLayout";
 import FeedbackSection from "./components/FeedbackSection";
-import ServiceSection from "./components/ServiceSection";
+// import ServiceSection from "./components/ServiceSection";
+import DisplayFeedback from "./components/DisplayFeedback";
 
 const Profile = () => {
   const {
@@ -21,6 +22,7 @@ const Profile = () => {
     selectPortfolio,
   } = useContext(AppContext);
   const navigate = useNavigate();
+  const [displayFeedbackList, setDisplayFeedbackList] = useState(undefined);
   useEffect(() => {}, []);
 
   const handleDeletePortfolio = async (id) => {
@@ -45,6 +47,10 @@ const Profile = () => {
     addPortfolio,
     onDelete: handleDeletePortfolio,
   };
+  const handleSelectFeedback = (value) => {
+    console.log('value is',value)
+    setDisplayFeedbackList(value)
+  }
   return (
     <StyledDiv className="profile">
       <ContentLayout>
@@ -62,17 +68,38 @@ const Profile = () => {
           <Col className="user-data-section" span={24}>
             <UserInfoSection userData={user} />
           </Col>
-          <Col className="feedback-section" span={24}>
+          {displayFeedbackList ? (
+          <Col  span={24}>
+          <DisplayFeedback
+              feedbackList={displayFeedbackList}
+              onBack={() => {
+                setDisplayFeedbackList(undefined);
+              }}
+            />
+            </Col>
+          ) : (
+            <>
+              {/* <Col className="feedback-section" span={24}>
             <h2>Services</h2>
             <ServiceSection />
-          </Col>
-          <Col className="feedback-section" span={24}>
-            <h2>Feedback</h2>
-            <FeedbackSection />
-          </Col>
-          <Col className="portfolio-section" span={24}>
-            <DisplayPortfolio {...displayPortfolioProps} />
-          </Col>
+          </Col> */}
+              <Col className="feedback-section" span={24}>
+                <h2>Feedback</h2>
+                <FeedbackSection
+                  onSelect={(value) =>handleSelectFeedback(value) }
+                  seekerFeedback={
+                    user?.seeker_feedbacks
+                  }
+                  freelancerFeedback={
+                    user?.freelancer_feedbacks
+                  }
+                />
+              </Col>
+              <Col className="portfolio-section" span={24}>
+                <DisplayPortfolio {...displayPortfolioProps} />
+              </Col>
+            </>
+          )}
         </Row>
       </ContentLayout>
     </StyledDiv>

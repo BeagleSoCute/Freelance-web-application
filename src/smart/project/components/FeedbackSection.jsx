@@ -21,7 +21,7 @@ const options = [
   { label: "Negative", value: "negative" },
 ];
 
-const FeedbackSection = ({ feedbackList, isDoneFeedback, onSubmit }) => {
+const FeedbackSection = ({ feedbackList, isDoneFeedback,myRole, onSubmit }) => {
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
   const handleSubmit = () => {
@@ -34,6 +34,7 @@ const FeedbackSection = ({ feedbackList, isDoneFeedback, onSubmit }) => {
       </Flex>
       {!isDoneFeedback ? (
         <div className="input-section">
+          <p className="alert-text">The system will transfer money to your back account after you provide a feedback to your client</p>
           <p
             className="bold-text
         "
