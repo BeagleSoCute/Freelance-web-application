@@ -45,7 +45,6 @@ export const allUserColums = (navigate) => [
 
 export const serviceColums = (navigate) => {
   return [
-
     {
       title: "By",
       dataIndex: "name",
@@ -86,7 +85,10 @@ export const serviceColums = (navigate) => {
       title: "View",
       dataIndex: "view",
       key: "view",
-      render: (item, record) => ( //navigate(`/admin-approve-post/${item._id}`)
+      render: (
+        item,
+        record //navigate(`/admin-approve-post/${item._id}`)
+      ) => (
         <Button onClick={() => navigate(`/admin-approve-post/${record.id}`)}>
           View
         </Button>
@@ -94,3 +96,47 @@ export const serviceColums = (navigate) => {
     },
   ];
 };
+
+export const requestColums = (navigate) => [
+  {
+    title: "Project Title",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Reporter name ",
+    dataIndex: "reporter",
+    key: "reporter",
+  },
+  {
+    title: "Type",
+    dataIndex: "type",
+    key: "type",
+  },
+  {
+    title: "View Project",
+    dataIndex: "view",
+    key: "view",
+    render: (item, record) => (
+      <Button onClick={() => navigate(`/user/${record.id}`)}>View</Button>
+    ),
+  },
+  {
+    title: "Approve",
+    dataIndex: "approve",
+    key: "approve",
+    render: (item, record) => (
+      <Button onClick={() => navigate(`/user/${record.id}`)}>Approve</Button>
+    ),
+  },
+  {
+    title: "Reject",
+    dataIndex: "reject",
+    key: "reject",
+    render: (item, record) => (
+      <Button danger onClick={() => navigate(`/user/${record.id}`)}>
+        Reject
+      </Button>
+    ),
+  },
+];

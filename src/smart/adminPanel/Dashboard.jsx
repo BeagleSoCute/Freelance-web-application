@@ -5,9 +5,12 @@ import { getAllUsers } from "services/user.service";
 import TableData from "components/common/TableData";
 import { transformAllUsersDataToTable } from "helpers/user.helper";
 import { useNavigate, useParams } from "react-router-dom";
-import { allUserColums, serviceColums } from "./tableData";
+import { allUserColums, serviceColums, requestColums } from "./tableData";
 import OptionPanel from "./components/OptionPanel";
-import { showPendingPostService } from "services/admin.service";
+import {
+  showPendingPostService,
+  retriveRequestRejectProject,
+} from "services/admin.service";
 import { transformPrivideServiceTableData } from "./helpers/table.helper";
 import ContentLayout from "layouts/ContentLayout";
 
@@ -17,16 +20,19 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [serviceData, setSerivceData] = useState([]);
   const [currentTab, setCurrentTab] = useState("seeUsers");
+  const [requestList, setRequestList] = useState([]);
   useEffect(() => {
     setLoading(true);
     const init = async () => {
       const { allUsersData } = await getAllUsers();
       const { payload: pendingServiceLists } = await showPendingPostService();
+      const { payload: requests } = await retriveRequestRejectProject();
       const tableData = transformAllUsersDataToTable(allUsersData);
       const provideServiceData =
         transformPrivideServiceTableData(pendingServiceLists);
       setUsers(tableData);
       setSerivceData(provideServiceData);
+      setRequestList(requests);
     };
     init();
     setLoading(false);
@@ -40,6 +46,8 @@ const Dashboard = () => {
       return { column: allUserColums(navigate), data: users };
     } else if (currentTab === "approveServices") {
       return { column: serviceColums(navigate), data: serviceData };
+    } else {
+      return { column: requestColums(navigate), data: requestList };
     }
   };
   return (

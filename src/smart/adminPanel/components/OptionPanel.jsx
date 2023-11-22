@@ -20,6 +20,8 @@ const OptionPanel = ({ onChangeOption }) => {
       >
         <Radio.Button value="seeUsers">See all users</Radio.Button>
         <Radio.Button value="approveServices">Approve Services</Radio.Button>
+        <Radio.Button value="seeRequest">See Requests</Radio.Button>
+
       </Radio.Group>
     </StyledDiv>
   );

@@ -39,7 +39,7 @@ const RequirementForm = ({ data, isDisable , form }) => {
         <div></div>
         <h1>{data?.title}</h1>
         <div>
-        {isDisable ? <Button onClick={() => navigate(`/project/${projectID}`)}>Back to your project</Button>: ''}
+        {data?.isPaid ? <Button onClick={() => navigate(`/project/${projectID}`)}>Back to your project</Button>:''}
         </div>
       </Flex>
       <Form

@@ -21,10 +21,10 @@ const CommentInfo = ({ data, isFeedback }) => {
           <img
             className="profile-picture"
             alt="profile-pic"
-            src={data?.user.profile_picture}
+            src={data?.user?.profile_picture}
           />
           <p className="name">
-            {data?.user.first_name} {data?.user.last_name}
+            {data?.user?.first_name} {data?.user?.last_name}
           </p>
         </Col>
         <Col className="content-section" span={18}>

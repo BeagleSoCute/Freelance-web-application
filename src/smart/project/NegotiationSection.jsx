@@ -191,7 +191,7 @@ const NegotiationSection = () => {
         projectDetail?.status === "negotiation" ||
         isSeeOnly ? (
           <RequirementForm
-            isDisable={!isEditRequirement || isSeeOnly}
+            isDisable={!isEditRequirement || isSeeOnly }
             data={projectDetail}
             form={form}
           />

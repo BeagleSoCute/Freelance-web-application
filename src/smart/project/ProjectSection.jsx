@@ -176,6 +176,12 @@ const ProjectSection = ({ data }) => {
   return (
     <div className="project-section">
       <ContentLayout>
+        {projectDetail?.status === "requestReject" && (
+          <h2 className="alert-text">
+            This project have been suspended due to the rejecting request,
+            Please waiting for an admin to approve the request
+          </h2>
+        )}
         {isDisplayTask ? (
           <ManageTaskForm
             viewTaskData={viewTaskData}
