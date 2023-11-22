@@ -1,6 +1,6 @@
 import { Button } from "antd";
 
-export const serviceColums = (navigate,type) => {
+export const serviceColums = (navigate, type) => {
   return [
     {
       title: "Title",
@@ -60,7 +60,7 @@ export const serviceRequestColums = (navigate) => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: "20%"
+      width: "20%",
     },
     {
       title: "Type",
@@ -92,42 +92,89 @@ export const serviceRequestColums = (navigate) => {
       dataIndex: "view",
       key: "view",
       render: (item, record) => (
-        <Button onClick={() => navigate(`/post-details/${record.serviceType}/${record.id}`)}>View</Button>
+        <Button
+          onClick={() =>
+            navigate(`/post-details/${record.serviceType}/${record.id}`)
+          }
+        >
+          View
+        </Button>
       ),
     },
   ];
-}
-  export const projectColums = (navigate) => {
-    return [
-      {
-        title: "Freelancer name",
-        dataIndex: "freelancerName",
-        key: "freelancerName",
-      },
-      {
-        title: "Seeker name",
-        dataIndex: "seekerName",
-        key: "seekerName",
-      },
-      {
-        title: "Title",
-        dataIndex: "title",
-        key: "title",
-        width: "20%"
-      },
-      {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
-      },
-      {
-        title: "View",
-        dataIndex: "view",
-        key: "view",
-        render: (item, record) => (
-          <Button onClick={() => navigate(`/landing-project-page/${record.id}`)}>View</Button>
-        ),
-      },
-    ];
+};
+export const projectColums = (navigate) => {
+  return [
+    {
+      title: "Freelancer name",
+      dataIndex: "freelancerName",
+      key: "freelancerName",
+    },
+    {
+      title: "Seeker name",
+      dataIndex: "seekerName",
+      key: "seekerName",
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: "20%",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "View",
+      dataIndex: "view",
+      key: "view",
+      render: (item, record) => (
+        <Button onClick={() => navigate(`/landing-project-page/${record.id}`)}>
+          View
+        </Button>
+      ),
+    },
+  ];
+};
 
+export const transactionColums = (navigate) => {
+  return [
+    {
+      title: "Project title",
+      dataIndex: "projectTitle",
+      key: "projectTitle",
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+    },
+    {
+      title: "Seeker paid to the system",
+      dataIndex: "isPaidBySeeker",
+      key: "isPaidBySeeker",
+    },
+    {
+      title: "Paid to Freelancer",
+      dataIndex: "isPaidToFreelancer",
+      key: "isPaidToFreelancer",
+    },
+    {
+      title: "Seeker paid Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Paid to Freelancer date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+  ];
 };

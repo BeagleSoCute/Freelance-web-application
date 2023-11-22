@@ -15,7 +15,7 @@ import { getFormatedDate } from "helpers/date.helper";
 import { notification } from "helpers/notification.helper";
 import DiscussionSection from "./components/DiscussionSection";
 import { getCurrentDate } from "helpers/date.helper";
-import isEmpty from 'lodash/isEmpty';
+import isEmpty from "lodash/isEmpty";
 
 const NegotiationSection = () => {
   const { projectDetail, loading, setProjectDetail } = useContext(AppContext);
@@ -27,11 +27,13 @@ const NegotiationSection = () => {
   const [comment, setComment] = useState();
   const [isAddEditMsg, setIsAddEditMsg] = useState(false);
   const [form] = Form.useForm();
-const isSeeOnly = projectDetail?.status !== 'pending';
+  const isSeeOnly =
+    projectDetail?.status !== "pending" &&
+    projectDetail?.status !== "negotiation";
   useEffect(() => {
     const init = async () => {
       if (isEmpty(projectDetail) && !loading) {
-        navigate(`/landing-project-page/${projectID}`)
+        navigate(`/landing-project-page/${projectID}`);
         return;
       }
       setMyRole(projectDetail?.myRole);
@@ -47,12 +49,14 @@ const isSeeOnly = projectDetail?.status !== 'pending';
 
   const handleShowContent = () => {
     const isShowContent =
-      projectDetail?.status === "pending" &&
-      (myRole === "admin" || myRole === "freelancer");
+      projectDetail?.status === "pending" && myRole === "seeker";
+    // (myRole === "admin" || myRole === "freelancer");
+    console.log("ishow", isShowContent);
     if (isShowContent) {
-      return false;
-    } else {
       return true;
+    } else {
+      console.log("trueee");
+      return false;
     }
   };
 
@@ -76,7 +80,7 @@ const isSeeOnly = projectDetail?.status !== 'pending';
         type: "success",
         message: "Update the porject requirement success",
       });
-      setIsEditRequirement(false);
+      navigate(`/landing-project-page/${projectID}`);
     } else {
       notification({
         type: "error",
@@ -99,9 +103,8 @@ const isSeeOnly = projectDetail?.status !== 'pending';
         type: "success",
         message: "Add the comment success",
       });
-      const { payload } = await showProjectDetails(projectDetail?._id);
-      setProjectDetail(payload?.projectDetails);
-      setComment("");
+      await showProjectDetails(projectDetail?._id);
+      navigate(`/landing-project-page/${projectID}`);
     } else {
       notification({
         type: "error",
@@ -132,8 +135,8 @@ const isSeeOnly = projectDetail?.status !== 'pending';
         type: "success",
         message: "Approve the project requirement success",
       });
-      const { payload } = await showProjectDetails(projectDetail?._id);
-      setProjectDetail(payload?.projectDetails);
+      await showProjectDetails(projectDetail?._id);
+      navigate(`/landing-project-page/${projectID}`);
     } else {
       notification({
         type: "error",
@@ -150,17 +153,22 @@ const isSeeOnly = projectDetail?.status !== 'pending';
       handleFreelancerApproveRequirement();
     }
   };
-  const handlePayService = () => {
+  const handlePayService = async () => {
     const transformData = {
       amount: form.getFieldValue("budget"),
       date: getCurrentDate(),
+      freelancer: projectDetail?.freelancer._id,
     };
-    const { success } = seekerPayForService(transformData, projectDetail?._id);
+    const { success } = await seekerPayForService(
+      transformData,
+      projectDetail?._id
+    );
     if (success) {
       notification({
         type: "success",
         message: "Pay for the service success",
       });
+      navigate(`/landing-project-page/${projectID}`);
     } else {
       notification({
         type: "error",
@@ -172,11 +180,16 @@ const isSeeOnly = projectDetail?.status !== 'pending';
     <div className="project-section">
       <ContentLayout
         isDisable={!isEditRequirement && myRole === "seeker" ? true : false}
-        isSubmit={handleShowContent() && isAgree}
+        isSubmit={
+          handleShowContent() ||
+          (isAgree && projectDetail?.status === "negotiation")
+        }
         onSubmit={() => onSubmit()}
         onCancel={() => navigate("/user-panel")}
       >
-        {handleShowContent() === true ? (
+        {(projectDetail?.status === "pending" && myRole === "seeker") ||
+        projectDetail?.status === "negotiation" ||
+        isSeeOnly ? (
           <RequirementForm
             isDisable={!isEditRequirement || isSeeOnly}
             data={projectDetail}

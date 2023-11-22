@@ -7,12 +7,14 @@ import CommentInfo from "smart/project/components/CommentInfo";
 const propTypes = {
   status: PropTypes.string,
   isDiscussion: PropTypes.bool,
+  isDisable: PropTypes.bool,
   onSetAgree: PropTypes.func,
   onAdd: PropTypes.func,
 };
 
 const defaultProps = {
   isDiscussion: false,
+  isDisable:false,
   onSetAgree: () => {},
   onAdd: () => {},
 };
@@ -49,7 +51,7 @@ const DiscussionSection = ({
                 buttonStyle="solid"
               >
                 <Radio.Button value={true}>
-                  {myRole === "freelancer" ? "Apprpve" : "Edit Requirement"}
+                  {myRole === "freelancer" ? "Approve" : "Edit Requirement"}
                 </Radio.Button>
                 <Radio.Button value={false}>Need discussion</Radio.Button>
               </Radio.Group>

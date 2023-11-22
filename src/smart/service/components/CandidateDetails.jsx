@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Flex, Button } from "antd";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 const propTypes = {
   data: PropTypes.object,
   onSubmit: PropTypes.func,
@@ -14,6 +15,7 @@ const defaultProps = {
   onBack: () => {},
 };
 const CandidateDetails = ({ data, onSubmit, onBack }) => {
+  const navigate = useNavigate();
   return (
     <StyledDiv className="candidate-details">
       <Flex justify="space-between">
@@ -23,7 +25,10 @@ const CandidateDetails = ({ data, onSubmit, onBack }) => {
 
       <p>
         <span className="bold-text">Name:</span>
-        {data?.name}
+        {data?.name}{" "}
+        <Button onClick={() => navigate(`/profile/${data?.userID}`)}>
+          See the candidate profile
+        </Button>
       </p>
       <p>
         <span className="bold-text">Status:</span>

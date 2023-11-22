@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { AppContext } from "contexts/app.context";
 import TableData from "components/common/TableData";
 import { useNavigate } from "react-router-dom";
-import { serviceColums, serviceRequestColums, projectColums } from "./tableData";
+import {
+  serviceColums,
+  serviceRequestColums,
+  projectColums,
+  transactionColums,
+} from "./tableData";
 import OptionPanel from "./components/OptionPanel";
 import {
   transformPrivideServiceTableData,
@@ -13,6 +18,7 @@ import {
 import ContentLayout from "layouts/ContentLayout";
 import { getMyServiceList } from "services/service.service";
 import { getMyProjectLists } from "services/project.service";
+import { showTransactionData } from "services/escrow.service";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -22,12 +28,13 @@ const UserDashboard = () => {
   const [requestList, setRequestList] = useState([]);
   const [projectList, setProjectList] = useState([]);
   const [currentTab, setCurrentTab] = useState("findService");
+  const [transactionList, setTransactionList] = useState([]);
   useEffect(() => {
     setLoading(true);
     const init = async () => {
       const { success, payload } = await getMyServiceList();
       const resProjectList = await getMyProjectLists();
-      console.log('resProjectList',resProjectList)
+      const transactionData = await showTransactionData();
       if (success) {
         const provideServiceData = transformPrivideServiceTableData(
           payload.provideServiceLists
@@ -41,7 +48,12 @@ const UserDashboard = () => {
         setRequestList(requestListData);
       }
       if (resProjectList?.success) {
-        setProjectList(transformProjectTableData(resProjectList?.payload.projectLists));
+        setProjectList(
+          transformProjectTableData(resProjectList?.payload.projectLists)
+        );
+        if (transactionData.success) {
+          setTransactionList(transactionData.payload);
+        }
       }
     };
     init();
@@ -64,6 +76,8 @@ const UserDashboard = () => {
       };
     } else if (currentTab === "requestService") {
       return { column: serviceRequestColums(navigate), data: requestList };
+    } else if (currentTab === "transaction") {
+      return { column: transactionColums(navigate), data: transactionList };
     } else {
       return { column: projectColums(navigate), data: projectList };
     }

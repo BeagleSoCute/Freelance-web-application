@@ -21,7 +21,12 @@ const options = [
   { label: "Negative", value: "negative" },
 ];
 
-const FeedbackSection = ({ feedbackList, isDoneFeedback,myRole, onSubmit }) => {
+const FeedbackSection = ({
+  feedbackList,
+  isDoneFeedback,
+  myRole,
+  onSubmit,
+}) => {
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
   const handleSubmit = () => {
@@ -34,7 +39,12 @@ const FeedbackSection = ({ feedbackList, isDoneFeedback,myRole, onSubmit }) => {
       </Flex>
       {!isDoneFeedback ? (
         <div className="input-section">
-          <p className="alert-text">The system will transfer money to your back account after you provide a feedback to your client</p>
+          {myRole === "freelancer" && (
+            <p className="alert-text">
+              The system will transfer money to your back account after you
+              provide a feedback to your client
+            </p>
+          )}
           <p
             className="bold-text
         "
@@ -63,9 +73,11 @@ const FeedbackSection = ({ feedbackList, isDoneFeedback,myRole, onSubmit }) => {
             </Button>
           </Flex>
         </div>
-      ):<Flex justify="center">
-        <p className="bold-text">You have done your feedback</p>
-        </Flex>}
+      ) : (
+        <Flex justify="center">
+          <p className="bold-text">You have done your feedback</p>
+        </Flex>
+      )}
       <div className="feedback-list-section">
         {feedbackList &&
           feedbackList.map((item) => (
@@ -78,8 +90,8 @@ const FeedbackSection = ({ feedbackList, isDoneFeedback,myRole, onSubmit }) => {
 
 const StyledDiv = styled.div`
   &.feedback-section {
-    .feedback-list-section{
-        margin-top:20px;
+    .feedback-list-section {
+      margin-top: 20px;
     }
   }
 `;

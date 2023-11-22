@@ -26,6 +26,7 @@ const OptionPanel = ({ onChangeOption }) => {
         </Radio.Button>
         <Radio.Button value="requestService">See my requests</Radio.Button>
         <Radio.Button value="approveServicesa">See my projects</Radio.Button>
+        <Radio.Button value="transaction">See my transaction</Radio.Button>
       </Radio.Group>
     </StyledDiv>
   );
