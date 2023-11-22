@@ -5,13 +5,15 @@ import PropTypes from "prop-types";
 
 const propTypes = {
   data: PropTypes.object,
+  isFeedback: PropTypes.bool,
 };
 
 const defaultProps = {
   data: {},
+  isFeedback: false,
 };
 
-const CommentInfo = ({ data }) => {
+const CommentInfo = ({ data, isFeedback }) => {
   return (
     <StyledDiv className="comment-info">
       <Row>
@@ -36,6 +38,12 @@ const CommentInfo = ({ data }) => {
               {data?.status === "needDiscussion"
                 ? "Need a discussion"
                 : "Edit the requirement"}
+            </p>
+          )}
+          {isFeedback && (
+            <p>
+              <span className="bold-text">Rating:</span>
+              {data?.rating}
             </p>
           )}
           <p>{data?.comment}</p>

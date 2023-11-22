@@ -12,12 +12,14 @@ import {
   addProjectComment,
   completeProject,
   requestRejectProject,
+  provideFeedback,
 } from "services/project.service";
 import { notification } from "helpers/notification.helper";
 import { categorizeTasks } from "./helpers/index";
 import ProjectCommentSection from "./components/ProjectCommentSection";
 import { getCurrentDate } from "helpers/date.helper";
 import { Flex, Button } from "antd";
+import FeedbackSection from "./components/FeedbackSection";
 
 const ProjectSection = ({ data }) => {
   const { projectDetail, loading, setProjectDetail, setLoading } =
@@ -60,7 +62,7 @@ const ProjectSection = ({ data }) => {
     } else {
       notification({
         type: "error",
-        message: "Can not add a task, please contract admin!",
+        message: "Can not add a task, please contact admin!",
       });
     }
   };
@@ -75,7 +77,7 @@ const ProjectSection = ({ data }) => {
     } else {
       notification({
         type: "error",
-        message: "Can not update the task, please contract admin!",
+        message: "Can not update the task, please contact admin!",
       });
     }
   };
@@ -99,7 +101,7 @@ const ProjectSection = ({ data }) => {
     } else {
       notification({
         type: "error",
-        message: "Add the comment fail, please contract admin!",
+        message: "Add the comment fail, please contact admin!",
       });
     }
   };
@@ -131,7 +133,7 @@ const ProjectSection = ({ data }) => {
     } else {
       notification({
         type: "error",
-        message: "Change the project status fail, please contract admin!",
+        message: "Change the project status fail, please contact admin!",
       });
     }
   };
@@ -148,8 +150,26 @@ const ProjectSection = ({ data }) => {
     } else {
       notification({
         type: "error",
-        message:
-          "equest for rejecting the project fail, please contract admin!",
+        message: "equest for rejecting the project fail, please contact admin!",
+      });
+    }
+  };
+  const handleSubmitFeedback = async (data) => {
+    const transformData = {
+      ...data,
+      date: getCurrentDate(),
+    };
+    const { success } = await provideFeedback(transformData, projectID);
+    if (success) {
+      notification({
+        type: "success",
+        message: "Provide a feedback success",
+      });
+      navigate(`/landing-project-page/${projectID}`);
+    } else {
+      notification({
+        type: "error",
+        message: "Provide a feedback fail, please contact admin!",
       });
     }
   };
@@ -215,6 +235,13 @@ const ProjectSection = ({ data }) => {
                   {handleIsComplete() ? "Cancel" : "Complete"}
                 </Button>
               </Flex>
+            )}
+            {projectDetail?.status === "complete" && (
+              <FeedbackSection
+                feedbackList={projectDetail?.feedback}
+                isDoneFeedback={projectDetail?.isDoneFeedback}
+                onSubmit={handleSubmitFeedback}
+              />
             )}
           </>
         )}

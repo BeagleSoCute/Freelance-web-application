@@ -9,6 +9,7 @@ import {
   addCommentAPI,
   completeProjectAPI,
   requestRejectProjectAPI,
+  provideFeedbackAPI
 } from "apis/project.api";
 
 export const getMyProjectLists = () => {
@@ -56,3 +57,7 @@ export const completeProject = (isComplete, projectID) => {
 export const requestRejectProject = (projectID) => {
   return requestRejectProjectAPI(projectID);
 };
+
+export const provideFeedback = (data, projectID) => {
+  return provideFeedbackAPI(data,projectID)
+}

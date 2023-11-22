@@ -54,9 +54,10 @@ const reducer = (state, action) => {
         isAddPortfolio: false,
       };
     case TYPES.SET_PROJECT_DETAIL:
+      console.log('payloadd',payload)
       return {
         ...state,
-        projectDetail: { ...payload.projectDetails, myRole: payload.myRole },
+        projectDetail: { ...payload.projectDetails, myRole: payload.myRole, isDoneFeedback:payload.isDoneFeedback },
       };
     default:
       break;
