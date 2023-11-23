@@ -5,14 +5,17 @@ import { getAllUsers } from "services/user.service";
 import TableData from "components/common/TableData";
 import { transformAllUsersDataToTable } from "helpers/user.helper";
 import { useNavigate, useParams } from "react-router-dom";
-import { allUserColums, serviceColums, requestColums } from "./tableData";
+import { allUserColums, serviceColums, requestColums, transactionColums } from "./tableData";
 import OptionPanel from "./components/OptionPanel";
+import { notification } from "helpers/notification.helper";
 import {
   showPendingPostService,
   retriveRequestRejectProject,
+  approveRejectProject,
 } from "services/admin.service";
 import { transformPrivideServiceTableData } from "./helpers/table.helper";
 import ContentLayout from "layouts/ContentLayout";
+import { showAllTransactionData, refundMoneyData } from "services/escrow.service";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -21,18 +24,23 @@ const Dashboard = () => {
   const [serviceData, setSerivceData] = useState([]);
   const [currentTab, setCurrentTab] = useState("seeUsers");
   const [requestList, setRequestList] = useState([]);
+  const [transactionList, setTransactionList] = useState([]);
+
   useEffect(() => {
     setLoading(true);
     const init = async () => {
       const { allUsersData } = await getAllUsers();
       const { payload: pendingServiceLists } = await showPendingPostService();
       const { payload: requests } = await retriveRequestRejectProject();
+      const allTransactionData = await showAllTransactionData();
+
       const tableData = transformAllUsersDataToTable(allUsersData);
       const provideServiceData =
         transformPrivideServiceTableData(pendingServiceLists);
       setUsers(tableData);
       setSerivceData(provideServiceData);
       setRequestList(requests);
+      setTransactionList(allTransactionData.payload);
     };
     init();
     setLoading(false);
@@ -41,13 +49,45 @@ const Dashboard = () => {
   const handleChangeOption = (e) => {
     setCurrentTab(e.target.value);
   };
+  const handleApproveRequest = async (isApprove, projectID) => {
+    const { success } = await approveRejectProject(isApprove, projectID);
+
+    if (success) {
+      notification({ type: "success", message: "Take an action Success" });
+      navigate("/admin-panel");
+    } else {
+      notification({
+        type: "error",
+        message: "Take an action fail, please try again later!",
+      });
+    }
+  };
+  const handleRefund = async (value, projectID, transactionID) => {
+    const { success } = await refundMoneyData(value, projectID, transactionID);
+    if (success) {
+      notification({ type: "success", message: "Refund Success" });
+      navigate("/admin-panel");
+    } else {
+      notification({
+        type: "error",
+        message: "Refund fail, please try again later!",
+      });
+    }
+  };
+  
+  
   const handleShowTableData = () => {
     if (currentTab === "seeUsers") {
       return { column: allUserColums(navigate), data: users };
     } else if (currentTab === "approveServices") {
       return { column: serviceColums(navigate), data: serviceData };
-    } else {
-      return { column: requestColums(navigate), data: requestList };
+    } else if (currentTab === "seeRequest") {
+      return {
+        column: requestColums(navigate, handleApproveRequest),
+        data: requestList,
+      };
+    } else if (currentTab === "seeTransaction") {
+      return { column: transactionColums(navigate, handleRefund), data: transactionList };
     }
   };
   return (

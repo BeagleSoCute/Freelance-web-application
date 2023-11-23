@@ -37,7 +37,8 @@ const FeedbackSection = ({
       <Flex justify="center">
         <h2>Feedback</h2>
       </Flex>
-      {!isDoneFeedback ? (
+      {}
+      {!isDoneFeedback && myRole !== "admin" ? (
         <div className="input-section">
           {myRole === "freelancer" && (
             <p className="alert-text">
@@ -75,7 +76,9 @@ const FeedbackSection = ({
         </div>
       ) : (
         <Flex justify="center">
-          <p className="bold-text">You have done your feedback</p>
+          {myRole !== "admin" && (
+            <p className="bold-text">You have done your feedback</p>
+          )}
         </Flex>
       )}
       <div className="feedback-list-section">

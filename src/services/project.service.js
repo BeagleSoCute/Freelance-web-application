@@ -54,8 +54,8 @@ export const completeProject = (isComplete, projectID) => {
   return completeProjectAPI({ isComplete }, projectID);
 };
 
-export const requestRejectProject = (projectID) => {
-  return requestRejectProjectAPI(projectID);
+export const requestRejectProject = (projectID,rejectReason) => {
+  return requestRejectProjectAPI(projectID, {rejectReason});
 };
 
 export const provideFeedback = (data, projectID) => {

@@ -2,6 +2,7 @@ import {
   showPostServicePendingAPI,
   updatePostServiceStatusAPI,
   retriveRequestRejectProjectAPI,
+  approveRejectProjectAPI
 } from "apis/admin.api";
 import { showPostDetailsAPI } from "apis/service.api";
 
@@ -25,10 +26,15 @@ export const retriveRequestRejectProject = async () => {
   const transformData = payload.requestRejectList.map((item) => {
     return {
       title: item.title,
-      reporterName: `${item.reporter.first_name} ${item.reporter.last_name}`,
+      reporter: `${item.reporter.first_name} ${item.reporter.last_name}`,
       type: item.status,
       projectID: item._id,
     };
   });
   return { success, payload: transformData };
 };
+
+
+export const approveRejectProject = (isApprove, projectID) => {
+    return approveRejectProjectAPI(isApprove, projectID);
+}

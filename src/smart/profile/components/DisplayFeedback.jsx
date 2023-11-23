@@ -16,7 +16,7 @@ const DisplayFeedback = ({ feedbackList, onBack }) => {
         <h2>Feedback</h2>
       </Flex>
       <div className="feedback-list-section">
-        {feedbackList.legth > 0 && feedbackList.map((item) => (
+        {feedbackList.map((item) => (
           <CommentInfo data={item} isFeedback={true} />
         ))}
       </div>

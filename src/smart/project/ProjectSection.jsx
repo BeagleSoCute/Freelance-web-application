@@ -18,7 +18,7 @@ import { notification } from "helpers/notification.helper";
 import { categorizeTasks } from "./helpers/index";
 import ProjectCommentSection from "./components/ProjectCommentSection";
 import { getCurrentDate } from "helpers/date.helper";
-import { Flex, Button } from "antd";
+import { Flex, Button, Input, Row, Col } from "antd";
 import FeedbackSection from "./components/FeedbackSection";
 
 const ProjectSection = ({ data }) => {
@@ -29,6 +29,9 @@ const ProjectSection = ({ data }) => {
   const [commentInput, setCommentInput] = useState();
   const [commentList, setCommentList] = useState([]);
   const [myRole, setMyRole] = useState();
+  const [rejectReason, setRejectReason] = useState();
+  const [isReject, setIsReject] = useState(false);
+
   const isDisable =
     projectDetail?.status === "complete" ||
     projectDetail?.status === "reject" ||
@@ -139,7 +142,7 @@ const ProjectSection = ({ data }) => {
   };
 
   const handleRequestRejectProject = async () => {
-    const { success } = await requestRejectProject(projectID);
+    const { success } = await requestRejectProject(projectID, rejectReason);
     if (success) {
       notification({
         type: "success",
@@ -177,11 +180,25 @@ const ProjectSection = ({ data }) => {
     <div className="project-section">
       <ContentLayout>
         {projectDetail?.status === "requestReject" && (
-          <h2 className="alert-text">
-            This project have been suspended due to the rejecting request,
-            Please waiting for an admin to approve the request
-          </h2>
+          <>
+            <h2 className="alert-text">
+              This project have been suspended due to the rejecting request,
+              Please waiting for an admin to review the request
+            </h2>
+          </>
         )}
+        {projectDetail?.status === "reject" && (
+          <>
+            <h2 className="alert-text">This project have been rejected</h2>
+          </>
+        )}
+        {projectDetail?.status === "reject" ||
+          (projectDetail?.status === "requestReject" && (
+            <h3 className="alert-text">
+              <span className="bold-text">Reject Reason:</span>
+              {projectDetail?.rejectReason}
+            </h3>
+          ))}
         {isDisplayTask ? (
           <ManageTaskForm
             viewTaskData={viewTaskData}
@@ -226,20 +243,49 @@ const ProjectSection = ({ data }) => {
               ""
             ) : (
               <Flex justify="center" gap="large">
-                <Button
-                  onClick={() => handleRequestRejectProject()}
-                  className="normal-btn"
-                  danger
-                >
-                  Reject
-                </Button>
-                <Button
-                  onClick={() => handleCompleteProject()}
-                  type="primary"
-                  className="normal-btn"
-                >
-                  {handleIsComplete() ? "Cancel" : "Complete"}
-                </Button>
+                {isReject ? (
+                  <Row>
+                    <Col style={{ marginBottom: 25 }} span={24}>
+                      <p className="bold-text">Reject Reason</p>
+                      <Input.TextArea
+                        onChange={(e) => setRejectReason(e.target.value)}
+                      />
+                    </Col>
+
+                    <Button
+                      style={{ marginRight: 25 }}
+                      onClick={() => setIsReject(false)}
+                      className="normal-btn"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => handleRequestRejectProject()}
+                      className="normal-btn"
+                      danger
+                    >
+                      Confirm request rejection
+                    </Button>
+                  </Row>
+                ) : (
+                  <>
+                    <Button
+                      onClick={() => setIsReject(true)}
+                      className="normal-btn"
+                      danger
+                    >
+                      Reject
+                    </Button>
+
+                    <Button
+                      onClick={() => handleCompleteProject()}
+                      type="primary"
+                      className="normal-btn"
+                    >
+                      {handleIsComplete() ? "Cancel" : "Complete"}
+                    </Button>
+                  </>
+                )}
               </Flex>
             )}
             {projectDetail?.status === "complete" && (

@@ -18,7 +18,7 @@ export const addCommentAPI = (data, projectID) =>
   apiInstance.put(`project/addComment/${projectID}`, data);
 export const completeProjectAPI = (data, projectID) =>
   apiInstance.put(`project/completeProject/${projectID}`, data);
-export const requestRejectProjectAPI = (projectID) =>
-  apiInstance.put(`project/requestRejectProject/${projectID}`);
+export const requestRejectProjectAPI = (projectID,rejectReason) =>
+  apiInstance.put(`project/requestRejectProject/${projectID}`,rejectReason);
 export const provideFeedbackAPI = (data, projectID) =>
   apiInstance.put(`project/provideFeedback/${projectID}`, data);

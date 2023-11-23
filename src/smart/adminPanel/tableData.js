@@ -22,25 +22,25 @@ export const allUserColums = (navigate) => [
     key: "view",
     width: "5%",
     render: (item, record) => (
-      <Button onClick={() => navigate(`/user/${record.id}`)}>View</Button>
+      <Button onClick={() => navigate(`/profile/${record.id}`)}>View</Button>
     ),
   },
-  {
-    title: "Edit",
-    dataIndex: "edit",
-    key: "edit",
-    width: "5%",
+  // {
+  //   title: "Edit",
+  //   dataIndex: "edit",
+  //   key: "edit",
+  //   width: "5%",
 
-    render: (item, record) => <Button>Edit</Button>,
-  },
-  {
-    title: "Delete",
-    dataIndex: "delete",
-    key: "delete",
-    width: "5%",
+  //   render: (item, record) => <Button>Edit</Button>,
+  // },
+  // {
+  //   title: "Delete",
+  //   dataIndex: "delete",
+  //   key: "delete",
+  //   width: "5%",
 
-    render: (item, record) => <Button>Delete</Button>,
-  },
+  //   render: (item, record) => <Button>Delete</Button>,
+  // },
 ];
 
 export const serviceColums = (navigate) => {
@@ -97,7 +97,7 @@ export const serviceColums = (navigate) => {
   ];
 };
 
-export const requestColums = (navigate) => [
+export const requestColums = (navigate, approveAction) => [
   {
     title: "Project Title",
     dataIndex: "title",
@@ -118,7 +118,9 @@ export const requestColums = (navigate) => [
     dataIndex: "view",
     key: "view",
     render: (item, record) => (
-      <Button onClick={() => navigate(`/user/${record.id}`)}>View</Button>
+      <Button onClick={() => navigate(`/project/${record.projectID}`)}>
+        View
+      </Button>
     ),
   },
   {
@@ -126,17 +128,113 @@ export const requestColums = (navigate) => [
     dataIndex: "approve",
     key: "approve",
     render: (item, record) => (
-      <Button onClick={() => navigate(`/user/${record.id}`)}>Approve</Button>
+      <Button onClick={() => approveAction(true, record.projectID)}>
+        Approve
+      </Button>
     ),
   },
   {
-    title: "Reject",
-    dataIndex: "reject",
-    key: "reject",
+    title: "Deny",
+    dataIndex: "deny",
+    key: "deny",
     render: (item, record) => (
-      <Button danger onClick={() => navigate(`/user/${record.id}`)}>
-        Reject
+      <Button danger onClick={() => approveAction(false, record.projectID)}>
+        Deny
       </Button>
     ),
   },
 ];
+
+export const transactionColums = (navigate, refundMoneyData, status) => {
+  return [
+    {
+      title: "Project title",
+      dataIndex: "projectTitle",
+      key: "projectTitle",
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+    },
+    {
+      title: "Seeker paid to the system",
+      dataIndex: "isPaidBySeeker",
+      key: "isPaidBySeeker",
+    },
+    {
+      title: "Paid to Freelancer",
+      dataIndex: "isPaidToFreelancer",
+      key: "isPaidToFreelancer",
+    },
+    {
+      title: "Seeker paid Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Paid to Freelancer date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "View Project",
+      dataIndex: "view",
+      key: "view",
+      render: (item, record) => (
+        <Button onClick={() => navigate(`/project/${record.projectID}`)}>
+          View
+        </Button>
+      ),
+    },
+    {
+      title: "Reund money to seeker",
+      dataIndex: "refundToSeeker",
+      key: "refundToSeeker",
+      render: (item, record) => (
+        <Button
+          disabled={
+            record.status === "refund to freelacner" ||
+            record.status === "refund to seeker" ||
+            record.status === "done"
+          }
+          danger
+          onClick={() =>
+            refundMoneyData("seeker", record.projectID, record.transactionID)
+          }
+        >
+          Refund
+        </Button>
+      ),
+    },
+    {
+      title: "Reund money to freelancer",
+      dataIndex: "refundTofreelancer",
+      key: "refundTofreelancer",
+      render: (item, record) => (
+        <Button
+          disabled={
+            record.tatus === "refund to seeker" ||
+            record.status === "refund to freelacner" ||
+            record.status === "done"
+          }
+          danger
+          onClick={() =>
+            refundMoneyData(
+              "freelancer",
+              record.projectID,
+              record.transactionID
+            )
+          }
+        >
+          Refund
+        </Button>
+      ),
+    },
+  ];
+};
