@@ -35,6 +35,6 @@ export const retriveRequestRejectProject = async () => {
 };
 
 
-export const approveRejectProject = (isApprove, projectID) => {
-    return approveRejectProjectAPI(isApprove, projectID);
+export const approveRejectProject = async(isApprove, projectID) => {
+    return approveRejectProjectAPI({isApprove}, projectID);
 }

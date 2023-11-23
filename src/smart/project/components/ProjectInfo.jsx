@@ -43,21 +43,6 @@ const ProjectInfo = ({ data, projectID }) => {
           {data?.status}
         </p>
       </div>
-
-      <Flex className="task-status-section">
-        <p>
-          <span className="bold-text">Total task:</span>
-        </p>
-        <p>
-          <span className="bold-text">ToDo:</span>
-        </p>
-        <p>
-          <span className="bold-text">In progress:</span>
-        </p>
-        <p>
-          <span className="bold-text">Done:</span>
-        </p>
-      </Flex>
     </div>
   );
 };

@@ -151,8 +151,7 @@ const App = () => {
                 margin: "16px 0",
               }}
             >
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+              <Breadcrumb.Item>{user?.first_name}-{user?.last_name}</Breadcrumb.Item>
             </Breadcrumb>
             <div
               className="content"

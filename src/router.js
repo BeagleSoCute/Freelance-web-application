@@ -24,6 +24,7 @@ import NegotiationSection from "smart/project/NegotiationSection";
 import LandingProjectPage from "smart/project/LandingProjectPage";
 import ProjectSection from "smart/project/ProjectSection";
 import OtherProfileDetails from "smart/profile/OtherProfileDetail";
+import HomeSection from "smart/Home/HomeSection";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
     ),
     //   errorElement: <ErrorPage />,
     children: [
+      { path: "/", element: <HomeSection /> },
       { path: "/logout", element: <Logout /> },
       { path: "/service-post", element: <Logout /> },
       {

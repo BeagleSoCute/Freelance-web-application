@@ -5,7 +5,12 @@ import { getAllUsers } from "services/user.service";
 import TableData from "components/common/TableData";
 import { transformAllUsersDataToTable } from "helpers/user.helper";
 import { useNavigate, useParams } from "react-router-dom";
-import { allUserColums, serviceColums, requestColums, transactionColums } from "./tableData";
+import {
+  allUserColums,
+  serviceColums,
+  requestColums,
+  transactionColums,
+} from "./tableData";
 import OptionPanel from "./components/OptionPanel";
 import { notification } from "helpers/notification.helper";
 import {
@@ -15,7 +20,10 @@ import {
 } from "services/admin.service";
 import { transformPrivideServiceTableData } from "./helpers/table.helper";
 import ContentLayout from "layouts/ContentLayout";
-import { showAllTransactionData, refundMoneyData } from "services/escrow.service";
+import {
+  showAllTransactionData,
+  refundMoneyData,
+} from "services/escrow.service";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -33,7 +41,6 @@ const Dashboard = () => {
       const { payload: pendingServiceLists } = await showPendingPostService();
       const { payload: requests } = await retriveRequestRejectProject();
       const allTransactionData = await showAllTransactionData();
-
       const tableData = transformAllUsersDataToTable(allUsersData);
       const provideServiceData =
         transformPrivideServiceTableData(pendingServiceLists);
@@ -50,11 +57,13 @@ const Dashboard = () => {
     setCurrentTab(e.target.value);
   };
   const handleApproveRequest = async (isApprove, projectID) => {
+    setLoading(true);
     const { success } = await approveRejectProject(isApprove, projectID);
-
+    setLoading(false);
     if (success) {
       notification({ type: "success", message: "Take an action Success" });
-      navigate("/admin-panel");
+      const { payload: requests } = await retriveRequestRejectProject();
+      setRequestList(requests);
     } else {
       notification({
         type: "error",
@@ -63,10 +72,13 @@ const Dashboard = () => {
     }
   };
   const handleRefund = async (value, projectID, transactionID) => {
+    setLoading(true);
     const { success } = await refundMoneyData(value, projectID, transactionID);
+    setLoading(false);
     if (success) {
       notification({ type: "success", message: "Refund Success" });
-      navigate("/admin-panel");
+      const allTransactionData = await showAllTransactionData();
+      setTransactionList(allTransactionData.payload);
     } else {
       notification({
         type: "error",
@@ -74,8 +86,7 @@ const Dashboard = () => {
       });
     }
   };
-  
-  
+
   const handleShowTableData = () => {
     if (currentTab === "seeUsers") {
       return { column: allUserColums(navigate), data: users };
@@ -87,7 +98,10 @@ const Dashboard = () => {
         data: requestList,
       };
     } else if (currentTab === "seeTransaction") {
-      return { column: transactionColums(navigate, handleRefund), data: transactionList };
+      return {
+        column: transactionColums(navigate, handleRefund),
+        data: transactionList,
+      };
     }
   };
   return (
