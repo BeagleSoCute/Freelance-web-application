@@ -24,9 +24,7 @@ export const showTransactionData = async () => {
 };
 
 export const showAllTransactionData = async () => {
-  console.log('cares res showAllTransactionDatashowAllTransactionData')
   const res = await showAllTransactionDataAPI();
-  console.log('res',res.payload)
   if( !res.payload.data ){
     return []
   }

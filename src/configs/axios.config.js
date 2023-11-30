@@ -11,10 +11,6 @@ const apiInstance = axios.create({
   baseURL: "/api",
   withCredentials: true,
   headers: {
-    
-    // 'Content-Type' :  'application/json',
-    // 'Content-Type': "multipart/form-data",
-
     "x-auth-token": localStorage.getItem(ACCESS_TOKEN),
   },
 });
