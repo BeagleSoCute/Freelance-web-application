@@ -11,13 +11,13 @@ import DisplayPortfolio from "components/portfolio/DisplayPortfolio";
 import { AppContext } from "contexts/app.context";
 
 const ShowApprovePostDetails = () => {
+  const { viewPortfolio } = useContext(AppContext);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { postID } = useParams();
   const [postData, setPostData] = useState();
   const [type, setType] = useState("approve");
   const [relatedPortfolio, setRelatedPortfolio] = useState([]);
-  const { viewPortfolio } = useContext(AppContext);
 
   useEffect(() => {
     const init = async () => {
@@ -66,6 +66,7 @@ const ShowApprovePostDetails = () => {
               isViewOnly={true}
               portfolios={relatedPortfolio}
               viewPortfolio={viewPortfolio}
+              isHideAddBtn={true}
             />
         <ApprovePostForm type={type} onChangeType={handleChangeType} form={form}  />
       </ContentLayout>

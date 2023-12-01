@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ShowPostContentSection from "components/postService/ShowPostContentSection";
 import ContentLayout from "layouts/ContentLayout";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,17 +13,27 @@ import { notification } from "helpers/notification.helper";
 import CandidateLists from "./components/CandidateLists";
 import CandidateDetails from "./components/CandidateDetails";
 import { getCurrentDate } from "helpers/date.helper";
+import DisplayPortfolio from "components/portfolio/DisplayPortfolio";
+import { AppContext } from "contexts/app.context";
+
+
 const ShowPostDetails = ({}) => {
+  const { viewPortfolio } = useContext(AppContext);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { postID, type } = useParams();
   const [data, setData] = useState();
   const [isSeeCandidateDetails, setIsSeeCandidate] = useState(false);
   const [currentCandidate, setCurrentCandidate] = useState();
+  const [relatedPortfolio, setRelatedPortfolio] = useState([]);
+
   useEffect(() => {
     const init = async () => {
-      const result = await showPostDetails(postID, type);
-      setData(result.payload);
+      const {payload} = await showPostDetails(postID, type);
+      setData(payload);
+      setRelatedPortfolio(payload?.related_portfolios)
+      console.log('payload',payload)
+
     };
     init();
   }, []);
@@ -83,6 +93,15 @@ const ShowPostDetails = ({}) => {
         }
       >
         <ShowPostContentSection postType={type} data={data} />
+        {type === 'provideService' &&
+        <DisplayPortfolio
+              title="Related works"
+              isViewOnly={true}
+              portfolios={relatedPortfolio}
+              viewPortfolio={viewPortfolio}
+              isHideAddBtn={true}
+            />
+      }
         {data?.isOwner ? (
           isSeeCandidateDetails ? (
             <CandidateDetails
