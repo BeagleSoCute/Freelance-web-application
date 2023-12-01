@@ -7,6 +7,8 @@ import { showPostDetails, updatePostStatus } from "services/admin.service";
 import { Form } from "antd";
 import { notification } from "helpers/notification.helper";
 import { getCurrentDate } from "helpers/date.helper";
+import DisplayPortfolio from "components/portfolio/DisplayPortfolio";
+import { AppContext } from "contexts/app.context";
 
 const ShowApprovePostDetails = () => {
   const [form] = Form.useForm();
@@ -14,11 +16,14 @@ const ShowApprovePostDetails = () => {
   const { postID } = useParams();
   const [postData, setPostData] = useState();
   const [type, setType] = useState("approve");
+  const [relatedPortfolio, setRelatedPortfolio] = useState([]);
+  const { viewPortfolio } = useContext(AppContext);
 
   useEffect(() => {
     const init = async () => {
       const { payload } = await showPostDetails(postID);
       setPostData(payload);
+      setRelatedPortfolio(payload?.related_portfolios)
     };
     init();
   }, []);
@@ -56,6 +61,12 @@ const ShowApprovePostDetails = () => {
         }}
       >
         <ShowPostContentSection data={postData} />
+        <DisplayPortfolio
+              title="Related works"
+              isViewOnly={true}
+              portfolios={relatedPortfolio}
+              viewPortfolio={viewPortfolio}
+            />
         <ApprovePostForm type={type} onChangeType={handleChangeType} form={form}  />
       </ContentLayout>
     </div>

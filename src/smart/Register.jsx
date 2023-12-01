@@ -29,11 +29,11 @@ const Register = () => {
 
 const StyledDiv = styled.div`
   &.login {
-    height: 100vh;
+    /* height: 100vh; */
     .form-warpper {
-      margin-top: 150px !important;
+      /* margin-top: 150px !important; */
       display: block;
-      padding: 20px;
+      /* padding: 20px; */
       margin: auto;
       h1 {
         text-align: center;

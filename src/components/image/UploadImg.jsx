@@ -27,7 +27,7 @@ const UploadImg = ({ file, pictureURL, isProfile, setFile }) => {
       fileInputRef.current.value = "";
       return;
     }
-    const limitFileSizeKB = isProfile ? 100 : 500;
+    const limitFileSizeKB = 250;
     const isExcessSize = value.size <= limitFileSizeKB * 1024;
     if (!isExcessSize) {
       message.error(`Image must be smaller than ${limitFileSizeKB} KB!`);

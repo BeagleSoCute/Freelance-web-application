@@ -14,7 +14,8 @@ const UserInfoSection = ({ userData }) => {
   return (
     <StyledDiv className="user-info-section">
       <Row justify="center">
-        <Col className="user-info-wrapper">
+        <Col span={7}></Col>
+        <Col span={10} className="user-info-wrapper">
           <div>
             <img
               className="profile-picture"
@@ -40,6 +41,8 @@ const UserInfoSection = ({ userData }) => {
             <SkillTags items={userData.skills} />
           </div>
         </Col>
+        <Col span={7}></Col>
+
       </Row>
     </StyledDiv>
   );

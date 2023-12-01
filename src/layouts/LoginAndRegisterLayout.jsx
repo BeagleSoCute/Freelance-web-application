@@ -19,7 +19,7 @@ const StyledDiv = styled.div`
   &.login-and-register-layout {
     height: 100vh;
     .form-warpper {
-      margin-top: 150px !important;
+      /* margin-top: 150px !important; */
       display: block;
       padding: 20px;
       margin: auto;
