@@ -92,6 +92,8 @@ const ShowPostDetails = ({}) => {
           navigate(data?.isOwner ? "/user-panel" : "/service-list")
         }
       >
+                {data?.status === 'reject' && <div className="alert-text"><p>Your service have been rejected</p>  <p><span className="bold-text">Reason: {data?.reason}</span></p></div>}
+
         <ShowPostContentSection postType={type} data={data} />
         {type === 'provideService' &&
         <DisplayPortfolio
