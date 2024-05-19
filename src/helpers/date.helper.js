@@ -15,7 +15,6 @@ export const getFormatedDate = (date) => {
 };
 
 export const parseFormattedDate = (formattedDate) => {
-  console.log('formattedDate',formattedDate)
   if(!formattedDate){
     return
   }
